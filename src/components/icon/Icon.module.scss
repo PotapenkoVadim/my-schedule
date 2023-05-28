@@ -1,0 +1,16 @@
+@import "../../assets/styles/variables.scss";
+
+.icon { display: block; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+   line-height: 1rem;
+
+  &__calendar { -webkit-mask-image: url(../../assets/icons/calendar.svg); }
+  &__add { -webkit-mask-image: url(../../assets/icons/add.svg); }
+  &__double-arrow { -webkit-mask-image: url(../../assets/icons/double-arrow.svg); }
+
+  &_white { background-color: white; }
+  &_black { background-color: black; }
+  &_light { background-color: $light; }
+
+  &_medium { width: 35px; height: 35px; }
+  &_small { width: 15px; height: 15px; }
+}
