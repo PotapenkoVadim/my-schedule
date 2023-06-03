@@ -23,6 +23,7 @@
     "no-warning-comments": ["error"],
     "no-console": ["warn"],
     "quotes": [2, "double", { "avoidEscape": true }],
-    "semi": ["error"]
+    "semi": ["error"],
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

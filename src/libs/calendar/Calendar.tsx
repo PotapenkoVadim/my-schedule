@@ -1,23 +1,61 @@
-import { eachWeekOfInterval, startOfYear, endOfYear, endOfWeek } from "date-fns";
+import cn from "classnames";
+import { Button, Icon } from "../../components";
+import { ButtonVariant, IconSize, IconVariant } from "../../enums";
+import styles from "./Calendar.module.scss";
+import { getDaysByWeeksOfYear } from "./utils";
+import { MONTHS, WEEKS } from "./consts";
 
-// const year = 2023;
-// const startDate = startOfYear(new Date(year, 0, 1));
-// const endDate = endOfYear(new Date(year, 11, 31));
-// const weeks = eachWeekOfInterval({ start: startDate, end: endDate });
+export default function Calendar({
+  year,
+  onChangeYear 
+}: {
+  year: number;
+  onChangeYear: (newYear: number) => void;
+}) {
+  const dates = getDaysByWeeksOfYear(year);
 
-// console.log(weeks);
+  const setPrevYear = () => onChangeYear(year - 1);
+  const setNextYear = () => onChangeYear(year + 1);
 
-const year = 2023;
-const startDate = startOfYear(new Date(year, 0, 1));
-const endDate = endOfYear(new Date(year, 11, 31));
-const weeks = eachWeekOfInterval({ start: startDate, end: endDate }, { weekStartsOn: 1 });
-const weekEnds = weeks.map((weekStart) => endOfWeek(weekStart, { weekStartsOn: 1 }));
-
-console.log("WEEKS: ", weeks);
-console.log("WEEKEND: ", weekEnds);
-
-export default function Calendar() {
   return (
-    <div>Calendar</div>
+    <div className={styles["calendar"]}>
+      <div className={styles["calendar__toolbar"]}>
+        <div>Год: {year}</div>
+        <div>
+          <Button data-testid="calendar-btn-left" onClick={setPrevYear} variant={ButtonVariant.ICON}>
+            <Icon variant={IconVariant.ARROW_BACK} size={IconSize.SMALL}/>
+          </Button>
+
+          <Button data-testid="calendar-btn-right" onClick={setNextYear} variant={ButtonVariant.ICON}>
+            <Icon variant={IconVariant.ARROW_FORWARD} size={IconSize.SMALL} />
+          </Button>
+        </div>
+      </div>
+
+      <div className={styles["calendar__dates"]}>
+        {dates.map((weeks, index) => (
+          <div key={MONTHS[index]} className={styles["calendar__month"]}>
+            <div className={styles["calendar__month-header"]}>{MONTHS[index]}</div>
+            <div className={styles["calendar__month-content"]}>
+
+              {weeks.map((days, index) => (
+                <div key={WEEKS[index]} className={styles["calendar__week"]}>
+                  <div className={styles["calendar__day"]}>{WEEKS[index]}</div>
+
+                  {days.map((item, index) => (
+                    <div key={index} className={cn([
+                      styles["calendar__day"],
+                      { [styles["calendar__day_hover"]]: Boolean(item) }
+                    ])}>
+                      {item?.getDate()}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

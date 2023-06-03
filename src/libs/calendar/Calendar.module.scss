@@ -1,0 +1,25 @@
+@import '../../assets/styles/variables.scss';
+
+.calendar {
+  &__dates { display: flex; flex-wrap: wrap; gap: 12px; }
+  &__toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  &__month { flex: 1;
+    &-content { display: flex;  border-radius: 2px; gap: 1px; justify-content: center; }
+    &-header { font-size: 0.85rem; letter-spacing: 1px; font-weight: 400; color: $secondary-text; text-align: center; }
+  }
+  
+  &__day { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 2px;
+    &-test { background-color: red; border-radius: 2px;}
+
+    &_hover { cursor: pointer;
+      &:hover {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  &__week {
+    & > .calendar__day:first-child { color: $secondary-text; }
+  }
+}

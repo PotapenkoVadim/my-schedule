@@ -1,20 +1,22 @@
 @import "../../assets/styles/variables.scss";
 
-.layout { display: flex; width: 100%; height: 100%;
-  &__sidebar { flex: 1; transition: 0.3s ease-out; border-right: 1px solid $light; display: flex;
-    flex-direction: column; align-items: flex-start; padding-top: 15px;
+.layout { display: flex; min-height: 100%;
+  &__sidebar { flex: 1; transition: 0.3s ease-out; display: flex; flex-direction: column;
+    align-items: flex-start; padding-top: 15px; overflow: hidden; position: sticky; top: 0; height: 100%;
 
     &_open { flex: 3;
-      & .layout__icon-button__text { width: 100%; }
+      & .layout__icon-button__text { opacity: 1; position: static; }
     }
   }
 
-  &__content { flex: 25; }
+  &__content { flex: 25; padding: 25px; border-left: 1px solid $light; }
 
   &__icon-button { transition: 0.3s ease-in; display: flex; color: white; font-size: 0.7rem;
-    align-items: center; justify-content: center; width: 100%;
+    align-items: center; justify-content: center; width: 100%; position: relative;
 
-    &__text { width: 0; overflow: hidden; transition: ease-in; }
+    &__text { position: absolute; overflow: hidden; transition: ease-in; opacity: 0; transition: .5s; right: -150% }
     &_open { transform: rotate(180deg); }
+
+    &:not(:first-child) { justify-content: space-between; }
   }
 }

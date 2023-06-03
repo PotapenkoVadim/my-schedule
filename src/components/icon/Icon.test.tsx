@@ -16,6 +16,8 @@ describe("Icon", () => {
       [IconVariant.CALENDAR, `icon__${IconVariant.CALENDAR}`],
       [IconVariant.ADD, `icon__${IconVariant.ADD}`],
       [IconVariant.DOUBLE_ARROW, `icon__${IconVariant.DOUBLE_ARROW}`],
+      [IconVariant.ARROW_BACK, `icon__${IconVariant.ARROW_BACK}`],
+      [IconVariant.ARROW_FORWARD, `icon__${IconVariant.ARROW_FORWARD}`],
     ])("should apply each variant", (variant, className) => {
       const {container} = render(<Icon variant={variant} />);
 
