@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout } from "./components";
+import { Layout, Table } from "./components";
 import { Calendar } from "./libs";
 
 export default function App() {
@@ -12,13 +12,7 @@ export default function App() {
       <div>
         <Calendar onChangeYear={setYear} year={selectedYear} />
 
-        
-        <div style={{ marginTop: "55px"}}>
-          <p>table</p>
-          <p>table</p>
-          <p>table</p>
-          <p>table</p>
-        </div>
+        <Table />
       </div>
     </Layout>
   );
