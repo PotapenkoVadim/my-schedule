@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Layout, Table } from "./components";
-import { Calendar } from "./libs";
-import { Order } from "./interfacies";
+import { render, screen } from "@testing-library/react";
+import { expect } from "vitest";
+import { Order } from "../../interfacies";
+import Table from "./Table";
 
 const orders: Array<Order> = [
   {
@@ -29,7 +29,7 @@ const orders: Array<Order> = [
   {
     id: "124",
     color: "blue",
-    customer: "Иван Ёклмнов",
+    customer: "Степан Ёклмнов",
     set: "Pretty Girls",
     deadline: [new Date("2023-05-20"), new Date("2023-05-25")],
     comment: "Душнила 123 123 comment test",
@@ -44,17 +44,17 @@ const orders: Array<Order> = [
   }
 ];
 
-export default function App() {
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+describe("Table", () => {
+  it("should render component", () => {
+    render(<Table orders={orders} />);
+    
+    expect(screen.getByText("Заказчик")).toBeInTheDocument();
+    expect(screen.getByText("Дедлайн")).toBeInTheDocument();
+    expect(screen.getByText("Комментарий")).toBeInTheDocument();
 
-  const setYear = (newYear: number) => setSelectedYear(newYear);
-
-  return (
-    <Layout>
-      <>
-        <Calendar onChangeYear={setYear} year={selectedYear} />
-        <Table orders={orders} />
-      </>
-    </Layout>
-  );
-}
+    expect(screen.getByText("Иван Ёклмнов")).toBeInTheDocument();
+    expect(screen.getByText("Душнила 123 123 comment test")).toBeInTheDocument();
+    expect(screen.getByText("Общее количество: 5")).toBeInTheDocument();
+    expect(screen.getByText("Итого: 200")).toBeInTheDocument();
+  });
+});
