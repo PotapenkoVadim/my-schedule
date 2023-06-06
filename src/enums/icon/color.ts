@@ -1,5 +1,6 @@
 export enum IconColor {
   WHITE = "white",
   BLACK = "black",
-  LIGHT = "light"
+  LIGHT = "light",
+  RED = "red"
 };

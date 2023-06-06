@@ -5,12 +5,16 @@ import { ButtonVariant, IconColor, IconSize, IconVariant } from "../../enums";
 import Icon from "../icon/Icon";
 import Button from "../button/Button";
 
-export default function Layout({ children }: { children: ReactElement }) {
+export default function Layout({
+  children,
+  onClickOrder
+}: {
+  children: ReactElement;
+  onClickOrder: () => void;
+}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const onClickCalendar = () => console.log("Calendar");
-  const onClickOrder = () => console.log("Order");
 
   return (
     <div className={styles["layout"]}>
@@ -19,6 +23,7 @@ export default function Layout({ children }: { children: ReactElement }) {
         { [styles["layout__sidebar_open"]]: isSidebarOpen}
       ])}>
         <Button
+          data-testid="sidebar-btn"
           className={cn([
             styles["layout__icon-button"],
             { [styles["layout__icon-button_open"]]: isSidebarOpen }
@@ -32,7 +37,7 @@ export default function Layout({ children }: { children: ReactElement }) {
         </Button>
 
         <Button
-          onClick={onClickCalendar}
+          data-testid="calendar-btn"
           variant={ButtonVariant.ICON}
           className={styles["layout__icon-button"]} >
           <Icon variant={IconVariant.CALENDAR} />
@@ -43,6 +48,7 @@ export default function Layout({ children }: { children: ReactElement }) {
         </Button>
         
         <Button
+          data-testid="add-order-btn"
           onClick={onClickOrder}
           variant={ButtonVariant.ICON}
           className={styles["layout__icon-button"]} >

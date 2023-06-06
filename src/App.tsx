@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, Table } from "./components";
+import { Layout, Table, Modal } from "./components";
 import { Calendar } from "./libs";
 import { Order } from "./interfacies";
 
@@ -46,14 +46,25 @@ const orders: Array<Order> = [
 
 export default function App() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
 
+  const openModal = () => setIsOpenModal(true);
+  const closeModal = () => setIsOpenModal(false);
+
   return (
-    <Layout>
+    <Layout onClickOrder={openModal}>
       <>
         <Calendar onChangeYear={setYear} year={selectedYear} />
         <Table orders={orders} />
+
+        <Modal
+          isOpen={isOpenModal}
+          onClose={closeModal}
+          title='Test modal' >
+          <div>Hello world!</div>
+        </Modal>
       </>
     </Layout>
   );

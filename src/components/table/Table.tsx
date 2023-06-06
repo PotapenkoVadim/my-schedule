@@ -2,6 +2,7 @@ import { Order } from "../../interfacies";
 import { OrderDetailsType } from "../../types";
 import List from "../list/List";
 import styles from "./Table.module.scss";
+import TableActions from "./_Actions";
 
 export default function Table({ orders }: { orders: Array<Order>}) {
   const calculateDetails = (orderDetails: Array<OrderDetailsType>, type: "count" | "sum") => (
@@ -40,7 +41,9 @@ export default function Table({ orders }: { orders: Array<Order>}) {
                     <div>Итого: {calculateDetails(item.details, "sum")}</div>
                   </td>
                   <td className={styles["table__cell"]}>{item.comment}</td>
-                  <td className={styles["table__cell"]}>{String(item.done)}</td>
+                  <td className={styles["table__cell"]}>
+                    <TableActions />
+                  </td>
                 </tr>
               ))}
             </tbody>

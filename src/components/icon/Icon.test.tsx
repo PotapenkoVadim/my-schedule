@@ -13,11 +13,13 @@ describe("Icon", () => {
 
   describe("Icon Variant", () => {
     it.each([
-      [IconVariant.CALENDAR, `icon__${IconVariant.CALENDAR}`],
-      [IconVariant.ADD, `icon__${IconVariant.ADD}`],
-      [IconVariant.DOUBLE_ARROW, `icon__${IconVariant.DOUBLE_ARROW}`],
-      [IconVariant.ARROW_BACK, `icon__${IconVariant.ARROW_BACK}`],
+      [IconVariant.CALENDAR,      `icon__${IconVariant.CALENDAR}`],
+      [IconVariant.ADD,           `icon__${IconVariant.ADD}`],
+      [IconVariant.DOUBLE_ARROW,  `icon__${IconVariant.DOUBLE_ARROW}`],
+      [IconVariant.ARROW_BACK,    `icon__${IconVariant.ARROW_BACK}`],
       [IconVariant.ARROW_FORWARD, `icon__${IconVariant.ARROW_FORWARD}`],
+      [IconVariant.CLOSE,         `icon__${IconVariant.CLOSE}`],
+      [IconVariant.DELETE,        `icon__${IconVariant.DELETE}`],
     ])("should apply each variant", (variant, className) => {
       const {container} = render(<Icon variant={variant} />);
 
@@ -27,8 +29,9 @@ describe("Icon", () => {
 
   describe("Icon Size", () => {
     it.each([
+      [IconSize.LARGE,  `icon_${IconSize.LARGE}`],
       [IconSize.MEDIUM, `icon_${IconSize.MEDIUM}`],
-      [IconSize.SMALL, `icon_${IconSize.SMALL}`],
+      [IconSize.SMALL,  `icon_${IconSize.SMALL}`],
     ])("should apply each size", (size, className) => {
       const {container} = render(<Icon variant={IconVariant.CALENDAR} size={size} />);
 
@@ -41,6 +44,7 @@ describe("Icon", () => {
       [IconColor.BLACK, `icon_${IconColor.BLACK}`],
       [IconColor.LIGHT, `icon_${IconColor.LIGHT}`],
       [IconColor.WHITE, `icon_${IconColor.WHITE}`],
+      [IconColor.RED,   `icon_${IconColor.RED}`],
     ])("should apply each color", (color, className) => {
       const {container} = render(<Icon variant={IconVariant.CALENDAR} color={color} />);
 
