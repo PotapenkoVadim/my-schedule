@@ -2,5 +2,9 @@
 
 .button { background: none; outline: none; border: none; cursor: pointer;
 
+  &__primary { background-color: #6699CC; color: white; padding: 12px 32px; border-radius: 4px;
+    &:hover { opacity: .85; }
+  }
+
   &__icon { padding: 12px; }
 }
