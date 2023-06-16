@@ -14,7 +14,6 @@ export default function FormField<T extends FieldValues = FieldValues>({
   control: Control<T, any>;
   name: Path<T>;
 } & InputHTMLAttributes<HTMLInputElement>) {
-  console.log(className);
   return (
     <Controller
       name={name}

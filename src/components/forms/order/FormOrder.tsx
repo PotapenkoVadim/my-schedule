@@ -27,7 +27,7 @@ export default function FormOrder() {
           <FormColorPicker name="color" control={methods.control} />
           <FormField name="customer" control={methods.control} placeholder="Заказчик" className={styles["order__field"]} />
           <FormField name="set" control={methods.control} placeholder="Сет" className={styles["order__field"]} />
-          <DatePeriod name="deadline" control={methods.control} className={styles["order__field"]} />
+          <DatePeriod name="deadline" control={methods.control} placeholder="Дедлайн" className={styles["order__field"]} />
         </div>
 
         <Textarea name="comment" control={methods.control} placeholder="Коментарий" />

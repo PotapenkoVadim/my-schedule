@@ -1,0 +1,9 @@
+@import "../../assets/styles/variables.scss";
+
+.dateperiod { display: inline-block; width: 100%; margin: 8px 0; position: relative; color: $background-color;
+  &__field { border: none; outline: none; background-color: transparent; width: 100%; }
+  &__label { position: absolute; top: 50%; left: 2%; transform: translateY(-50%); transition: .35s; padding: 0 5px; }
+  &__field:focus ~ &__label, &__label_active { top: 0; left: 0; font-size: 0.75rem;
+    background-color: $light-white; color: $red;
+  }
+}
