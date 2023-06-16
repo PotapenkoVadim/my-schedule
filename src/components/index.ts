@@ -7,3 +7,5 @@ export {default as Modal} from "./modal/Modal";
 export {default as FormField} from "./form-field/FormField";
 export {default as FormOrder} from "./forms/order/FormOrder";
 export {default as FormColorPicker} from "./form-color-picker/FormColorPicker";
+export {default as Textarea} from "./textarea/Textarea";
+export {default as DatePeriod} from "./date-period/DatePeriod";

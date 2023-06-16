@@ -8,17 +8,19 @@ export default function FormField<T extends FieldValues = FieldValues>({
   value,
   placeholder,
   control,
+  className,
   ...otherProps
 }: {
   control: Control<T, any>;
   name: Path<T>;
 } & InputHTMLAttributes<HTMLInputElement>) {
+  console.log(className);
   return (
     <Controller
       name={name}
       control={control}
       render={({field}) => (
-        <label className={styles["formfield"]}>
+        <label className={cn(styles["formfield"], {[className!]: Boolean(className)})}>
           <input
             className={styles["formfield__field"]}
             onChange={field.onChange}
