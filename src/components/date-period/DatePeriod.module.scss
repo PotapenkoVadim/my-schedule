@@ -6,4 +6,6 @@
   &__field:focus ~ &__label, &__label_active { top: 0; left: 0; font-size: 0.75rem;
     background-color: $light-white; color: $red;
   }
+
+  &__error { position: absolute; bottom: -5px; left: 5px; font-size: 10px; color: $red; letter-spacing: 1px; }
 }

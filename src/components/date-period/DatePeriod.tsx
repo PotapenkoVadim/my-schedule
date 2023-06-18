@@ -7,10 +7,12 @@ export default function DatePeriod<T extends FieldValues = FieldValues>({
   name,
   control,
   placeholder,
+  error,
   className
 }: {
   control: Control<T, any>;
   name: Path<T>;
+  error?: string;
 } & CalendarProps) {
   return (
     <Controller
@@ -34,6 +36,10 @@ export default function DatePeriod<T extends FieldValues = FieldValues>({
           ])}>
             {placeholder}
           </span>
+
+          {error && (
+            <span className={styles["formfield__error"]}>{error}</span>
+          )}
         </label>
       )}
     />

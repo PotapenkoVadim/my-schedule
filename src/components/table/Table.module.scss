@@ -2,13 +2,17 @@
 
 .table { margin-top: 50px; position: relative; min-height: 400px; overflow: auto; padding: 0; border-radius: 4px 4px 0 0;
   &__wrapper { position: absolute; top: 0; left: 0; min-width: max-content; width: 100%; }
-  &__content { height: 300px; overflow-x: auto; margin-top: 0px; width: 100%; }
+  &__content { overflow-x: auto; margin-top: 0px; width: 100%; }
   &__table { width: 100%; border-collapse: collapse; }
   &__head { padding: 20px 15px; text-align: left; font-weight: 500; font-size: 12px; color: white; text-transform: uppercase;
-    background-color: #6e6e6e; position: sticky; top: 0;
+    background-color: #6e6e6e; position: sticky; top: 0; z-index: 2;
   }
 
   &__cell { padding: 15px; text-align: left; vertical-align: middle; font-weight: 300; font-size: 12px; color: white;
     border-bottom: solid 1px rgba(255,255,255,0.1); max-width: 500px;
   }
+
+  &__notice { font-size: 18px; font-weight: bold; padding: 0 25px; letter-spacing: 2px; }
+  &__color { width: 17px; height: 17px; border-radius: 2px; }
+  &__actions { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 }

@@ -8,10 +8,12 @@ const onSubmit = vi.fn();
 
 const FakeComponent = ({
   onSubmit,
-  value
+  value,
+  error
 }: {
   onSubmit: (data: Record<string, unknown>) => void;
   value?: string;
+  error?: string;
 }) => {
   const {handleSubmit, control} = useForm({
     defaultValues: { field: value ?? "" }
@@ -24,7 +26,7 @@ const FakeComponent = ({
       })}
     >
       <label htmlFor="field">Form Field</label>
-      <FormField control={control} name="field" />
+      <FormField control={control} name="field" error={error} />
       <button>submit</button>
     </form>
   );
@@ -59,5 +61,11 @@ describe("FormField", () => {
     render(<FakeComponent onSubmit={onSubmit} value="default" />);
 
     expect(screen.getByRole("textbox")).toHaveValue("default");
+  });
+
+  it("should display error message", () => {
+    render(<FakeComponent onSubmit={onSubmit} error="Some error text" />);
+
+    expect(screen.getByText("Some error text")).toBeInTheDocument();
   });
 });

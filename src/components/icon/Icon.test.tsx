@@ -20,6 +20,7 @@ describe("Icon", () => {
       [IconVariant.ARROW_FORWARD, `icon__${IconVariant.ARROW_FORWARD}`],
       [IconVariant.CLOSE,         `icon__${IconVariant.CLOSE}`],
       [IconVariant.DELETE,        `icon__${IconVariant.DELETE}`],
+      [IconVariant.EDIT,          `icon__${IconVariant.EDIT}`],
     ])("should apply each variant", (variant, className) => {
       const {container} = render(<Icon variant={variant} />);
 
@@ -41,10 +42,11 @@ describe("Icon", () => {
 
   describe("Icon Color", () => {
     it.each([
-      [IconColor.BLACK, `icon_${IconColor.BLACK}`],
-      [IconColor.LIGHT, `icon_${IconColor.LIGHT}`],
-      [IconColor.WHITE, `icon_${IconColor.WHITE}`],
-      [IconColor.RED,   `icon_${IconColor.RED}`],
+      [IconColor.BLACK,  `icon_${IconColor.BLACK}`],
+      [IconColor.LIGHT,  `icon_${IconColor.LIGHT}`],
+      [IconColor.WHITE,  `icon_${IconColor.WHITE}`],
+      [IconColor.RED,    `icon_${IconColor.RED}`],
+      [IconColor.BLUE,   `icon_${IconColor.BLUE}`],
     ])("should apply each color", (color, className) => {
       const {container} = render(<Icon variant={IconVariant.CALENDAR} color={color} />);
 

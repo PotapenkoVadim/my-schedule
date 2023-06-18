@@ -7,10 +7,12 @@ const onSubmit = vi.fn();
 
 const FakeComponent = ({
   onSubmit,
-  value
+  value,
+  error
 }: {
   onSubmit: (data: Record<string, unknown>) => void;
   value?: string;
+  error?: string;
 }) => {
   const {handleSubmit, control} = useForm({
     defaultValues: { deadline: [] }
@@ -23,7 +25,7 @@ const FakeComponent = ({
       })}
     >
       <label htmlFor="deadline">DatePeriod</label>
-      <DatePeriod control={control} name="deadline" />
+      <DatePeriod control={control} name="deadline" error={error} />
       <button>submit</button>
     </form>
   );
@@ -34,5 +36,11 @@ describe("DatePeriod", () => {
     render(<FakeComponent onSubmit={onSubmit} />);
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
+  });
+
+  it("should display error text", () => {
+    render(<FakeComponent onSubmit={onSubmit} error={"Some error text"}/>);
+
+    expect(screen.getByText("Some error text")).toBeInTheDocument();
   });
 });

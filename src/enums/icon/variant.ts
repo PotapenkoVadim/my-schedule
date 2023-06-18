@@ -5,5 +5,6 @@ export enum IconVariant {
   ARROW_FORWARD = "arrow-forward",
   ARROW_BACK = "arrow-back",
   CLOSE = "close",
-  DELETE = "delete"
+  DELETE = "delete",
+  EDIT = "edit"
 };

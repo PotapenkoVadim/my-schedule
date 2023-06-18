@@ -1,13 +1,76 @@
+import {format} from "date-fns";
+import {ru} from "date-fns/locale";
 import { Order } from "../../interfacies";
 import { OrderDetailsType } from "../../types";
 import List from "../list/List";
 import styles from "./Table.module.scss";
 import TableActions from "./_Actions";
 
-export default function Table({ orders }: { orders: Array<Order>}) {
+export default function Table({
+  orders,
+  onRemoveOrder,
+  onEditOrder,
+  onDoneOrder
+}: {
+  orders: Array<Order>;
+  onRemoveOrder: (order: Order) => void;
+  onEditOrder: (order: Order) => void;
+  onDoneOrder: (order: Order) => void;
+}) {
   const calculateDetails = (orderDetails: Array<OrderDetailsType>, type: "count" | "sum") => (
-    orderDetails.reduce((acc, o) => acc + o[type], 0)
+    orderDetails.reduce((acc, o) => acc + Number(o[type]), 0)
   );
+
+  const toFormat = (date: Date) => format(date as Date, "d.MM.yyyy", {locale: ru});
+  const getDateText = (dates?: Array<Date>) => dates
+    ? dates.filter(v => Boolean(v)).map(d => toFormat(d)).join(" - ")
+    : "";
+
+  let content;
+  if (orders.length > 0) {
+    content = orders.map(item => (
+      <tr key={item.id}>
+        <td className={styles["table__cell"]}>
+          <div className={styles["table__color"]} style={{ background: `#${item.color}`}} />
+        </td>
+        <td className={styles["table__cell"]}>{item.customer}</td>
+        <td className={styles["table__cell"]}>{item.set}</td>
+        <td className={styles["table__cell"]}>
+          {getDateText(item.deadline)}
+        </td>
+        <td className={styles["table__cell"]}>
+          {item.details && item.details?.length > 0 && ([
+            <List key="countList" items={item.details.map(x => x.description)} />,
+            <div key="countRes">Общее количество: {calculateDetails(item.details, "count")}</div>
+
+          ])}
+        </td>
+        <td className={styles["table__cell"]}>
+          {item.details && item.details?.length > 0 && ([
+            <List key="sumList" items={item.details.map(x => x.sum)} />,
+            <div key="sumRes">Итого: {calculateDetails(item.details, "sum")}</div>
+          ])}
+        </td>
+        <td className={styles["table__cell"]}>{item.comment}</td>
+        <td className={styles["table__cell"]}>
+          <TableActions
+            isDone={item.done}
+            onRemove={() => onRemoveOrder(item)}
+            onEdit={() => onEditOrder(item)}
+            onDone={() => onDoneOrder(item)}
+          />
+        </td>
+      </tr>
+    ));
+  } else {
+    content = (
+      <tr>
+        <td>
+          <span className={styles["table__notice"]}>Нет заказов</span>
+        </td>
+      </tr>
+    );
+  }
 
   return (
     <section className={styles["table"]}>
@@ -26,26 +89,7 @@ export default function Table({ orders }: { orders: Array<Order>}) {
               </tr>
             </thead>
             <tbody className={styles["table__content"]}>
-              {orders.map(item => (
-                <tr key={item.id}>
-                  <td className={styles["table__cell"]}>{item.color}</td>
-                  <td className={styles["table__cell"]}>{item.customer}</td>
-                  <td className={styles["table__cell"]}>{item.set}</td>
-                  <td className={styles["table__cell"]}>05.05.2023 - 10.05.2023</td>
-                  <td className={styles["table__cell"]}>
-                    <List items={item.details.map(x => x.description)} />
-                    <div>Общее количество: {calculateDetails(item.details, "count")}</div>
-                  </td>
-                  <td className={styles["table__cell"]}>
-                    <List items={item.details.map(x => x.sum)} />
-                    <div>Итого: {calculateDetails(item.details, "sum")}</div>
-                  </td>
-                  <td className={styles["table__cell"]}>{item.comment}</td>
-                  <td className={styles["table__cell"]}>
-                    <TableActions />
-                  </td>
-                </tr>
-              ))}
+              {content}
             </tbody>
           </table>
       </div>

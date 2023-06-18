@@ -9,11 +9,13 @@
   &__arrow-back { -webkit-mask-image: url(../../assets/icons/arrow-back.svg); }
   &__close { -webkit-mask-image: url(../../assets/icons/close.svg); }
   &__delete { -webkit-mask-image: url(../../assets/icons/delete.svg); }
+  &__edit { -webkit-mask-image: url(../../assets/icons/edit.svg); }
 
   &_white { background-color: white; }
   &_black { background-color: black; }
   &_light { background-color: $light; }
   &_red { background-color: $red; }
+  &_blue { background-color: $blue; }
 
   &_large { width: 35px; height: 35px; }
   &_medium { width: 25px; height: 25px; }

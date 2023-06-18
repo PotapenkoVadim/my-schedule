@@ -14,6 +14,7 @@ body, #root { height: 100vh; }
 
 .p-colorpicker, .p-colorpicker-preview { width: 20px; height: 20px; }
 .p-colorpicker-preview { display: flex; align-items: center; justify-content: center; }
+.p-checkbox .p-checkbox-box.p-highlight { border-color: $red !important; background: $red !important; }
 
 ::-webkit-scrollbar {
   width: 6px;
