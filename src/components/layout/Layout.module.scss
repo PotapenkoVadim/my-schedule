@@ -1,7 +1,7 @@
 @import "../../assets/styles/variables.scss";
 
 .layout { display: flex; min-height: 100%;
-  &__sidebar { flex: 1; transition: 0.3s ease-out; display: flex; flex-direction: column;
+  &__sidebar { flex: 1; transition: 0.3s ease-out; display: flex; flex-direction: column; min-width: 50px;
     align-items: flex-start; padding-top: 15px; overflow: hidden; position: sticky; top: 0; height: 100%;
 
     &_open { flex: 3;
@@ -18,5 +18,15 @@
     &_open { transform: rotate(180deg); }
 
     &:not(:first-child) { justify-content: space-between; }
+  }
+
+
+  @media (max-width: 1200px) {
+    &__icon-button:first-child { display: none; }
+    &__sidebar {
+      &_open { flex: 1;
+        & .layout__icon-button__text { opacity: 0; position: absolute; }
+      }
+    }
   }
 }
