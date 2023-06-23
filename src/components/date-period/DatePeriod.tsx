@@ -8,11 +8,13 @@ export default function DatePeriod<T extends FieldValues = FieldValues>({
   control,
   placeholder,
   error,
-  className
+  className,
+  minDate
 }: {
   control: Control<T, any>;
   name: Path<T>;
   error?: string;
+  minDate?: Date;
 } & CalendarProps) {
   return (
     <Controller
@@ -21,14 +23,14 @@ export default function DatePeriod<T extends FieldValues = FieldValues>({
       render={({field}) => (
         <label className={cn(styles["dateperiod"], {[className!]: Boolean(className)})}>
           <Calendar
+            minDate={minDate}
             className={styles["dateperiod__field"]}
             dateFormat="dd.mm.yy"
             name={field.name}
             onChange={field.onChange}
             value={field.value}
             selectionMode="range"
-            readOnlyInput
-          />
+            readOnlyInput />
 
           <span className={cn([
             styles["dateperiod__label"],

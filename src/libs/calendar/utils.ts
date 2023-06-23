@@ -1,3 +1,4 @@
+import { Order } from "../../interfacies";
 import { YearType } from "./types";
 
 export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
@@ -40,11 +41,53 @@ export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
         }
       }
       
-      acc[week] = acc[week]
-        ? [...acc[week], item]
-        : [item];
+      acc[week] = acc[week] ? [...acc[week], item] : [item];
 
       return acc;
     }, [] as YearType);
   });
+};
+
+export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): string => {
+  const findedOrder = orders?.find(item => {
+    if (item.deadline && date) {
+      const start = item.deadline[0];
+      const end = item.deadline[1] ?? item.deadline[0];
+
+      if (date >= start && date <= end) return true;
+    }
+
+    return false;
+  });
+
+  return findedOrder ? `#${findedOrder.color!}` : "transparent";
+};
+
+export const getTextColor = (date: Date | null, orders?: Array<Order>): string => {
+  function getContrastYIQ(hexcolor?: string){
+    if (!hexcolor || hexcolor === "000") return "white";
+    if (hexcolor === "ffffff") return "black";
+
+    const r = parseInt(hexcolor.substring(1,3),16);
+    const g = parseInt(hexcolor.substring(3,5),16);
+    const b = parseInt(hexcolor.substring(5,7),16);
+    const yiq = ((r*299)+(g*587)+(b*114))/1000;
+
+    return (yiq >= 128) ? "white" : "black";
+  }
+
+  const findedOrder = orders?.find(item => {
+    if (item.deadline && date) {
+      const start = item.deadline[0];
+      const end = item.deadline[1] ?? item.deadline[0];
+
+      if (date >= start && date <= end) {
+        return true;
+      }
+    }
+
+    return false;
+  });
+
+  return getContrastYIQ(findedOrder?.color);
 };

@@ -2,13 +2,16 @@ import cn from "classnames";
 import { Button, Icon } from "../../components";
 import { ButtonVariant, IconSize, IconVariant } from "../../enums";
 import styles from "./Calendar.module.scss";
-import { getDaysByWeeksOfYear } from "./utils";
+import { getBackgroundColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
 import { MONTHS, WEEKS } from "./consts";
+import { Order } from "../../interfacies";
 
 export default function Calendar({
+  orders,
   year,
   onChangeYear 
 }: {
+  orders: Array<Order>
   year: number;
   onChangeYear: (newYear: number) => void;
 }) {
@@ -43,10 +46,16 @@ export default function Calendar({
                   <div className={styles["calendar__day"]}>{WEEKS[index]}</div>
 
                   {days.map((item, index) => (
-                    <div key={index} className={cn([
-                      styles["calendar__day"],
-                      { [styles["calendar__day_hover"]]: Boolean(item) }
-                    ])}>
+                    <div
+                      style={{
+                        background: getBackgroundColor(item, orders),
+                        color: getTextColor(item, orders)
+                      }}
+                      key={index}
+                      className={cn([
+                        styles["calendar__day"],
+                        { [styles["calendar__day_hover"]]: Boolean(item) }
+                      ])} >
                       {item?.getDate()}
                     </div>
                   ))}

@@ -18,7 +18,7 @@ export default function Table({
   onDoneOrder: (order: Order) => void;
 }) {
   const calculateDetails = (orderDetails: Array<OrderDetailsType>, type: "count" | "sum") => (
-    orderDetails.reduce((acc, o) => acc + Number(o[type]), 0)
+    orderDetails.reduce((acc, o) => acc + Number(o[type] ?? 0), 0)
   );
 
   const toFormat = (date: Date) => format(date as Date, "d.MM.yyyy", {locale: ru});
@@ -40,7 +40,7 @@ export default function Table({
         </td>
         <td className={styles["table__cell"]}>
           {item.details && item.details?.length > 0 && ([
-            <List key="countList" items={item.details.map(x => x.description)} />,
+            <List key="countList" items={item.details.map(x => `${x.count ?? 0} ${x.description ?? ""}`)} />,
             <div key="countRes">Общее количество: {calculateDetails(item.details, "count")}</div>
 
           ])}

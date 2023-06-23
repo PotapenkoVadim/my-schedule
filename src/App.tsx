@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { Layout, Table, Modal, FormOrder } from "./components";
 import { Calendar } from "./libs";
 import { Order } from "./interfacies";
@@ -16,13 +16,9 @@ export default function App() {
 
   const hadleSubmitOrder = (data: Order) => {
     if (order) {
-      setOrders(orders => orders.map(item => {
-        if (item.id === data.id) {
-          return { ...item, ...data };
-        }
-
-        return item;
-      }));
+      setOrders(orders => orders.map(item =>
+        (item.id === data.id) ? { ...item, ...data } : item
+      ));
     } else {
       setOrders(orders => [
         ...orders,
@@ -42,31 +38,32 @@ export default function App() {
   };
 
   const handleDoneOrder = (data: Order) => {
-    setOrders(orders => orders.map(item => {
-      if (item.id === data.id && !item.done) {
-        return {...item, done: true};
-      }
-
-      return item;
-    }));
+    setOrders(orders => orders.map(item =>
+      (item.id === data.id && !item.done) ? {...item, done: true} : item
+    ));
   };
 
   return (
     <Layout onClickOrder={openModal}>
       <>
-        <Calendar onChangeYear={setYear} year={selectedYear} />
+        <Calendar
+          orders={orders}
+          onChangeYear={setYear}
+          year={selectedYear} />
+
         <Table
           orders={orders}
           onRemoveOrder={handleRemoveOrder}
           onEditOrder={handleEditOrder}
-          onDoneOrder={handleDoneOrder}
-        />
+          onDoneOrder={handleDoneOrder} />
 
         <Modal
           isOpen={isOpenModal}
           onClose={closeModal}
           title={order ? "Редактировать заказ" : "Новый заказ"} >
-          <FormOrder onSubmit={hadleSubmitOrder} editedOrder={order} />
+          <FormOrder
+            onSubmit={hadleSubmitOrder}
+            editedOrder={order} />
         </Modal>
       </>
     </Layout>
