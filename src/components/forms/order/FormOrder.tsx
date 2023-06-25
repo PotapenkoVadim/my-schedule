@@ -47,10 +47,8 @@ export default function FormOrder({
   };
 
   useEffect(() => {
-    if (editedOrder) {
-      setDetails(editedOrder.details ?? []);
-      methods.setValue("details", editedOrder.details ?? []);
-    }
+    setDetails(editedOrder?.details ?? []);
+    methods.setValue("details", editedOrder?.details ?? []);
   }, [editedOrder, methods]);
 
   return (
@@ -59,6 +57,7 @@ export default function FormOrder({
         <div className={styles["order__row"]}>
           <FormColorPicker name="color" control={methods.control} />
           <FormField
+            data-testid="customer-field"
             name="customer"
             control={methods.control}
             placeholder="Заказчик"
@@ -67,6 +66,7 @@ export default function FormOrder({
           />
 
           <FormField
+            data-testid="set-field"
             name="set"
             control={methods.control}
             placeholder="Сет"
@@ -83,10 +83,15 @@ export default function FormOrder({
           />
         </div>
 
-        <Textarea name="comment" control={methods.control} placeholder="Коментарий" />
+        <Textarea
+          data-testid="comment-field"
+          name="comment"
+          control={methods.control}
+          placeholder="Коментарий" />
 
         <div className={styles["order__details"]}>
           <Button
+            data-testid="details-add"
             type="button"
             onClick={addDetails}
             variant={ButtonVariant.ICON}
@@ -95,8 +100,8 @@ export default function FormOrder({
           </Button>
 
           <div className={styles["order__details-list"]}>
-            {details.map((item, index) => (
-              <div key={item.id} className={styles["order__row"]}>
+            {details.map((_, index) => (
+              <div key={index} className={styles["order__row"]}>
                 <FormField
                   type="number"
                   name={`details.${index}.count`}
@@ -106,6 +111,7 @@ export default function FormOrder({
                 />
 
                 <FormField
+                  data-testid="description-field"
                   name={`details.${index}.description`}
                   control={methods.control}
                   placeholder="Описание"
@@ -121,6 +127,7 @@ export default function FormOrder({
                 />
 
                 <Button
+                  data-testid="details-remove"
                   type="button"
                   onClick={() => removeDetails(index)}
                   variant={ButtonVariant.ICON}

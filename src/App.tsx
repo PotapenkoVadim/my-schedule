@@ -1,4 +1,6 @@
 import {  useState } from "react";
+import { invoke } from "@tauri-apps/api";
+import { format } from "date-fns";
 import { Layout, Table, Modal, FormOrder } from "./components";
 import { Calendar } from "./libs";
 import { Order } from "./interfacies";
@@ -12,7 +14,10 @@ export default function App() {
   const setYear = (newYear: number) => setSelectedYear(newYear);
 
   const openModal = () => setIsOpenModal(true);
-  const closeModal = () => setIsOpenModal(false);
+  const closeModal = () => {
+    setIsOpenModal(false);
+    setOrder(undefined);
+  };
 
   const hadleSubmitOrder = (data: Order) => {
     if (order) {
@@ -24,7 +29,26 @@ export default function App() {
         ...orders,
         {...data, id: String(Date.now()), done: false}
       ]);
+      
+      const deadline = data.deadline
+        ?.filter(item => Boolean(item))
+        .map(item => format(item, "yyyy-MM-dd"));
+
+      const serverOrder = {
+        id: String(Date.now()),
+        color: data.color ?? "",
+        customer: data.customer ?? "",
+        set: data.set ?? "",
+        deadline: deadline ?? [],
+        comment: data.comment ?? "",
+        done: false,
+        details: data.details
+      };
+
+      invoke("add_order", { order: serverOrder})
+        .then((response) => console.log(response));
     }
+
     setIsOpenModal(false);
   };
 

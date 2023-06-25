@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { expect } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { expect, vi } from "vitest";
 import { Order } from "../../interfacies";
 import Table from "./Table";
 
@@ -31,7 +32,7 @@ const orders: Array<Order> = [
     color: "blue",
     customer: "Степан Ёклмнов",
     set: "Pretty Girls",
-    deadline: [new Date("2023-05-20"), new Date("2023-05-25")],
+    deadline: [],
     comment: "Душнила 123 123 comment test",
     done: false,
     details: [
@@ -44,9 +45,18 @@ const orders: Array<Order> = [
   }
 ];
 
+const onDone = vi.fn();
+const onEdit = vi.fn();
+const onDelete = vi.fn();
+
 describe("Table", () => {
   it("should render component", () => {
-    render(<Table orders={orders} />);
+    render(<Table
+      onDoneOrder={onDone}
+      onEditOrder={onEdit}
+      onRemoveOrder={onDelete}
+      orders={orders}
+    />);
     
     expect(screen.getByText("Заказчик")).toBeInTheDocument();
     expect(screen.getByText("Дедлайн")).toBeInTheDocument();
@@ -56,5 +66,58 @@ describe("Table", () => {
     expect(screen.getByText("Душнила 123 123 comment test")).toBeInTheDocument();
     expect(screen.getByText("Общее количество: 5")).toBeInTheDocument();
     expect(screen.getByText("Итого: 200")).toBeInTheDocument();
+  });
+
+  it("should call onDone when user click by checkbox", async () => {
+    render(<Table
+      onDoneOrder={onDone}
+      onEditOrder={onEdit}
+      onRemoveOrder={onDelete}
+      orders={orders}
+    />);
+
+    await userEvent.click(screen.getAllByRole("checkbox")[0]);
+
+    expect(onDone).toHaveBeenCalled();
+    expect(onDone).toHaveBeenCalledWith(orders[0]);
+  });
+
+  it("should call onEdit when user click by edit icon", async () => {
+    render(<Table
+      onDoneOrder={onDone}
+      onEditOrder={onEdit}
+      onRemoveOrder={onDelete}
+      orders={orders}
+    />);
+
+    await userEvent.click(screen.getAllByRole("button")[0]);
+
+    expect(onEdit).toHaveBeenCalled();
+    expect(onEdit).toHaveBeenCalledWith(orders[0]);
+  });
+
+  it("should call onDelete when user click by remove icon", async () => {
+    render(<Table
+      onDoneOrder={onDone}
+      onEditOrder={onEdit}
+      onRemoveOrder={onDelete}
+      orders={orders}
+    />);
+
+    await userEvent.click(screen.getAllByRole("button")[1]);
+
+    expect(onEdit).toHaveBeenCalled();
+    expect(onEdit).toHaveBeenCalledWith(orders[0]);
+  });
+
+  it("should display empty message", () => {
+    render(<Table
+      onDoneOrder={onDone}
+      onEditOrder={onEdit}
+      onRemoveOrder={onDelete}
+      orders={[]}
+    />);
+
+    expect(screen.getByText("Нет заказов")).toBeInTheDocument();
   });
 });
