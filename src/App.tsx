@@ -1,53 +1,101 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import "./App.scss";
+import {  useEffect, useState } from "react";
+import { invoke } from "@tauri-apps/api";
+import { Layout, Table, Modal, FormOrder } from "./components";
+import { Calendar } from "./libs";
+import { Order } from "./interfacies";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+export default function App() {
+  const [order, setOrder] = useState<Order | undefined>(undefined);
+  const [orders, setOrders] = useState<Array<Order>>([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  const setYear = (newYear: number) => setSelectedYear(newYear);
+
+  const openModal = () => setIsOpenModal(true);
+  const closeModal = () => {
+    setIsOpenModal(false);
+    setOrder(undefined);
+  };
+
+  const hadleSubmitOrder = (data: Order) => {
+    const serverOrder = {
+      id: data.id ?? String(Date.now()),
+      color: data.color ?? "",
+      customer: data.customer ?? "",
+      set: data.set ?? "",
+      deadline: data.deadline?.filter(item => item !== null) ?? [],
+      comment: data.comment ?? "",
+      done: false,
+      details: data.details
+    };
+    
+    if (order) {
+      invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+        .then(response => setOrders(JSON.parse(response)));
+    } else {
+      invoke<string>("add_order", { order: JSON.stringify(serverOrder) })
+        .then((response) => setOrders(JSON.parse(response)));
+    }
+
+    setIsOpenModal(false);
+    setOrder(undefined);
+  };
+
+  const handleRemoveOrder = (data: Order) => {
+    invoke<string>("remove_order", { orderId: data.id })
+      .then(response => setOrders(JSON.parse(response)));
+  };
+
+  const handleEditOrder = (data: Order) => {
+    setOrder(data);
+    setIsOpenModal(true);
+  };
+
+  const handleDoneOrder = (data: Order) => {
+    const serverOrder = {
+      id: data.id,
+      color: data.color ?? "",
+      customer: data.customer ?? "",
+      set: data.set ?? "",
+      deadline: data.deadline?.filter(item => item !== null) ?? [],
+      comment: data.comment ?? "",
+      done: !data.done,
+      details: data.details
+    };
+    
+    invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+      .then(response => setOrders(JSON.parse(response)));
+  };
+
+  useEffect(() => {
+    invoke<string>("get_orders")
+      .then(response => setOrders(JSON.parse(response)));
+  }, []);
 
   return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
+    <Layout onClickOrder={openModal}>
+      <>
+        <Calendar
+          orders={orders}
+          onChangeYear={setYear}
+          year={selectedYear} />
 
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank" rel="noreferrer">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+        <Table
+          orders={orders}
+          onRemoveOrder={handleRemoveOrder}
+          onEditOrder={handleEditOrder}
+          onDoneOrder={handleDoneOrder} />
 
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-
-      <p>{greetMsg}</p>
-    </div>
+        <Modal
+          isOpen={isOpenModal}
+          onClose={closeModal}
+          title={order ? "Редактировать заказ" : "Новый заказ"} >
+          <FormOrder
+            onSubmit={hadleSubmitOrder}
+            editedOrder={order} />
+        </Modal>
+      </>
+    </Layout>
   );
 }
-
-export default App;

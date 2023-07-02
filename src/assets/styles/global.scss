@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+
+@import "primereact/resources/themes/lara-light-indigo/theme.css";
+@import "primereact/resources/primereact.min.css";
+@import "primeicons/primeicons.css"; 
+@import "./variables.scss";
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+body, #root { height: 100vh; }
+:root { font-family: 'PT Sans', sans-serif; font-size: $fonts; line-height: 24px; font-weight: 400;
+  color: $text-color; background-color: $background-color; font-synthesis: none; text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-text-size-adjust: 100%;
+}
+
+.p-colorpicker, .p-colorpicker-preview { width: 20px; height: 20px; }
+.p-colorpicker-preview { display: flex; align-items: center; justify-content: center; }
+.p-checkbox .p-checkbox-box.p-highlight { border-color: $red !important; background: $red !important; }
+
+::-webkit-scrollbar {
+  width: 6px;
+} 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
