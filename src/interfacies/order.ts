@@ -5,7 +5,7 @@ export interface Order {
   color?: string;
   customer?: string;
   set?: string;
-  deadline?: Array<Date>;
+  deadline?: Array<string>;
   comment?: string;
   done?: boolean;
   details?: Array<OrderDetailsType>

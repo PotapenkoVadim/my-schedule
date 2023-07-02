@@ -10,7 +10,7 @@ const order = {
   color: "red",
   customer: "Иван Ёклмнов",
   set: "Pretty Girls",
-  deadline: [new Date("2023-05-05"), new Date("2023-05-20")],
+  deadline: ["2023-05-05", "2023-05-20"],
   comment: "Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне.",
   done: false,
   details: [

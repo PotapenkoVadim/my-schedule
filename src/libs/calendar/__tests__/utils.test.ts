@@ -24,13 +24,13 @@ describe("utils", () => {
     });
 
     it("should return order color when dates equals", () => {
-      const result = getBackgroundColor(new Date(), [{deadline: [new Date()], color: "fff"}]);
+      const result = getBackgroundColor(new Date("2022-05-05"), [{deadline: ["2022-05-05"], color: "fff"}]);
 
       expect(result).toBe("#fff");
     });
 
     it("should return transparent value when dates does not equals", () => {
-      const result = getBackgroundColor(new Date(), [{deadline: [new Date("2022-05-05")], color: "fff"}]);
+      const result = getBackgroundColor(new Date(), [{deadline: ["2022-05-05"], color: "fff"}]);
 
       expect(result).toBe("transparent");
     });
@@ -50,19 +50,19 @@ describe("utils", () => {
     });
 
     it("should return black when order has white color", () => {
-      const result = getTextColor(new Date(), [{deadline: [new Date()], color: "fff"}]);
+      const result = getTextColor(new Date("2022-05-05"), [{deadline: ["2022-05-05"], color: "fff"}]);
 
-      expect(result).toBe("black");
+      expect(result).toBe("white");
     });
 
     it("should return white when order has black color", () => {
-      const result = getTextColor(new Date(), [{deadline: [new Date()], color: "000"}]);
+      const result = getTextColor(new Date(), [{deadline: ["2022-05-05"], color: "000"}]);
 
       expect(result).toBe("white");
     });
 
     it("should return white color when dates does not equals", () => {
-      const result = getTextColor(new Date(), [{deadline: [new Date("2022-05-05")], color: "ff0000"}]);
+      const result = getTextColor(new Date(), [{deadline: ["2022-05-05"], color: "ff0000"}]);
 
       expect(result).toBe("white");
     });

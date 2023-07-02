@@ -22,9 +22,11 @@ export default function Table({
   );
 
   const toFormat = (date: Date) => format(date as Date, "d.MM.yyyy", {locale: ru});
-  const getDateText = (dates?: Array<Date>) => dates
-    ? dates.filter(v => Boolean(v)).map(d => toFormat(d)).join(" - ")
-    : "";
+  const getDateText = (dates?: Array<string>) => dates ? dates
+    .map(d => new Date(d))
+    .filter(v => Boolean(v))
+    .map(d => toFormat(d))
+    .join(" - ") : "";
 
   let content;
   if (orders.length > 0) {

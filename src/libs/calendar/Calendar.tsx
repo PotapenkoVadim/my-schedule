@@ -2,7 +2,7 @@ import cn from "classnames";
 import { Button, Icon } from "../../components";
 import { ButtonVariant, IconSize, IconVariant } from "../../enums";
 import styles from "./Calendar.module.scss";
-import { getBackgroundColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
+import { getBackgroundColor, getBorderColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
 import { MONTHS, WEEKS } from "./consts";
 import { Order } from "../../interfacies";
 
@@ -48,6 +48,7 @@ export default function Calendar({
                   {days.map((item, index) => (
                     <div
                       style={{
+                        border: `1px solid ${getBorderColor(item, orders)}`,
                         background: getBackgroundColor(item, orders),
                         color: getTextColor(item, orders)
                       }}

@@ -1,6 +1,5 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import { format } from "date-fns";
 import { Layout, Table, Modal, FormOrder } from "./components";
 import { Calendar } from "./libs";
 import { Order } from "./interfacies";
@@ -20,40 +19,32 @@ export default function App() {
   };
 
   const hadleSubmitOrder = (data: Order) => {
+    const serverOrder = {
+      id: data.id ?? String(Date.now()),
+      color: data.color ?? "",
+      customer: data.customer ?? "",
+      set: data.set ?? "",
+      deadline: data.deadline?.filter(item => item !== null) ?? [],
+      comment: data.comment ?? "",
+      done: false,
+      details: data.details
+    };
+    
     if (order) {
-      setOrders(orders => orders.map(item =>
-        (item.id === data.id) ? { ...item, ...data } : item
-      ));
+      invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+        .then(response => setOrders(JSON.parse(response)));
     } else {
-      setOrders(orders => [
-        ...orders,
-        {...data, id: String(Date.now()), done: false}
-      ]);
-      
-      const deadline = data.deadline
-        ?.filter(item => Boolean(item))
-        .map(item => format(item, "yyyy-MM-dd"));
-
-      const serverOrder = {
-        id: String(Date.now()),
-        color: data.color ?? "",
-        customer: data.customer ?? "",
-        set: data.set ?? "",
-        deadline: deadline ?? [],
-        comment: data.comment ?? "",
-        done: false,
-        details: data.details
-      };
-
-      invoke("add_order", { order: serverOrder})
-        .then((response) => console.log(response));
+      invoke<string>("add_order", { order: JSON.stringify(serverOrder) })
+        .then((response) => setOrders(JSON.parse(response)));
     }
 
     setIsOpenModal(false);
+    setOrder(undefined);
   };
 
   const handleRemoveOrder = (data: Order) => {
-    setOrders(orders => orders.filter(item => item.id !== data.id));
+    invoke<string>("remove_order", { orderId: data.id })
+      .then(response => setOrders(JSON.parse(response)));
   };
 
   const handleEditOrder = (data: Order) => {
@@ -62,10 +53,25 @@ export default function App() {
   };
 
   const handleDoneOrder = (data: Order) => {
-    setOrders(orders => orders.map(item =>
-      (item.id === data.id && !item.done) ? {...item, done: true} : item
-    ));
+    const serverOrder = {
+      id: data.id,
+      color: data.color ?? "",
+      customer: data.customer ?? "",
+      set: data.set ?? "",
+      deadline: data.deadline?.filter(item => item !== null) ?? [],
+      comment: data.comment ?? "",
+      done: !data.done,
+      details: data.details
+    };
+    
+    invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+      .then(response => setOrders(JSON.parse(response)));
   };
+
+  useEffect(() => {
+    invoke<string>("get_orders")
+      .then(response => setOrders(JSON.parse(response)));
+  }, []);
 
   return (
     <Layout onClickOrder={openModal}>

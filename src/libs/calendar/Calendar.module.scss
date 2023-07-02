@@ -1,9 +1,9 @@
 @import '../../assets/styles/variables.scss';
 
 .calendar {
-  &__dates { display: flex; flex-wrap: wrap; gap: 12px; }
+  &__dates { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 25px; }
   &__toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-  &__month { flex: 1;
+  &__month {
     &-content { display: flex;  border-radius: 2px; gap: 1px; justify-content: center; }
     &-header { font-size: 0.85rem; letter-spacing: 1px; font-weight: 400; color: $secondary-text; text-align: center; }
   }

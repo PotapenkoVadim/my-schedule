@@ -54,7 +54,22 @@ export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): st
       const start = item.deadline[0];
       const end = item.deadline[1] ?? item.deadline[0];
 
-      if (date >= start && date <= end) return true;
+      if (date >= new Date(start) && date <= new Date(end) && !item.done) return true;
+    }
+
+    return false;
+  });
+
+  return findedOrder ? `#${findedOrder.color!}` : "transparent";
+};
+
+export const getBorderColor = (date: Date | null, orders?: Array<Order>): string => {
+  const findedOrder = orders?.find(item => {
+    if (item.deadline && date) {
+      const start = item.deadline[0];
+      const end = item.deadline[1] ?? item.deadline[0];
+
+      if (date >= new Date(start) && date <= new Date(end)) return true;
     }
 
     return false;
@@ -73,7 +88,7 @@ export const getTextColor = (date: Date | null, orders?: Array<Order>): string =
     const b = parseInt(hexcolor.substring(5,7),16);
     const yiq = ((r*299)+(g*587)+(b*114))/1000;
 
-    return (yiq >= 128) ? "white" : "black";
+    return (yiq >= 128) ? "black" : "white";
   }
 
   const findedOrder = orders?.find(item => {
@@ -81,7 +96,7 @@ export const getTextColor = (date: Date | null, orders?: Array<Order>): string =
       const start = item.deadline[0];
       const end = item.deadline[1] ?? item.deadline[0];
 
-      if (date >= start && date <= end) {
+      if (date >= new Date(start) && date <= new Date(end) && !item.done) {
         return true;
       }
     }

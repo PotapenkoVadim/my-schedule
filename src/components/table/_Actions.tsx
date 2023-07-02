@@ -17,7 +17,11 @@ export default function TableActions({
 }) {
   return (
     <div className={styles["table__actions"]}>
-      <Checkbox checked={Boolean(isDone)} onChange={onDone} />
+      <Checkbox
+        className={styles["table__checkbox"]}
+        checked={Boolean(isDone)}
+        onChange={onDone}
+      />
 
       <Button
         variant={ButtonVariant.ICON}
