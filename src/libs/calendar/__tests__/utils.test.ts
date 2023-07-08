@@ -1,5 +1,49 @@
-import { getBackgroundColor, getDaysByWeeksOfYear, getTextColor } from "../utils";
+import { findOrderByDate, getBackgroundColor, getDaysByWeeksOfYear, getTextColor } from "../utils";
 import { datesOf2022 } from "./results";
+
+const order1 = {
+  id: "123",
+  color: "red",
+  customer: "Иван Ёклмнов",
+  set: "Pretty Girls",
+  deadline: ["2023-05-05", "2023-05-20"],
+  comment: "Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне.",
+  done: false,
+  details: [
+    {
+      count: 3,
+      description: "3 фото Girls",
+      sum: 100
+    },
+    {
+      count: 2,
+      description: "2 фото Boys",
+      sum: 100
+    }
+  ]
+};
+
+const order2 = {
+  id: "321",
+  color: "red",
+  customer: "Иван Ёклмнов",
+  set: "Pretty Girls",
+  deadline: ["2023-05-25", "2023-06-01"],
+  comment: "Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне.",
+  done: false,
+  details: [
+    {
+      count: 3,
+      description: "3 фото Girls",
+      sum: 100
+    },
+    {
+      count: 2,
+      description: "2 фото Boys",
+      sum: 100
+    }
+  ]
+};
 
 describe("utils", () => {
   describe("getDaysByWeeksOfYear", () => {
@@ -65,6 +109,20 @@ describe("utils", () => {
       const result = getTextColor(new Date(), [{deadline: ["2022-05-05"], color: "ff0000"}]);
 
       expect(result).toBe("white");
+    });
+  });
+
+  describe("findOrderByDate", () => {
+    it("should return default", () => {
+      const result = findOrderByDate(new Date(), []);
+
+      expect(result).toBe(undefined);
+    });
+
+    it("should return finded order", () => {
+      const result = findOrderByDate(new Date("2023-05-15"), [order1, order2]);
+
+      expect(result).toEqual(order1);
     });
   });
 });
