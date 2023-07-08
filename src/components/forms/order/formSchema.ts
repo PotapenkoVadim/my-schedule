@@ -7,5 +7,7 @@ export default () => yup.object<Order>({
   set: yup.string().required("Укажите сет"),
   deadline: yup.array().required("Укажите дедлайн"),
   comment: yup.string(),
-  details: yup.array().min(1).required("Необходимо указать детали заказа"),
+  details: yup.array().min(1).required("Необходимо указать детали заказа").test((value) => {
+    return value.length > 0 && value.every(item => (item.count && item.description && item.sum));
+  }),
 });
