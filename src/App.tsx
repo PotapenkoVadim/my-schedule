@@ -77,9 +77,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    invoke<string>("get_orders")
+    invoke<string>("get_orders", {year: selectedYear})
       .then(response => setOrders(JSON.parse(response)));
-  }, []);
+  }, [selectedYear]);
 
   return (
     <Layout onClickOrder={openModal}>

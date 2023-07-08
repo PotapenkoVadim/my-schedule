@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use chrono::{DateTime, Duration, Utc, Datelike};
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use std::{fs::{self, File}, path::Path, io::Read};
 use serde_json::to_writer;
@@ -38,8 +40,25 @@ fn add_order(order: String) -> String {
 }
 
 #[tauri::command]
-fn get_orders() -> String {
-    serde_json::to_string(&get_data()).unwrap()
+fn get_orders(year: i32) -> String {
+    let orders = get_data();
+
+    let filtered_orders: Vec<&Order> = orders
+        .iter()
+        .filter(|order| {
+            if let Some(deadline) = order.deadline.get(0) {
+                if let Ok(datetime) = DateTime::<Utc>::from_str(deadline) {
+                    let day = datetime.checked_add_signed(Duration::days(1)).unwrap();
+
+                    return day.year() == year;
+                }
+            }
+
+            false
+        })
+        .collect();
+
+    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
