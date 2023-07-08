@@ -9,16 +9,35 @@ import { Order } from "../../interfacies";
 export default function Calendar({
   orders,
   year,
+  onClick,
   onChangeYear 
 }: {
   orders: Array<Order>
   year: number;
+  onClick: (id: string) => void;
   onChangeYear: (newYear: number) => void;
 }) {
   const dates = getDaysByWeeksOfYear(year);
 
   const setPrevYear = () => onChangeYear(year - 1);
   const setNextYear = () => onChangeYear(year + 1);
+
+  const handleDayClick = (date: Date | null) => {
+    const findedOrder = orders?.find(item => {
+      if (item.deadline && date) {
+        const start = item.deadline[0];
+        const end = item.deadline[1] ?? item.deadline[0];
+  
+        if (date >= new Date(start) && date <= new Date(end)) return true;
+      }
+  
+      return false;
+    });
+
+    if (findedOrder) {
+      onClick(findedOrder.id!);
+    }
+  };
 
   return (
     <div className={styles["calendar"]}>
@@ -47,6 +66,7 @@ export default function Calendar({
 
                   {days.map((item, index) => (
                     <div
+                      onClick={() => handleDayClick(item)}
                       style={{
                         border: `1px solid ${getBorderColor(item, orders)}`,
                         background: getBackgroundColor(item, orders),

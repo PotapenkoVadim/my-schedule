@@ -68,6 +68,14 @@ export default function App() {
       .then(response => setOrders(JSON.parse(response)));
   };
 
+  const handleCalendarClick = (id: string) => {
+    const element = document.getElementById(`orderId-${id}`);
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     invoke<string>("get_orders")
       .then(response => setOrders(JSON.parse(response)));
@@ -77,6 +85,7 @@ export default function App() {
     <Layout onClickOrder={openModal}>
       <>
         <Calendar
+          onClick={handleCalendarClick}
           orders={orders}
           onChangeYear={setYear}
           year={selectedYear} />

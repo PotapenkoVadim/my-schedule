@@ -31,7 +31,7 @@ export default function Table({
   let content;
   if (orders.length > 0) {
     content = orders.map(item => (
-      <tr key={item.id}>
+      <tr key={item.id} id={`orderId-${item.id}`}>
         <td className={styles["table__cell"]}>
           <div className={styles["table__color"]} style={{ background: `#${item.color}`}} />
         </td>
