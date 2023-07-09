@@ -15,6 +15,13 @@ export default function Layout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const handleCalendarClick = () => {
+    const element = document.getElementById("calendar");
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className={styles["layout"]}>
@@ -37,6 +44,7 @@ export default function Layout({
         </Button>
 
         <Button
+          onClick={handleCalendarClick}
           data-testid="calendar-btn"
           variant={ButtonVariant.ICON}
           className={styles["layout__icon-button"]} >

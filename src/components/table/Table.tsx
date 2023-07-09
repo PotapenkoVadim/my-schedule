@@ -1,4 +1,5 @@
 import {format} from "date-fns";
+import cn from "classnames";
 import {ru} from "date-fns/locale";
 import { Order } from "../../interfacies";
 import { OrderDetailsType } from "../../types";
@@ -8,11 +9,13 @@ import TableActions from "./_Actions";
 
 export default function Table({
   orders,
+  scrolledOrderId,
   onRemoveOrder,
   onEditOrder,
   onDoneOrder
 }: {
   orders: Array<Order>;
+  scrolledOrderId?: string;
   onRemoveOrder: (order: Order) => void;
   onEditOrder: (order: Order) => void;
   onDoneOrder: (order: Order) => void;
@@ -31,7 +34,11 @@ export default function Table({
   let content;
   if (orders.length > 0) {
     content = orders.map(item => (
-      <tr key={item.id}>
+      <tr
+        key={item.id}
+        id={`orderId-${item.id}`}
+        className={cn({[styles["table__scroll"]]: item.id === scrolledOrderId})}
+      >
         <td className={styles["table__cell"]}>
           <div className={styles["table__color"]} style={{ background: `#${item.color}`}} />
         </td>

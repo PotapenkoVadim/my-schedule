@@ -1,27 +1,67 @@
+import { MouseEvent } from "react";
 import cn from "classnames";
+import { Tooltip } from "primereact/tooltip";
 import { Button, Icon } from "../../components";
 import { ButtonVariant, IconSize, IconVariant } from "../../enums";
-import styles from "./Calendar.module.scss";
-import { getBackgroundColor, getBorderColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
+import { findOrderByDate, getBackgroundColor, getBorderColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
 import { MONTHS, WEEKS } from "./consts";
 import { Order } from "../../interfacies";
+import styles from "./Calendar.module.scss";
 
 export default function Calendar({
   orders,
   year,
-  onChangeYear 
+  onClick,
+  onChangeYear,
+  onClickCtxMenu
 }: {
   orders: Array<Order>
   year: number;
+  onClick: (id: string) => void;
   onChangeYear: (newYear: number) => void;
+  onClickCtxMenu?: (x: number, y: number, order?: Order) => void;
 }) {
   const dates = getDaysByWeeksOfYear(year);
 
   const setPrevYear = () => onChangeYear(year - 1);
   const setNextYear = () => onChangeYear(year + 1);
 
+  const handleDayClick = (date: Date | null) => {
+    const findedOrder = findOrderByDate(date, orders);
+
+    if (findedOrder) {
+      onClick(findedOrder.id!);
+    }
+  };
+
+  const isDisabledDay = (date: Date | null) => {
+    const findedOrder = findOrderByDate(date, orders);
+
+    return findedOrder ? false : true;
+  };
+
+  const getTooltipText = (date: Date | null) => {
+    const findedOrder = findOrderByDate(date, orders);
+
+    if (findedOrder) {
+      return `${findedOrder.customer}: ${findedOrder.set}`;
+    }
+  };
+
+  const handleContextMenu = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, date: Date | null) => {
+    const findedOrder = findOrderByDate(date, orders);
+
+    if (onClickCtxMenu && findedOrder) {
+      e.preventDefault();
+  
+      const {pageX, pageY} = e;
+  
+      onClickCtxMenu(pageX, pageY, findedOrder);
+    }
+  };
+
   return (
-    <div className={styles["calendar"]}>
+    <div id="calendar" className={styles["calendar"]}>
       <div className={styles["calendar__toolbar"]}>
         <div>Год: {year}</div>
         <div>
@@ -47,6 +87,10 @@ export default function Calendar({
 
                   {days.map((item, index) => (
                     <div
+                      onContextMenu={(e) => handleContextMenu(e, item)}
+                      data-pr-disabled={isDisabledDay(item)}
+                      id="calendarDay"
+                      onClick={() => handleDayClick(item)}
                       style={{
                         border: `1px solid ${getBorderColor(item, orders)}`,
                         background: getBackgroundColor(item, orders),
@@ -56,7 +100,10 @@ export default function Calendar({
                       className={cn([
                         styles["calendar__day"],
                         { [styles["calendar__day_hover"]]: Boolean(item) }
-                      ])} >
+                      ])}
+                      data-pr-tooltip={getTooltipText(item)}
+                      data-pr-position="top"
+                    >
                       {item?.getDate()}
                     </div>
                   ))}
@@ -66,6 +113,8 @@ export default function Calendar({
           </div>
         ))}
       </div>
+
+      <Tooltip hideDelay={250} target={`.${styles["calendar__day"]}`} />
     </div>
   );
 }

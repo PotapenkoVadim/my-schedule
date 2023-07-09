@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use chrono::{DateTime, Duration, Utc, Datelike};
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use std::{fs::{self, File}, path::Path, io::Read};
 use serde_json::to_writer;
@@ -8,7 +10,7 @@ use serde_json::to_writer;
 const DATA_DIR: &str = "d:\\bin\\my-shedule\\"; 
 const DATA_FILE: &str = "data.json";
 
-#[derive(Default, Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone)]
 struct Order {
     id: String,
     color: String,
@@ -20,7 +22,7 @@ struct Order {
     details: Vec<OrderDetails>
 }
 
-#[derive(Default, Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone)]
 struct OrderDetails {
     count: String,
     description: String,
@@ -28,33 +30,44 @@ struct OrderDetails {
 }
 
 #[tauri::command]
-fn add_order(order: String) -> String {
+fn add_order(order: String, year: i32) -> String {
     let order_data = serde_json::from_str(&order).unwrap();
     let mut data = get_data();
     data.push(order_data);
 
     write_data(data);
-    serde_json::to_string(&get_data()).unwrap()
+
+    let orders = get_data();
+    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
+
+    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
-fn get_orders() -> String {
-    serde_json::to_string(&get_data()).unwrap()
+fn get_orders(year: i32) -> String {
+    let orders = get_data();
+    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
+
+    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
-fn remove_order(order_id: String) -> String {
+fn remove_order(order_id: String, year: i32) -> String {
     let mut data = get_data();
     if let Some(index) = data.iter().position(|order| order.id == order_id) {
         data.remove(index);
     }
 
     write_data(data);
-    serde_json::to_string(&get_data()).unwrap()
+
+    let orders = get_data();
+    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
+
+    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
-fn change_order(order_id: String, updated_order: String) -> String {
+fn change_order(order_id: String, updated_order: String, year: i32) -> String {
     let new_order: Order = serde_json::from_str(&updated_order).unwrap();
     let mut data = get_data();
     if let Some(order) = data.iter_mut().find(|obj| obj.id == order_id) {
@@ -69,7 +82,11 @@ fn change_order(order_id: String, updated_order: String) -> String {
     }
 
     write_data(data);
-    serde_json::to_string(&get_data()).unwrap()
+
+    let orders = get_data();
+    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
+
+    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 fn main() {
@@ -105,4 +122,21 @@ fn get_data() -> Vec<Order> {
     };
 
     data
+}
+
+fn filter_orders_by_year(orders: &Vec<Order>, year: i32) -> Vec<Order> {
+    orders.iter()
+        .filter(|order| {
+            if let Some(deadline) = order.deadline.get(0) {
+                if let Ok(datetime) = DateTime::<Utc>::from_str(deadline) {
+                    let day = datetime.checked_add_signed(Duration::days(1)).unwrap();
+
+                    return day.year() == year;
+                }
+            }
+
+            false
+        })
+        .cloned()
+        .collect()
 }

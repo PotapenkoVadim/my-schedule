@@ -21,6 +21,7 @@ describe("Icon", () => {
       [IconVariant.CLOSE,         `icon__${IconVariant.CLOSE}`],
       [IconVariant.DELETE,        `icon__${IconVariant.DELETE}`],
       [IconVariant.EDIT,          `icon__${IconVariant.EDIT}`],
+      [IconVariant.DONE,          `icon__${IconVariant.DONE}`],
     ])("should apply each variant", (variant, className) => {
       const {container} = render(<Icon variant={variant} />);
 

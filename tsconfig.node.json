@@ -3,7 +3,10 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
   },
   "include": ["vite.config.ts"]
 }

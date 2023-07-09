@@ -49,31 +49,13 @@ export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
 };
 
 export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): string => {
-  const findedOrder = orders?.find(item => {
-    if (item.deadline && date) {
-      const start = item.deadline[0];
-      const end = item.deadline[1] ?? item.deadline[0];
+  const findedOrder = findOrderByDate(date, orders);
 
-      if (date >= new Date(start) && date <= new Date(end) && !item.done) return true;
-    }
-
-    return false;
-  });
-
-  return findedOrder ? `#${findedOrder.color!}` : "transparent";
+  return findedOrder && !findedOrder.done ? `#${findedOrder.color!}` : "transparent";
 };
 
 export const getBorderColor = (date: Date | null, orders?: Array<Order>): string => {
-  const findedOrder = orders?.find(item => {
-    if (item.deadline && date) {
-      const start = item.deadline[0];
-      const end = item.deadline[1] ?? item.deadline[0];
-
-      if (date >= new Date(start) && date <= new Date(end)) return true;
-    }
-
-    return false;
-  });
+  const findedOrder = findOrderByDate(date, orders);
 
   return findedOrder ? `#${findedOrder.color!}` : "transparent";
 };
@@ -91,18 +73,22 @@ export const getTextColor = (date: Date | null, orders?: Array<Order>): string =
     return (yiq >= 128) ? "black" : "white";
   }
 
-  const findedOrder = orders?.find(item => {
-    if (item.deadline && date) {
+  const findedOrder = findOrderByDate(date, orders);
+
+  return getContrastYIQ(findedOrder?.color);
+};
+
+export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
+  return orders?.find(item => {
+    if (item.deadline && day) {
       const start = item.deadline[0];
       const end = item.deadline[1] ?? item.deadline[0];
 
-      if (date >= new Date(start) && date <= new Date(end) && !item.done) {
+      if (day >= new Date(start) && day <= new Date(end)) {
         return true;
       }
     }
 
     return false;
   });
-
-  return getContrastYIQ(findedOrder?.color);
 };
