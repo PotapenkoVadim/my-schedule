@@ -1,7 +1,7 @@
 {
   "name": "my-schedule",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "src:lint": "eslint --fix --ext .ts,.tsx ./src/",
