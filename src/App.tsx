@@ -5,10 +5,11 @@ import { Calendar } from "./libs";
 import { Order } from "./interfacies";
 
 export default function App() {
-  const [order, setOrder] = useState<Order | undefined>(undefined);
+  const [order, setOrder] = useState<Order>();
   const [orders, setOrders] = useState<Array<Order>>([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [scrolledOrderId, setScrolledOrderId] = useState<string>();
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
 
@@ -73,6 +74,8 @@ export default function App() {
 
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setScrolledOrderId(id);
+      setTimeout(() => setScrolledOrderId(undefined), 2500);
     }
   };
 
@@ -91,6 +94,7 @@ export default function App() {
           year={selectedYear} />
 
         <Table
+          scrolledOrderId={scrolledOrderId}
           orders={orders}
           onRemoveOrder={handleRemoveOrder}
           onEditOrder={handleEditOrder}
