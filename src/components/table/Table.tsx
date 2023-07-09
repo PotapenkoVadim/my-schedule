@@ -31,8 +31,6 @@ export default function Table({
     .map(d => toFormat(d))
     .join(" - ") : "";
 
-  console.log("SCROLLED: ", scrolledOrderId);
-
   let content;
   if (orders.length > 0) {
     content = orders.map(item => (

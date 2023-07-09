@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import cn from "classnames";
 import { Tooltip } from "primereact/tooltip";
 import { Button, Icon } from "../../components";
@@ -11,12 +12,14 @@ export default function Calendar({
   orders,
   year,
   onClick,
-  onChangeYear 
+  onChangeYear,
+  onClickCtxMenu
 }: {
   orders: Array<Order>
   year: number;
   onClick: (id: string) => void;
   onChangeYear: (newYear: number) => void;
+  onClickCtxMenu?: (x: number, y: number, order?: Order) => void;
 }) {
   const dates = getDaysByWeeksOfYear(year);
 
@@ -42,6 +45,18 @@ export default function Calendar({
 
     if (findedOrder) {
       return `${findedOrder.customer}: ${findedOrder.set}`;
+    }
+  };
+
+  const handleContextMenu = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, date: Date | null) => {
+    const findedOrder = findOrderByDate(date, orders);
+
+    if (onClickCtxMenu && findedOrder) {
+      e.preventDefault();
+  
+      const {pageX, pageY} = e;
+  
+      onClickCtxMenu(pageX, pageY, findedOrder);
     }
   };
 
@@ -72,6 +87,7 @@ export default function Calendar({
 
                   {days.map((item, index) => (
                     <div
+                      onContextMenu={(e) => handleContextMenu(e, item)}
                       data-pr-disabled={isDisabledDay(item)}
                       id="calendarDay"
                       onClick={() => handleDayClick(item)}

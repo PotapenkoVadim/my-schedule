@@ -51,7 +51,7 @@ export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
 export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): string => {
   const findedOrder = findOrderByDate(date, orders);
 
-  return findedOrder ? `#${findedOrder.color!}` : "transparent";
+  return findedOrder && !findedOrder.done ? `#${findedOrder.color!}` : "transparent";
 };
 
 export const getBorderColor = (date: Date | null, orders?: Array<Order>): string => {
@@ -84,7 +84,7 @@ export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
       const start = item.deadline[0];
       const end = item.deadline[1] ?? item.deadline[0];
 
-      if (day >= new Date(start) && day <= new Date(end) && !item.done) {
+      if (day >= new Date(start) && day <= new Date(end)) {
         return true;
       }
     }

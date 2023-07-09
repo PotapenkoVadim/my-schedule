@@ -1,8 +1,9 @@
 import {  useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import { Layout, Table, Modal, FormOrder } from "./components";
+import { Layout, Table, Modal, FormOrder, ContextMenu } from "./components";
 import { Calendar } from "./libs";
 import { Order } from "./interfacies";
+import { initialContextMenu } from "./constants";
 
 export default function App() {
   const [order, setOrder] = useState<Order>();
@@ -10,6 +11,7 @@ export default function App() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [scrolledOrderId, setScrolledOrderId] = useState<string>();
+  const [contextMenu, setContextMenu] = useState(initialContextMenu);
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
 
@@ -32,10 +34,14 @@ export default function App() {
     };
     
     if (order) {
-      invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+      invoke<string>("change_order", {
+        orderId: data.id,
+        updatedOrder: JSON.stringify(serverOrder),
+        year: selectedYear
+      })
         .then(response => setOrders(JSON.parse(response)));
     } else {
-      invoke<string>("add_order", { order: JSON.stringify(serverOrder) })
+      invoke<string>("add_order", { order: JSON.stringify(serverOrder), year: selectedYear })
         .then((response) => setOrders(JSON.parse(response)));
     }
 
@@ -44,7 +50,7 @@ export default function App() {
   };
 
   const handleRemoveOrder = (data: Order) => {
-    invoke<string>("remove_order", { orderId: data.id })
+    invoke<string>("remove_order", { orderId: data.id, year: selectedYear })
       .then(response => setOrders(JSON.parse(response)));
   };
 
@@ -65,7 +71,11 @@ export default function App() {
       details: data.details
     };
     
-    invoke<string>("change_order", { orderId: data.id, updatedOrder: JSON.stringify(serverOrder) })
+    invoke<string>("change_order", {
+      orderId: data.id,
+      updatedOrder: JSON.stringify(serverOrder),
+      year: selectedYear
+    })
       .then(response => setOrders(JSON.parse(response)));
   };
 
@@ -79,6 +89,25 @@ export default function App() {
     }
   };
 
+  const handleClickCtxMenu = (x: number, y: number, order?: Order) => {
+    if (order) {
+      setContextMenu({ show: true, x, y, order });
+    }
+  };
+
+  const closeCtxMenu = () => setContextMenu({ show: false, x: 0, y: 0, order: undefined });
+  const handleDoneCtxMenu = () => {
+    if (contextMenu.order) handleDoneOrder(contextMenu.order);
+  };
+
+  const handleDeleteCtxMenu = () => {
+    if (contextMenu.order) handleRemoveOrder(contextMenu.order);
+  };
+
+  const handleEditCtxMenu = () => {
+    if (contextMenu.order) handleEditOrder(contextMenu.order);
+  };
+
   useEffect(() => {
     invoke<string>("get_orders", {year: selectedYear})
       .then(response => setOrders(JSON.parse(response)));
@@ -88,6 +117,7 @@ export default function App() {
     <Layout onClickOrder={openModal}>
       <>
         <Calendar
+          onClickCtxMenu={handleClickCtxMenu}
           onClick={handleCalendarClick}
           orders={orders}
           onChangeYear={setYear}
@@ -108,6 +138,16 @@ export default function App() {
             onSubmit={hadleSubmitOrder}
             editedOrder={order} />
         </Modal>
+
+        {contextMenu.show && (
+          <ContextMenu
+            onDelete={handleDeleteCtxMenu}
+            onDone={handleDoneCtxMenu}
+            onEdit={handleEditCtxMenu}
+            closeCtxMenu={closeCtxMenu}
+            ctxMenu={contextMenu}
+          />
+        )}
       </>
     </Layout>
   );
