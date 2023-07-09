@@ -1,10 +1,12 @@
-import { Calendar, CalendarProps } from "primereact/calendar";
+import { Calendar, CalendarChangeEvent, CalendarProps } from "primereact/calendar";
 import { addLocale } from "primereact/api";
 import cn from "classnames";
 import { Controller, Control, Path, FieldValues } from "react-hook-form";
 import styles from "./DatePeriod.module.scss";
 
 addLocale("ru", {firstDayOfWeek: 1});
+
+type onChangeType = (event: CalendarChangeEvent) => void;
 
 export default function DatePeriod<T extends FieldValues = FieldValues>({
   name,
@@ -37,7 +39,7 @@ export default function DatePeriod<T extends FieldValues = FieldValues>({
             className={styles["dateperiod__field"]}
             dateFormat="dd.mm.yy"
             name={field.name}
-            onChange={field.onChange}
+            onChange={field.onChange as onChangeType}
             value={getValue(field.value)}
             selectionMode="range"
             readOnlyInput />

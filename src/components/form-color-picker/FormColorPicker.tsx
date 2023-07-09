@@ -1,5 +1,7 @@
-import { ColorPicker, ColorPickerProps } from "primereact/colorpicker";
+import { ColorPicker, ColorPickerChangeEvent, ColorPickerProps } from "primereact/colorpicker";
 import { Controller, Control, Path, FieldValues } from "react-hook-form";
+
+type onChangeType = (event: ColorPickerChangeEvent) => void;
 
 export default function FormColorPicker<T extends FieldValues = FieldValues>({
   name,
@@ -15,7 +17,7 @@ export default function FormColorPicker<T extends FieldValues = FieldValues>({
       render={({field}) => (
         <ColorPicker
           name={field.name}
-          onChange={field.onChange}
+          onChange={field.onChange as onChangeType}
           value={field.value}
         />
       )}
