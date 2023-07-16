@@ -76,7 +76,7 @@ describe("Table", () => {
       orders={orders}
     />);
 
-    await userEvent.click(screen.getAllByRole("checkbox")[0]);
+    await userEvent.click(screen.getAllByRole("checkbox")[1]);
 
     expect(onDone).toHaveBeenCalled();
     expect(onDone).toHaveBeenCalledWith(orders[0]);

@@ -6,6 +6,9 @@ import { OrderDetailsType } from "../../types";
 import List from "../list/List";
 import styles from "./Table.module.scss";
 import TableActions from "./_Actions";
+import { useEffect, useState } from "react";
+import { Checkbox } from "primereact/checkbox";
+import { Tooltip } from "primereact/tooltip";
 
 export default function Table({
   orders,
@@ -20,10 +23,14 @@ export default function Table({
   onEditOrder: (order: Order) => void;
   onDoneOrder: (order: Order) => void;
 }) {
+  const [tableOrders, setTableOrders] = useState<Array<Order>>([]);
+  const [isShowDone, setIsShowDone] = useState(false);
+
   const calculateDetails = (orderDetails: Array<OrderDetailsType>, type: "count" | "sum") => (
     orderDetails.reduce((acc, o) => acc + Number(o[type] ?? 0), 0)
   );
 
+  const onChangeShowDone = () => setIsShowDone(!isShowDone);
   const toFormat = (date: Date) => format(date as Date, "d.MM.yyyy", {locale: ru});
   const getDateText = (dates?: Array<string>) => dates ? dates
     .map(d => new Date(d))
@@ -31,9 +38,17 @@ export default function Table({
     .map(d => toFormat(d))
     .join(" - ") : "";
 
+  useEffect(() => {
+    if (isShowDone) {
+      setTableOrders(orders);
+    } else {
+      setTableOrders(orders.filter(item => !item.done));
+    }
+  }, [orders, isShowDone]);
+
   let content;
-  if (orders.length > 0) {
-    content = orders.map(item => (
+  if (tableOrders.length > 0) {
+    content = tableOrders.map(item => (
       <tr
         key={item.id}
         id={`orderId-${item.id}`}
@@ -94,7 +109,16 @@ export default function Table({
                 <th className={styles["table__head"]}>Детализация</th>
                 <th className={styles["table__head"]}>Стоимость</th>
                 <th className={styles["table__head"]}>Комментарий</th>
-                <th className={styles["table__head"]}></th>
+                <th className={styles["table__head"]}>
+                <Checkbox
+                  id="checkbox"
+                  data-pr-tooltip={`${isShowDone ? "Скрыть" : "Показать"} выполненые заказы`}
+                  className={styles["table__checkbox"]}
+                  data-pr-position="top"
+                  checked={isShowDone}
+                  onChange={onChangeShowDone}
+                />
+                </th>
               </tr>
             </thead>
             <tbody className={styles["table__content"]}>
@@ -102,6 +126,8 @@ export default function Table({
             </tbody>
           </table>
       </div>
+
+      <Tooltip hideDelay={250} target="#checkbox" />
     </section>
   );
 }

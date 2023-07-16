@@ -51,13 +51,25 @@ export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
 export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): string => {
   const findedOrder = findOrderByDate(date, orders);
 
-  return findedOrder && !findedOrder.done ? `#${findedOrder.color!}` : "transparent";
+  const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
+  const isWeekendOrder = checkWeekend(findedOrder?.deadline);
+  const isShowWeekendOrder = !isWeekend || isWeekendOrder;
+
+  return findedOrder && !findedOrder.done && isShowWeekendOrder
+    ? `#${findedOrder.color!}`
+    : "transparent";
 };
 
 export const getBorderColor = (date: Date | null, orders?: Array<Order>): string => {
   const findedOrder = findOrderByDate(date, orders);
 
-  return findedOrder ? `#${findedOrder.color!}` : "transparent";
+  const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
+  const isWeekendOrder = checkWeekend(findedOrder?.deadline);
+  const isShowWeekendOrder = !isWeekend || isWeekendOrder;
+
+  return findedOrder && isShowWeekendOrder
+    ? `#${findedOrder.color!}`
+    : "transparent";
 };
 
 export const getTextColor = (date: Date | null, orders?: Array<Order>): string => {
@@ -75,11 +87,22 @@ export const getTextColor = (date: Date | null, orders?: Array<Order>): string =
 
   const findedOrder = findOrderByDate(date, orders);
 
-  return getContrastYIQ(findedOrder?.color);
+  const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
+  const isWeekendOrder = checkWeekend(findedOrder?.deadline);
+  const isShowWeekendOrder = !isWeekend || isWeekendOrder;
+
+  return isShowWeekendOrder ? getContrastYIQ(findedOrder?.color) : "white";
 };
 
 export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
-  return orders?.find(item => {
+  const sortedOrders = orders?.sort((a, b) => {
+    const start = new Date(a?.deadline![a.deadline!.length - 1]);
+    const end = new Date(b?.deadline![b.deadline!.length - 1]);
+
+    return Number(start) - Number(end);
+  });
+
+  return sortedOrders?.find(item => {
     if (item.deadline && day) {
       const start = item.deadline[0];
       const end = item.deadline[1] ?? item.deadline[0];
@@ -91,4 +114,16 @@ export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
 
     return false;
   });
+};
+
+export const checkWeekend = (date?: Array<string>) => {
+  if (date) {
+    const startDay = date[0] ? new Date(date[0]).getDay() : null;
+    const endDay = date[1] ? new Date(date[1]).getDay() : null;
+
+    return ([0, 6].includes(startDay!) && endDay === null)
+      || (startDay === 6 && endDay === 0);
+  }
+
+  return false;
 };
