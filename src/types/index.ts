@@ -1,2 +1,1 @@
-export * from "./orderDetails";
-export * from "./ctxMenu";
+export * from "./app";

@@ -1,12 +1,9 @@
-export {default as Layout} from "./layout/Layout";
-export {default as Icon} from "./icon/Icon";
-export {default as Button} from "./button/Button";
-export {default as Table} from "./table/Table";
-export {default as List} from "./list/List";
-export {default as Modal} from "./modal/Modal";
-export {default as FormField} from "./form-field/FormField";
-export {default as FormOrder} from "./forms/order/FormOrder";
-export {default as FormColorPicker} from "./form-color-picker/FormColorPicker";
-export {default as Textarea} from "./textarea/Textarea";
-export {default as DatePeriod} from "./date-period/DatePeriod";
-export {default as ContextMenu} from "./context-menu/ContextMenu";
+import {Button} from "primereact/button";
+import { Sidebar as BaseSidebar } from "primereact/sidebar";
+import { Menu } from "primereact/menu";
+
+export {
+  Button,
+  BaseSidebar,
+  Menu
+};
