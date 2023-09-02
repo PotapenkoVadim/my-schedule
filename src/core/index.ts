@@ -1,1 +1,1 @@
-export {default as tauriClient} from "./api/tauriClient";
+export {default as apiClient} from "./api/tauriClient";
