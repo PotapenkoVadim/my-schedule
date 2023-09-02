@@ -1,0 +1,53 @@
+@import '@styles/variables.scss';
+@import '@styles/mixins.scss';
+
+.calendar {
+  @include dark-theme("background");
+  @include light-theme("background");
+
+  &__dates { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 25px; }
+  &__toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  &__month {
+    &-content { display: flex;  border-radius: 2px; gap: 1px; justify-content: center; }
+    &-header { font-size: 0.85rem; letter-spacing: 1px; font-weight: 400; text-align: center; }
+  }
+  
+  &__day { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 2px;
+    margin: 1px 0;
+
+    &_hover { cursor: pointer;
+      .calendar[data-theme="dark"] &:hover {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1);
+      }
+
+      .calendar[data-theme="light"] &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    &_active {
+      .calendar[data-theme="dark"] & {
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.3);
+      }
+
+      .calendar[data-theme="light"] & {
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__year {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}

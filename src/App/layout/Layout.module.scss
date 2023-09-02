@@ -5,12 +5,11 @@
   &__content {
     @include dark-theme("background");
     @include light-theme("background");
-    position: relative;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   &__menu {
-    position: absolute;
+    position: fixed;
     bottom: 2%;
     right: 2%;
   }
