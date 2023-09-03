@@ -10,6 +10,9 @@ import { Dropdown } from "primereact/dropdown";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
+import { addLocale } from "primereact/api";
+
+addLocale("ru", {firstDayOfWeek: 1});
 
 export {
   Button,
@@ -28,3 +31,5 @@ export {
 
 export {default as PageContent} from "./PageContent/PageContent";
 export {default as SpinnerBlock} from "./SpinnerBlock/SpinnerBlock";
+
+export * from "./types";

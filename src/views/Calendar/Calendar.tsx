@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "@/App/context/AppContext";
 import { PageContent, SpinnerBlock } from "@/components";
 import { Calendar } from "@/libs";
-import { useGetOrders } from "./hooks";
+import { useGetOrders } from "@/hooks";
 import { DEFAULT_GETTING_ERROR } from "@/constants";
 
 export default function CalendarPage() {
@@ -13,7 +13,7 @@ export default function CalendarPage() {
   const setYear = (newYear: number) => setSelectedYear(newYear);
 
   useEffect(() => {
-    handleGetOrders(selectedYear);
+    handleGetOrders({year: selectedYear});
   }, [selectedYear, handleGetOrders]);
 
   useEffect(() => {

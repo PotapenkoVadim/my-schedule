@@ -1,10 +1,16 @@
-import { InputSwitch, Toolbar, Calendar } from "@/components";
-import { ThemeVariant } from "@/types";
+import { InputSwitch, Toolbar, Calendar, CalendarChangeEvent } from "@/components";
+import { DateRangeType, ThemeVariant } from "@/types";
 import styles from "./Toolbar.module.scss";
 
-export default function AccountTableToolbar({theme}: {theme: ThemeVariant}) {
-  const dates = [new Date(2023, 0, 1), new Date()];
-
+export default function AccountTableToolbar({
+  theme,
+  dates,
+  onChangeDate
+}: {
+  theme: ThemeVariant;
+  dates: DateRangeType;
+  onChangeDate: (event: CalendarChangeEvent) => void;
+}) {
   return (
     <Toolbar
       className={styles["toolbar"]}
@@ -13,8 +19,11 @@ export default function AccountTableToolbar({theme}: {theme: ThemeVariant}) {
         <Calendar
           value={dates}
           selectionMode="range"
+          onChange={onChangeDate}
+          dateFormat="dd.mm.yy"
           readOnlyInput
           showIcon
+          locale="ru"
         />
       }
       end={

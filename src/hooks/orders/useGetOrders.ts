@@ -1,17 +1,17 @@
-import { OrderType } from "@/types";
+import { OrderType, RequestOrderType } from "@/types";
 import { useCallback, useState } from "react";
-import { getOrders } from "../services";
+import { getOrders } from "@/services";
 
 export const useGetOrders = () => {
   const [orders, setOrders] = useState<OrderType>();
   const [isLoadingOrders, setIsLoadingOrders] = useState(false);
   const [isErrorOrders, setIsErrorOrders] = useState(false);
 
-  const handleGetOrders = useCallback(async (year: number) => {
+  const handleGetOrders = useCallback(async (options: RequestOrderType) => {
     setIsLoadingOrders(true);
 
     try {
-      const response = await getOrders(year);
+      const response = await getOrders(options);
 
       setOrders(response);
     } catch(error) {
