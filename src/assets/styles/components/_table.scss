@@ -1,0 +1,47 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+
+.p-datatable {
+  @include dark-theme("background");
+  @include light-theme("background");
+
+  .p-datatable-tbody > tr > td {
+    border: none;
+  }
+
+  .p-datatable-thead > tr > th  {
+    border-color: $button;
+  }
+}
+
+.p-datatable {
+  &[data-theme="dark"] {
+    box-shadow: 3px 3px 5px $martinique;
+
+    .p-datatable-header,
+    .p-datatable-tbody > tr > td {
+      color: map-get($dark-theme, "text-color");
+      background-color: map-get($dark-theme, "secondary-background");
+    }
+
+    .p-datatable-thead > tr > th {
+      color: $button;
+      background-color: map-get($dark-theme, "secondary-background");
+    }
+  }
+
+  &[data-theme="light"] {
+    box-shadow: 3px 3px 5px $safe;
+
+    .p-datatable-header,
+    .p-datatable-tbody > tr > td {
+      color: map-get($light-theme, "text-color");
+      background-color: map-get($light-theme, "secondary-background");
+    }
+
+    .p-datatable-thead > tr > th {
+      color: $dark;
+      background-color: map-get($light-theme, "secondary-background");
+    }
+  }
+}

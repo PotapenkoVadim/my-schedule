@@ -1,0 +1,10 @@
+@import "../variables.scss";
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: $button;
+}
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+  background: $button;
+  opacity: 0.75;
+}

@@ -8,7 +8,7 @@ import { toastTitle } from "@/constants/toast";
 export default function AppProvider() {
   const toast = useRef<Toast>(null);
 
-  const [theme, setTheme] = useState<ThemeVariant>("light");
+  const [theme, setTheme] = useState<ThemeVariant>("dark");
 
   const handleChangeTheme = useCallback((theme: ThemeVariant) => {
     setTheme(theme);
@@ -35,7 +35,6 @@ export default function AppProvider() {
   return (
     <AppContext.Provider value={value}>
       <Outlet />
-
       <Toast ref={toast} />
     </AppContext.Provider>
   );
