@@ -5,11 +5,15 @@ import styles from "./Toolbar.module.scss";
 export default function AccountTableToolbar({
   theme,
   dates,
-  onChangeDate
+  checked,
+  onChangeDate,
+  onSwitch
 }: {
   theme: ThemeVariant;
   dates: DateRangeType;
+  checked: boolean;
   onChangeDate: (event: CalendarChangeEvent) => void;
+  onSwitch: () => void;
 }) {
   return (
     <Toolbar
@@ -31,7 +35,8 @@ export default function AccountTableToolbar({
           <div>Отображение выполненых заказов:</div>
           <InputSwitch
             id="switch"
-            checked
+            checked={checked}
+            onChange={onSwitch}
           />
         </div>
       }

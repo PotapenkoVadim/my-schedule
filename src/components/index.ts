@@ -31,5 +31,6 @@ export {
 
 export {default as PageContent} from "./PageContent/PageContent";
 export {default as SpinnerBlock} from "./SpinnerBlock/SpinnerBlock";
+export {default as ListItems} from "./ListItems/ListItems";
 
 export * from "./types";

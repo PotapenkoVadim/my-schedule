@@ -12,7 +12,9 @@ export default function AccountTablePage() {
   const {orders, isLoadingOrders, isErrorOrders, handleGetOrders} = useGetOrders();
 
   const [dateRange, setDateRange] = useState<DateRangeType>(getCurentYearRange());
+  const [isShowDone, setIsShowDone] = useState(false);
 
+  const handleIsShowDone = () => setIsShowDone(!isShowDone);
   const handleChangeDateRange = (event: CalendarChangeEvent) => {
     setDateRange(event.target.value);
   };
@@ -36,7 +38,9 @@ export default function AccountTablePage() {
         <AccountTableToolbar
           theme={theme}
           dates={dateRange}
+          checked={isShowDone}
           onChangeDate={handleChangeDateRange}
+          onSwitch={handleIsShowDone}
         />
 
         <AccountTable theme={theme} data={orders} />

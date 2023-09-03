@@ -2,4 +2,10 @@
 
 .table {
   margin-top: 24px;
+
+  &__color {
+    width: 18px;
+    height: 18px;
+    border: 1px solid $safe;
+  }
 }
