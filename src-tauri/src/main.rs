@@ -57,6 +57,7 @@ fn change_order(order_id: String, updated_order: String, year: i32) -> String {
         order.comment = new_order.comment;
         order.done = new_order.done;
         order.details = new_order.details;
+        order.ready = new_order.ready;
     }
 
     write_data(data);

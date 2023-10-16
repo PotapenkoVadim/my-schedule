@@ -10,11 +10,13 @@ export default function ContextMenu({
   closeCtxMenu,
   onDone,
   onEdit,
+  onReady,
   onDelete
 }: {
   ctxMenu: CtxMenu;
   closeCtxMenu: () => void;
   onDone: () => void;
+  onReady: () => void;
   onEdit: () => void;
   onDelete: () => void;
 }) {
@@ -33,6 +35,11 @@ export default function ContextMenu({
       <div onClick={onDone} className={styles["menu__item"]}>
         <Icon variant={IconVariant.DONE} size={IconSize.SMALL} />
         <span>{ctxMenu.order?.done ? "Не выполнено" : "Выполнено"}</span>
+      </div>
+
+      <div onClick={onReady} className={styles["menu__item"]}>
+        <Icon variant={IconVariant.CALENDAR} size={IconSize.SMALL} />
+        <span>{ctxMenu.order?.ready ? "Не готово" : "Готово"}</span>
       </div>
 
       <div onClick={onEdit} className={styles["menu__item"]}>

@@ -15,13 +15,15 @@ export default function Table({
   scrolledOrderId,
   onRemoveOrder,
   onEditOrder,
-  onDoneOrder
+  onDoneOrder,
+  onReadyOrder
 }: {
   orders: Array<Order>;
   scrolledOrderId?: string;
   onRemoveOrder: (order: Order) => void;
   onEditOrder: (order: Order) => void;
   onDoneOrder: (order: Order) => void;
+  onReadyOrder: (order: Order) => void;
 }) {
   const [tableOrders, setTableOrders] = useState<Array<Order>>([]);
   const [isShowDone, setIsShowDone] = useState(false);
@@ -77,6 +79,13 @@ export default function Table({
         </td>
         <td className={styles["table__cell"]}>{item.comment}</td>
         <td className={styles["table__cell"]}>
+          <Checkbox
+            className={styles["table__checkbox"]}
+            checked={Boolean(item.ready)}
+            onChange={() => onReadyOrder(item)}
+          />
+        </td>
+        <td className={styles["table__cell"]}>
           <TableActions
             isDone={item.done}
             onRemove={() => onRemoveOrder(item)}
@@ -109,6 +118,7 @@ export default function Table({
                 <th className={styles["table__head"]}>Детализация</th>
                 <th className={styles["table__head"]}>Стоимость</th>
                 <th className={styles["table__head"]}>Комментарий</th>
+                <th className={styles["table__head"]}>Готово</th>
                 <th className={styles["table__head"]}>
                 <Checkbox
                   id="checkbox"

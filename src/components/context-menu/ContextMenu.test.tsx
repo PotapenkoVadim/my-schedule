@@ -13,6 +13,7 @@ const closeCtxMenuMock = vi.fn();
 const onDeleteMock = vi.fn();
 const onDoneMock = vi.fn();
 const onEditMock = vi.fn();
+const onReadyMock = vi.fn();
 
 describe("ContextMenu", () => {
   it("should render component", () => {
@@ -22,6 +23,7 @@ describe("ContextMenu", () => {
       onDelete={onDeleteMock}
       onDone={onDoneMock}
       onEdit={onEditMock}
+      onReady={onReadyMock}
     />);
 
     expect(screen.getByText("Выполнено")).toBeInTheDocument();
@@ -36,6 +38,7 @@ describe("ContextMenu", () => {
       onDelete={onDeleteMock}
       onDone={onDoneMock}
       onEdit={onEditMock}
+      onReady={onReadyMock}
     />);
 
     await userEvent.click(screen.getByTestId("context-menu"));
@@ -50,6 +53,7 @@ describe("ContextMenu", () => {
       onDelete={onDeleteMock}
       onDone={onDoneMock}
       onEdit={onEditMock}
+      onReady={onReadyMock}
     />);
 
     await userEvent.click(screen.getByText("Удалить"));
@@ -65,6 +69,7 @@ describe("ContextMenu", () => {
       onDelete={onDeleteMock}
       onDone={onDoneMock}
       onEdit={onEditMock}
+      onReady={onReadyMock}
     />);
 
     await userEvent.click(screen.getByText("Выполнено"));
@@ -80,6 +85,7 @@ describe("ContextMenu", () => {
       onDelete={onDeleteMock}
       onDone={onDoneMock}
       onEdit={onEditMock}
+      onReady={onReadyMock}
     />);
 
     await userEvent.click(screen.getByText("Редактировать"));

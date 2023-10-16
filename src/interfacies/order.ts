@@ -8,5 +8,6 @@ export interface Order {
   deadline?: Array<string>;
   comment?: string;
   done?: boolean;
-  details?: Array<OrderDetailsType>
+  details?: Array<OrderDetailsType>;
+  ready?: boolean;
 }

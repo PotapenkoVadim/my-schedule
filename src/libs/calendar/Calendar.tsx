@@ -22,6 +22,7 @@ export default function Calendar({
   onClickCtxMenu?: (x: number, y: number, order?: Order) => void;
 }) {
   const dates = getDaysByWeeksOfYear(year);
+  const currentDate = new Date().toDateString();
 
   const setPrevYear = () => onChangeYear(year - 1);
   const setNextYear = () => onChangeYear(year + 1);
@@ -99,7 +100,10 @@ export default function Calendar({
                       key={index}
                       className={cn([
                         styles["calendar__day"],
-                        { [styles["calendar__day_hover"]]: Boolean(item) }
+                        {
+                          [styles["calendar__day_hover"]]: Boolean(item),
+                          [styles["calendar__day_active"]]: item?.toDateString() === currentDate,
+                        }
                       ])}
                       data-pr-tooltip={getTooltipText(item)}
                       data-pr-position="top"

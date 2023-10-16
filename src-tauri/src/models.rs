@@ -9,7 +9,8 @@ pub struct Order {
     pub deadline: Vec<String>,
     pub comment: String,
     pub done: bool,
-    pub details: Vec<OrderDetails>
+    pub details: Vec<OrderDetails>,
+    pub ready: bool
 }
 
 #[derive(Default, Debug, Deserialize, Serialize, Clone)]

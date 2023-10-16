@@ -30,7 +30,8 @@ export default function App() {
       deadline: data.deadline?.filter(item => item !== null) ?? [],
       comment: data.comment ?? "",
       done: false,
-      details: data.details
+      details: data.details,
+      ready: data.ready
     };
     
     if (order) {
@@ -68,7 +69,29 @@ export default function App() {
       deadline: data.deadline?.filter(item => item !== null) ?? [],
       comment: data.comment ?? "",
       done: !data.done,
-      details: data.details
+      details: data.details,
+      ready: data.ready
+    };
+    
+    invoke<string>("change_order", {
+      orderId: data.id,
+      updatedOrder: JSON.stringify(serverOrder),
+      year: selectedYear
+    })
+      .then(response => setOrders(JSON.parse(response)));
+  };
+
+  const handleReadyOrder = (data: Order) => {
+    const serverOrder = {
+      id: data.id,
+      color: data.color ?? "",
+      customer: data.customer ?? "",
+      set: data.set ?? "",
+      deadline: data.deadline?.filter(item => item !== null) ?? [],
+      comment: data.comment ?? "",
+      done: data.done,
+      details: data.details,
+      ready: !data.ready
     };
     
     invoke<string>("change_order", {
@@ -108,6 +131,10 @@ export default function App() {
     if (contextMenu.order) handleEditOrder(contextMenu.order);
   };
 
+  const handleReadyCtxMenu = () => {
+    if (contextMenu.order) handleReadyOrder(contextMenu.order);
+  };
+
   useEffect(() => {
     invoke<string>("get_orders", {year: selectedYear})
       .then(response => setOrders(JSON.parse(response)));
@@ -127,6 +154,7 @@ export default function App() {
           scrolledOrderId={scrolledOrderId}
           orders={orders}
           onRemoveOrder={handleRemoveOrder}
+          onReadyOrder={handleReadyOrder}
           onEditOrder={handleEditOrder}
           onDoneOrder={handleDoneOrder} />
 
@@ -144,6 +172,7 @@ export default function App() {
             onDelete={handleDeleteCtxMenu}
             onDone={handleDoneCtxMenu}
             onEdit={handleEditCtxMenu}
+            onReady={handleReadyCtxMenu}
             closeCtxMenu={closeCtxMenu}
             ctxMenu={contextMenu}
           />
