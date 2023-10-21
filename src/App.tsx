@@ -31,7 +31,7 @@ export default function App() {
       comment: data.comment ?? "",
       done: false,
       details: data.details,
-      ready: data.ready
+      ready: data.ready ?? false
     };
     
     if (order) {
