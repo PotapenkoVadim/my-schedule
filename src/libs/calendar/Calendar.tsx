@@ -14,11 +14,11 @@ export default function Calendar({
   onClickCtxMenu,
   theme
 }: {
-  orders: Array<OrderType>
+  orders?: Array<OrderType>
   year: number;
   onClick: (id: string) => void;
   onChangeYear: (newYear: number) => void;
-  onClickCtxMenu?: (x: number, y: number, order?: OrderType) => void;
+  onClickCtxMenu?: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, order?: OrderType) => void;
   theme?: ThemeVariant
 }) {
   const dates = getDaysByWeeksOfYear(year);
@@ -55,9 +55,7 @@ export default function Calendar({
     if (onClickCtxMenu && findedOrder) {
       e.preventDefault();
   
-      const {pageX, pageY} = e;
-  
-      onClickCtxMenu(pageX, pageY, findedOrder);
+      onClickCtxMenu(e, findedOrder);
     }
   };
 

@@ -11,6 +11,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
 import { addLocale } from "primereact/api";
+import { ContextMenu } from "primereact/contextmenu";
 
 addLocale("ru", {firstDayOfWeek: 1});
 
@@ -26,7 +27,8 @@ export {
   Dropdown,
   DataTable,
   Column,
-  Calendar
+  Calendar,
+  ContextMenu
 };
 
 export {default as PageContent} from "./PageContent/PageContent";

@@ -73,8 +73,9 @@ export const getBorderColor = (date: Date | null, orders?: Array<OrderType>): st
 };
 
 export const getTextColor = (date: Date | null, orders?: Array<OrderType>, theme?: ThemeVariant): string => {
-  function getContrastYIQ(hexcolor?: string){
-    if (!hexcolor || hexcolor === "000") return defaultColor;
+  function getContrastYIQ(hexcolor?: string) {
+    if (!hexcolor) return defaultColor;
+    if (hexcolor === "000") return "white";
     if (hexcolor === "ffffff") return "black";
 
     const r = parseInt(hexcolor.substring(1,3),16);
@@ -90,9 +91,10 @@ export const getTextColor = (date: Date | null, orders?: Array<OrderType>, theme
   const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
   const isWeekendOrder = checkWeekend(findedOrder?.deadline);
   const isShowWeekendOrder = !isWeekend || isWeekendOrder;
+  const isShoudGetColor = isShowWeekendOrder && !findedOrder?.done;
   const defaultColor = theme === "dark" ? "white" : "black";
 
-  return isShowWeekendOrder ? getContrastYIQ(findedOrder?.color) : defaultColor;
+  return isShoudGetColor ? getContrastYIQ(findedOrder?.color) : defaultColor;
 };
 
 export const findOrderByDate = (day: Date | null, orders?: Array<OrderType>) => {

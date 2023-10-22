@@ -15,7 +15,7 @@ export default function Sidebar({
 }) {
   const navigate = useNavigate();
 
-  const navigateItems = getNavigateItems(navigate);
+  const navigateItems = getNavigateItems(navigate, handleHide);
 
   return (
     <BaseSidebar
