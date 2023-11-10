@@ -107,10 +107,14 @@ export const findOrderByDate = (day: Date | null, orders?: Array<OrderType>) => 
 
   return sortedOrders?.find(item => {
     if (item.deadline && day) {
-      const start = item.deadline[0];
-      const end = item.deadline[1] ?? item.deadline[0];
+      const start = new Date(item.deadline[0]);
+      const end = new Date(item.deadline[1] ?? item.deadline[0]);
 
-      if (day >= new Date(start) && day <= new Date(end)) {
+      day.setHours(0, 0, 0, 0);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
+
+      if (day >= start && day <= end) {
         return true;
       }
     }

@@ -1,0 +1,11 @@
+@import "@styles/variables.scss";
+
+.form {
+  &__field {
+    width: 100%;
+
+    &-content {
+      width: 100%;
+    }
+  }
+}

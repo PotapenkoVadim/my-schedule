@@ -6,11 +6,25 @@ export type OrderType = {
   deadline?: Array<string>;
   comment?: string;
   done?: boolean;
-  details?: Array<OrderDetailsType>
+  details?: Array<OrderDetailsType>;
 };
 
-export type RequestOrderType = {
-  year: number;
+export type OrderFormType = Omit<OrderType, "deadline"> & {
+  deadline?: Array<Date>;
+};
+
+export type RequestOrderType = {year: number};
+export type RequestCreateOrderType = {
+  order: string;
+};
+
+export type RequestUpdateOrderType = {
+  orderId: string;
+  updatedOrder: string;
+};
+
+export type RequestDeleteOrderType = {
+  orderId: string;
 };
 
 export type OrderDetailsType = {

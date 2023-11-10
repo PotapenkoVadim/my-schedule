@@ -3,7 +3,7 @@ import { PageContent, SpinnerBlock, CalendarChangeEvent } from "@/components";
 import {AccountTable, AccountTableToolbar} from "./components";
 import { useAppContext } from "@/App/context/AppContext";
 import { useGetOrders } from "@/hooks";
-import { DEFAULT_GETTING_ERROR } from "@/constants";
+import { DEFAULT_ERROR_MESSAGE } from "@/constants";
 import { getCurentYearRange } from "./utils";
 import { DateRangeType } from "@/types";
 
@@ -25,7 +25,7 @@ export default function AccountTablePage() {
 
   useEffect(() => {
     if (isErrorOrders) {
-      showToast("error", DEFAULT_GETTING_ERROR);
+      showToast("error", DEFAULT_ERROR_MESSAGE);
     }
   }, [isErrorOrders]);
 

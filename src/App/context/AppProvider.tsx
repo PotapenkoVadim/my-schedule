@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import { ThemeVariant, ToastType } from "@/types";
 import { Toast } from "@/components";
-import { toastTitle } from "@/constants/toast";
+import { toastTitle } from "@/constants";
 
 export default function AppProvider() {
   const toast = useRef<Toast>(null);

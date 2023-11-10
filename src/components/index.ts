@@ -12,6 +12,12 @@ import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
 import { addLocale } from "primereact/api";
 import { ContextMenu } from "primereact/contextmenu";
+import { Dialog } from "primereact/dialog";
+import { ColorPicker } from "primereact/colorpicker";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Divider } from "primereact/divider";
+import { InputNumber } from "primereact/inputnumber";
 
 addLocale("ru", {firstDayOfWeek: 1});
 
@@ -28,11 +34,18 @@ export {
   DataTable,
   Column,
   Calendar,
-  ContextMenu
+  ContextMenu,
+  Dialog,
+  ColorPicker,
+  InputText,
+  InputTextarea,
+  Divider,
+  InputNumber
 };
 
 export {default as PageContent} from "./PageContent/PageContent";
 export {default as SpinnerBlock} from "./SpinnerBlock/SpinnerBlock";
 export {default as ListItems} from "./ListItems/ListItems";
+export * from "./form";
 
 export * from "./types";

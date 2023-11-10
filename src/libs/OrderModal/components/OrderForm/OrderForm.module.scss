@@ -1,0 +1,17 @@
+@import "@styles/variables.scss";
+
+.form {
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  &__button {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto !important;
+  }
+}
