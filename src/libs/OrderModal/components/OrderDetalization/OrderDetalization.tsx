@@ -2,7 +2,11 @@ import {useFieldArray, useFormContext} from "react-hook-form";
 import { Button, FormInputText, FormNumber } from "@/components";
 import styles from "./OrderDetalization.module.scss";
 
-const OrderDetalization = () => {
+const OrderDetalization = ({
+  errorMessage
+}: {
+  errorMessage?: string;
+}) => {
   const {control} = useFormContext();
 
   const {
@@ -33,6 +37,8 @@ const OrderDetalization = () => {
           />
         </div>
       ))}
+
+      {errorMessage && <span className={styles.detalization__error}>{errorMessage}</span>}
 
       <div className={styles.detalization__add} onClick={addDetalization}>
         <span className="pi pi-plus"></span>

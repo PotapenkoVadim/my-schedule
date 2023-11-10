@@ -8,11 +8,13 @@ const FormCalendar = <T extends FieldValues = FieldValues>({
   name,
   label,
   className,
+  errorMessage,
   ...props
 }: {
   control: Control<T, any>;
   name: Path<T>;
   label?: string;
+  errorMessage?: string;
 } & CalendarProps) => {
   return (
     <Controller
@@ -31,6 +33,7 @@ const FormCalendar = <T extends FieldValues = FieldValues>({
             {...props}
           />
           <label>{label}</label>
+          {errorMessage && <span className={styles["form__field-error"]}>{errorMessage}</span>}
         </span>
       )}
   />

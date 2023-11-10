@@ -26,4 +26,9 @@
   &__delete {
     min-width: 44px;
   }
+
+  &__error {
+    font-size: 10px;
+    color: crimson;
+  }
 }
