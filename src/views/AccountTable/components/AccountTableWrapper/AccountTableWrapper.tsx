@@ -25,7 +25,7 @@ export default function AccountTableWrapper({
 }) {
   const {state} = useLocation();
   const {theme} = useAppContext();
-  const {orders, loading, ctxRef, setOrder} = useOrderContext();
+  const {orders, loading, ctxRef, setCtxData} = useOrderContext();
 
   const [globalFilterValue, setGlobalFilterValue] = useState<string>();
   const [isShowDone, setIsShowDone] = useState(false);
@@ -55,7 +55,7 @@ export default function AccountTableWrapper({
   const handleContextMenu = (e: SyntheticEvent<Element, Event>, order?: OrderType) => {
     if (order && ctxRef.current) {
       ctxRef.current.show(e);
-      setOrder(order);
+      setCtxData({order});
     }
   };
 

@@ -17,15 +17,17 @@ import styles from "./OrderForm.module.scss";
 const OrderForm = ({
   order,
   isLoading,
-  onSubmit
+  onSubmit,
+  ctxDate
 }: {
   order?: OrderType;
   isLoading?: boolean;
   onSubmit: (data: OrderFormType) => void;
+  ctxDate?: Date;
 }) => {
   const formMethods = useForm<OrderFormType>({
     resolver: yupResolver(formSchema),
-    defaultValues: getDefaultFormValues(order)
+    defaultValues: getDefaultFormValues(order, ctxDate)
   });
 
   const {handleSubmit, control, formState: {errors}} = formMethods;

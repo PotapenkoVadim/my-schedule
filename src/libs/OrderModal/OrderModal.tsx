@@ -8,13 +8,15 @@ const OrderModal = ({
   isLoading,
   order,
   onClose,
-  onSubmit
+  onSubmit,
+  ctxDate
 }: {
   isOpen: boolean;
   isLoading?: boolean;
   order?: OrderType;
   onClose: () => void;
   onSubmit: (data: OrderFormType) => void;
+  ctxDate?: Date;
 }) => {
   const title = order ? "Редактировать" : "Создать";
 
@@ -29,6 +31,7 @@ const OrderModal = ({
         order={order}
         onSubmit={onSubmit}
         isLoading={isLoading}
+        ctxDate={ctxDate}
       />
     </Dialog>
   );

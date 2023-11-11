@@ -15,13 +15,13 @@ export default function CalendarWrapper({
 }) {
   const navigate = useNavigate();
   const {theme} = useAppContext();
-  const {orders, loading, ctxRef, setOrder} = useOrderContext();
+  const {orders, loading, ctxRef, setCtxData} = useOrderContext();
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
-  const handleContextMenu = (e: MouseEvent<HTMLDivElement>, order?: OrderType) => {
+  const handleContextMenu = (e: MouseEvent<HTMLDivElement>, order?: OrderType, date?: Date | null) => {
     if (ctxRef.current) {
       ctxRef.current.show(e);
-      setOrder(order);
+      setCtxData({order, date});
     }
   };
 

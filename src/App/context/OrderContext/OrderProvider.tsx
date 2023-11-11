@@ -28,6 +28,7 @@ export default function OrderProvider({
   const error = findState([isErrorOrders, isErrorCreateOrder, isErrorUpdateOrder, isErrorDeleteOrder]);
 
   const [ctxOrder, setCtxOrder] = useState<OrderType>();
+  const [ctxDate, setCtxDate] = useState<Date>();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const resetErrors = () => {
@@ -37,8 +38,12 @@ export default function OrderProvider({
     resetDeleteOrderState();
   };
 
-  const setOrder = useCallback((order?: OrderType) => {
+  const setCtxData = useCallback(({order, date}: {order?: OrderType, date?: Date | null}) => {
     setCtxOrder(order);
+
+    if (date) {
+      setCtxDate(date);
+    }
   }, []);
 
   const openModal = () => setIsOpenModal(true);
@@ -139,10 +144,10 @@ export default function OrderProvider({
       orders,
       loading,
       ctxRef,
-      setOrder,
+      setCtxData,
       handleGetOrders
     };
-  }, [orders, loading, ctxRef, setOrder, handleGetOrders]);
+  }, [orders, loading, ctxRef, setCtxData, handleGetOrders]);
 
   return (
     <OrderContext.Provider value={value}>
@@ -154,6 +159,7 @@ export default function OrderProvider({
         isLoading={loading}
         onClose={closeModal}
         onSubmit={handleSubmit}
+        ctxDate={ctxDate}
       />
 
       <ContextMenu
