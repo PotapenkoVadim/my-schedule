@@ -1,28 +1,37 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { PageContent, SpinnerBlock, CalendarChangeEvent, DataTableFilterMeta } from "@/components";
-import {AccountTable, AccountTableToolbar} from "./components";
-import { useAppContext } from "@/App/context/AppContext";
-import { useGetOrders } from "@/hooks";
-import { DEFAULT_ERROR_MESSAGE } from "@/constants";
+import {
+  ChangeEventHandler,
+  SyntheticEvent,
+  useEffect,
+  useState
+} from "react";
+import {
+  SpinnerBlock,
+  CalendarChangeEvent,
+  DataTableFilterMeta,
+} from "@/components";
+import { useAppContext, useOrderContext } from "@/App/context";
 import { FilterMatchMode } from "primereact/api";
 import { useLocation } from "react-router-dom";
+import { OrderType } from "@/types";
+import AccountTable from "../Table/Table";
+import AccountTableToolbar from "../Toolbar/Toolbar";
 
-export default function AccountTablePage() {
+export default function AccountTableWrapper({
+  selectedDate,
+  setSelectedDate
+}: {
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
+}) {
   const {state} = useLocation();
-  const {theme, showToast} = useAppContext();
-
-  const {orders, isLoadingOrders, isErrorOrders, handleGetOrders, resetOrdersState} = useGetOrders();
+  const {theme} = useAppContext();
+  const {orders, loading, ctxRef, setOrder} = useOrderContext();
 
   const [globalFilterValue, setGlobalFilterValue] = useState<string>();
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isShowDone, setIsShowDone] = useState(false);
   const [filters, setFilters] = useState<DataTableFilterMeta>({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
-
-  const resetErrors = () => {
-    resetOrdersState();
-  };
 
   const handleIsShowDone = () => setIsShowDone(!isShowDone);
   const handleChangeDateRange = (event: CalendarChangeEvent) => {
@@ -32,7 +41,7 @@ export default function AccountTablePage() {
   const changeFilter = (value: string) => {
     const _filters = { ...filters };
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore see https://primereact.org/datatable/
+    // @ts-ignore see: https://primereact.org/datatable/
     _filters["global"].value = value;
 
     setFilters(_filters);
@@ -43,18 +52,12 @@ export default function AccountTablePage() {
     changeFilter(event.target.value);
   };
 
-  useEffect(() => {
-    if (selectedDate) {
-      handleGetOrders({year: selectedDate.getFullYear()});
+  const handleContextMenu = (e: SyntheticEvent<Element, Event>, order?: OrderType) => {
+    if (order && ctxRef.current) {
+      ctxRef.current.show(e);
+      setOrder(order);
     }
-  }, [selectedDate, handleGetOrders]);
-
-  useEffect(() => {
-    if (isErrorOrders) {
-      showToast("error", DEFAULT_ERROR_MESSAGE);
-      resetErrors();
-    }
-  }, [isErrorOrders]);
+  };
 
   useEffect(() => {
     if (state?.id && orders) {
@@ -70,11 +73,11 @@ export default function AccountTablePage() {
   const filteredOrders = orders?.filter(item => isShowDone ? true : !item.done);
 
   let content;
-  if (isLoadingOrders && !orders) {
+  if (loading && !orders) {
     content = <SpinnerBlock isPage />;
   } else {
     content = (
-      <PageContent>
+      <>
         <AccountTableToolbar
           theme={theme}
           date={selectedDate}
@@ -89,8 +92,9 @@ export default function AccountTablePage() {
           theme={theme}
           data={filteredOrders}
           filters={filters}
+          onContextClick={handleContextMenu}
         />
-      </PageContent>
+      </>
     );
   }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {Outlet} from "react-router";
 import {Sidebar} from "../components";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../context";
 import { Button } from "@/components";
 import styles from "./Layout.module.scss";
 

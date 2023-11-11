@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layout/Layout";
 import { RouterMap, defaultPage } from "@/constants";
 import {AccountTablePage, CalendarPage} from "@/views";
-import AppProvider from "./context/AppProvider";
+import {AppProvider} from "./context";
 
 export default function Router() {
   return (

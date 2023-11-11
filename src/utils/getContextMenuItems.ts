@@ -1,6 +1,4 @@
 import { MenuItem } from "@/components";
-import { OrderDetailsType } from "@/types";
-import { format } from "date-fns";
 
 export const getContextMenuItems = (
   onAdd: () => void,
@@ -14,12 +12,4 @@ export const getContextMenuItems = (
     { label: "Выполнено", icon: "pi pi-fw pi-check", command: onDone },
     { label: "Удалить", icon: "pi pi-fw pi-trash", command: onDelete }
   ];
-};
-
-export const formatDeadlineToServer = (deadline?: Array<Date>) => {
-  return deadline?.filter(Boolean).map(item => format(item, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z"));
-};
-
-export const transformDetails = (details?: Array<OrderDetailsType>) => {
-  return details?.map(item => ({...item, count: String(item.count), sum: String(item.sum)}));
 };

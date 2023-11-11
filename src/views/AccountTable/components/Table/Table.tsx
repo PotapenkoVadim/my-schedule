@@ -1,4 +1,5 @@
-import { DataTable, Column, DataTableFilterMeta } from "@/components";
+import { SyntheticEvent } from "react";
+import { DataTable, Column, DataTableFilterMeta, DataTableRowEvent } from "@/components";
 import { OrderType, ThemeVariant } from "@/types";
 import {
   colorBodyTemplate,
@@ -12,12 +13,18 @@ import styles from "./Table.module.scss";
 export default function AccountTable({
   theme,
   data,
-  filters
+  filters,
+  onContextClick
 }: {
   theme: ThemeVariant;
   data?: Array<OrderType>;
   filters: DataTableFilterMeta;
+  onContextClick: (e: SyntheticEvent<Element, Event>, order?: OrderType) => void;
 }) {
+  const handleContextClick = (event: DataTableRowEvent) => {
+    onContextClick(event.originalEvent, event.data);
+  };
+
   return (
     <DataTable
       paginator
@@ -29,6 +36,7 @@ export default function AccountTable({
       emptyMessage="Не найдено подходящего заказа."
       globalFilterFields={["customer", "set"]}
       filters={filters}
+      onContextMenu={handleContextClick}
     >
       <Column field="color" body={colorBodyTemplate} />
       <Column sortable  field="customer" header="Заказчик" />

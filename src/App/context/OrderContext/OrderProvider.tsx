@@ -1,23 +1,23 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {v4 as uuidv4} from "uuid";
-import { useAppContext } from "@/App/context/AppContext";
-import { ContextMenu, PageContent, SpinnerBlock, ContextMenuProps } from "@/components";
-import { Calendar, OrderModal } from "@/libs";
+import { OrderContext } from "./OrderContext";
 import { useCreateOrder, useDeleteOrder, useGetOrders, useUpdateOrder } from "@/hooks";
-import { DEFAULT_ERROR_MESSAGE, RouterMap, currentYear } from "@/constants";
+import { OrderModal } from "@/libs";
+import { ContextMenu, ContextMenuProps } from "@/components";
+import { findState, getContextMenuItems } from "@/utils";
 import { OrderFormType, OrderType } from "@/types";
-import { formatDeadlineToServer, getContextMenuItems, transformDetails } from "./utils";
-import { findState } from "@/utils";
-import { useNavigate } from "react-router-dom";
+import { formatDeadlineToServer, transformDetails } from "@/App/utils";
+import { useAppContext } from "../AppContext/AppContext";
+import { DEFAULT_ERROR_MESSAGE } from "@/constants";
 
-export default function CalendarPage() {
-  const navigate = useNavigate();
+export default function OrderProvider({
+  children,
+  year
+}: PropsWithChildren<{
+  year: number
+}>) {
   const ctxRef = useRef<ContextMenu & Readonly<ContextMenuProps>>(null);
-  const {theme, showToast} = useAppContext();
-
-  const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [ctxOrder, setCtxOrder] = useState<OrderType>();
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const {showToast} = useAppContext();
 
   const {orders, isLoadingOrders, isErrorOrders, handleGetOrders, resetOrdersState} = useGetOrders();
   const {handleCreateOrder, isErrorCreateOrder, isLoadingCreateOrder, resetCreateOrderState} = useCreateOrder();
@@ -27,6 +27,9 @@ export default function CalendarPage() {
   const loading = findState([isLoadingCreateOrder, isLoadingOrders, isLoadingUpdateOrder, isLoadingDeleteOrder]);
   const error = findState([isErrorOrders, isErrorCreateOrder, isErrorUpdateOrder, isErrorDeleteOrder]);
 
+  const [ctxOrder, setCtxOrder] = useState<OrderType>();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const resetErrors = () => {
     resetOrdersState();
     resetCreateOrderState();
@@ -34,13 +37,9 @@ export default function CalendarPage() {
     resetDeleteOrderState();
   };
 
-  const setYear = (newYear: number) => setSelectedYear(newYear);
-  const handleContextMenu = (e: MouseEvent<HTMLDivElement>, order?: OrderType) => {
-    if (order && ctxRef.current) {
-      ctxRef.current.show(e);
-      setCtxOrder(order);
-    }
-  };
+  const setOrder = useCallback((order: OrderType) => {
+    setCtxOrder(order);
+  }, []);
 
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => {
@@ -66,7 +65,7 @@ export default function CalendarPage() {
         updatedOrder: newOrder,
       });
 
-      await handleGetOrders({year: selectedYear});
+      await handleGetOrders({year});
     }
 
     closeModal();
@@ -75,16 +74,12 @@ export default function CalendarPage() {
   const handleCtxDelete = async () => {
     if (ctxOrder) {
       await handleDeleteOrder({orderId: ctxOrder.id!});
-      await handleGetOrders({year: selectedYear});
+      await handleGetOrders({year});
     }
 
     closeModal();
   };
 
-  const handleClickByDate = (id: string) => {
-    navigate(`/${RouterMap.AccountTable}`, { state: { id } });
-  };
-  
   const handleSubmit = async (data: OrderFormType) => {
     const deadline = formatDeadlineToServer(data.deadline);
     const details = transformDetails(data.details);
@@ -102,13 +97,9 @@ export default function CalendarPage() {
       await handleCreateOrder({order: newOrder});
     }
     
-    await handleGetOrders({year: selectedYear});
+    await handleGetOrders({year});
     closeModal();
   };
-
-  useEffect(() => {
-    handleGetOrders({year: selectedYear});
-  }, [selectedYear, handleGetOrders]);
 
   useEffect(() => {
     if (error) {
@@ -117,41 +108,43 @@ export default function CalendarPage() {
     }
   }, [error]);
 
-  let content;
-  if (loading && !orders) {
-    content = <SpinnerBlock isPage />;
-  } else {
-    content = (
-      <PageContent>
-        <Calendar
-          orders={orders}
-          year={selectedYear}
-          onChangeYear={setYear}
-          onClickCtxMenu={handleContextMenu}
-          onClick={handleClickByDate}
-          theme={theme}
-        />
+  useEffect(() => {
+    if (year) {
+      handleGetOrders({year});
+    }
+  }, [year, handleGetOrders]);
 
-        <OrderModal
-          isOpen={isOpenModal}
-          order={ctxOrder}
-          isLoading={loading}
-          onClose={closeModal}
-          onSubmit={handleSubmit}
-        />
+  const value = useMemo(() => {
+    return {
+      orders,
+      loading,
+      ctxRef,
+      setOrder,
+      handleGetOrders
+    };
+  }, [orders, loading, ctxRef, setOrder, handleGetOrders]);
 
-        <ContextMenu
-          model={getContextMenuItems(
-            handleCtxAdd,
-            handleCtxEdit,
-            handleCtxDone,
-            handleCtxDelete
-          )}
-          ref={ctxRef}
-        />
-      </PageContent>
-    );
-  }
+  return (
+    <OrderContext.Provider value={value}>
+      {children}
 
-  return content;
-}
+      <OrderModal
+        isOpen={isOpenModal}
+        order={ctxOrder}
+        isLoading={loading}
+        onClose={closeModal}
+        onSubmit={handleSubmit}
+      />
+
+      <ContextMenu
+        model={getContextMenuItems(
+          handleCtxAdd,
+          handleCtxEdit,
+          handleCtxDone,
+          handleCtxDelete
+        )}
+        ref={ctxRef}
+      />
+    </OrderContext.Provider>
+  );
+};

@@ -1,3 +1,6 @@
+import { RefObject } from "react";
+import { ContextMenu, ContextMenuProps } from "@/components";
+
 export type OrderType = {
   id?: string;
   color?: string;
@@ -31,4 +34,12 @@ export type OrderDetailsType = {
   count: number;
   description: string;
   sum: number;
+};
+
+export type OrderContextType = {
+  orders?: Array<OrderType>;
+  loading?: boolean;
+  ctxRef: RefObject<ContextMenu & Readonly<ContextMenuProps>>
+  setOrder: (order: OrderType) => void;
+  handleGetOrders: (options: RequestOrderType) => Promise<void>;
 };
