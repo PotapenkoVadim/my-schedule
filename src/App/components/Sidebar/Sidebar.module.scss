@@ -25,4 +25,20 @@
   :global(.p-sidebar-content) {
     padding: 0 !important;
   }
+
+  &__theme {
+    &-menu {
+      margin-top: 24px;
+      padding: 0 16px;
+    }
+
+    &-switcher {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      font-style: italic;
+    }
+  }
 }
