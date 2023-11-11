@@ -10,6 +10,7 @@ export type OrderType = {
   comment?: string;
   done?: boolean;
   details?: Array<OrderDetailsType>;
+  ready?: boolean;
 };
 
 export type OrderFormType = Omit<OrderType, "deadline"> & {
@@ -40,6 +41,6 @@ export type OrderContextType = {
   orders?: Array<OrderType>;
   loading?: boolean;
   ctxRef: RefObject<ContextMenu & Readonly<ContextMenuProps>>
-  setOrder: (order: OrderType) => void;
+  setOrder: (order?: OrderType) => void;
   handleGetOrders: (options: RequestOrderType) => Promise<void>;
 };

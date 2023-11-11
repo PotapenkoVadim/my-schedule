@@ -46,6 +46,7 @@ fn change_order(order_id: String, updated_order: String) {
         order.deadline = new_order.deadline;
         order.comment = new_order.comment;
         order.done = new_order.done;
+        order.ready = new_order.ready;
         order.details = new_order.details;
     }
 

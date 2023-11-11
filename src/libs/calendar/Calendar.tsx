@@ -52,7 +52,7 @@ export default function Calendar({
   const handleContextMenu = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, date: Date | null) => {
     const findedOrder = findOrderByDate(date, orders);
 
-    if (onClickCtxMenu && findedOrder) {
+    if (onClickCtxMenu) {
       e.preventDefault();
   
       onClickCtxMenu(e, findedOrder);

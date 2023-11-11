@@ -19,7 +19,7 @@ export default function CalendarWrapper({
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
   const handleContextMenu = (e: MouseEvent<HTMLDivElement>, order?: OrderType) => {
-    if (order && ctxRef.current) {
+    if (ctxRef.current) {
       ctxRef.current.show(e);
       setOrder(order);
     }

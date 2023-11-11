@@ -45,7 +45,8 @@ export default function AccountTable({
       <Column header="Детализация" body={detailsBodyTemplate} />
       <Column header="Стоимость" body={sumBodyTemplate} />
       <Column sortable  field="comment" header="Коментарий" />
-      <Column header="Выполнено" body={doneBodyTemplate} />
+      <Column header="Готов" body={(order) => doneBodyTemplate(order, "ready")} />
+      <Column header="Сдан" body={(order) => doneBodyTemplate(order, "done")} />
     </DataTable>
   );
 }

@@ -37,7 +37,7 @@ export default function OrderProvider({
     resetDeleteOrderState();
   };
 
-  const setOrder = useCallback((order: OrderType) => {
+  const setOrder = useCallback((order?: OrderType) => {
     setCtxOrder(order);
   }, []);
 
@@ -57,7 +57,8 @@ export default function OrderProvider({
     if (ctxOrder) {
       const newOrder = JSON.stringify({
         ...ctxOrder,
-        done: true
+        done: !ctxOrder.done,
+        ready: true
       });
 
       await handleUpdateOrder({
@@ -80,6 +81,24 @@ export default function OrderProvider({
     closeModal();
   };
 
+  const handleCtxReady = async () => {
+    if (ctxOrder) {
+      const newOrder = JSON.stringify({
+        ...ctxOrder,
+        ready: !ctxOrder.ready
+      });
+
+      await handleUpdateOrder({
+        orderId: ctxOrder.id!,
+        updatedOrder: newOrder,
+      });
+
+      await handleGetOrders({year});
+    }
+
+    closeModal();
+  };
+
   const handleSubmit = async (data: OrderFormType) => {
     const deadline = formatDeadlineToServer(data.deadline);
     const details = transformDetails(data.details);
@@ -87,6 +106,7 @@ export default function OrderProvider({
       ...data,
       id: data.id || uuidv4(),
       done: data.done || false,
+      ready: data.ready || false,
       deadline: deadline || [],
       details
     });
@@ -141,7 +161,8 @@ export default function OrderProvider({
           handleCtxAdd,
           handleCtxEdit,
           handleCtxDone,
-          handleCtxDelete
+          handleCtxDelete,
+          handleCtxReady
         )}
         ref={ctxRef}
       />

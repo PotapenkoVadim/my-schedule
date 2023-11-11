@@ -26,6 +26,7 @@ const FormNumber = <T extends FieldValues = FieldValues>({
             className={styles["form__field-content"]}
             value={field.value}
             onChange={(e) => field.onChange(e.value as PathValue<T, Path<T>>)}
+            locale="de-DE"
             {...props}
             />
           <label>{label}</label>

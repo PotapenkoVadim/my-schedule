@@ -55,6 +55,17 @@ export const getBackgroundColor = (date: Date | null, orders?: Array<OrderType>)
   const isWeekendOrder = checkWeekend(findedOrder?.deadline);
   const isShowWeekendOrder = !isWeekend || isWeekendOrder;
 
+  if (findedOrder?.ready && !findedOrder.done && isShowWeekendOrder) {
+    return `
+      repeating-linear-gradient(
+        45deg,
+        #${findedOrder.color!},
+        #${findedOrder.color!} 10px,
+        rgba(0, 0, 0, 0) 10px,
+        rgba(0, 0, 0, 0) 20px)
+    `;
+  }
+
   return findedOrder && !findedOrder.done && isShowWeekendOrder
     ? `#${findedOrder.color!}`
     : "transparent";
