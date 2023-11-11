@@ -1,4 +1,4 @@
-import { Dialog } from "primereact/dialog";
+import { Dialog } from "@/components";
 import { OrderForm } from "./components";
 import { OrderFormType, OrderType } from "@/types";
 import style from "./OrderModal.module.scss";
@@ -20,7 +20,6 @@ const OrderModal = ({
 
   return (
     <Dialog
-      draggable={false}
       className={style.modal}
       visible={isOpen}
       onHide={onClose}

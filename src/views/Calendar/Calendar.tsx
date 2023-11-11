@@ -4,16 +4,18 @@ import { useAppContext } from "@/App/context/AppContext";
 import { ContextMenu, PageContent, SpinnerBlock, ContextMenuProps } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import { useCreateOrder, useDeleteOrder, useGetOrders, useUpdateOrder } from "@/hooks";
-import { DEFAULT_ERROR_MESSAGE } from "@/constants";
+import { DEFAULT_ERROR_MESSAGE, RouterMap, currentYear } from "@/constants";
 import { OrderFormType, OrderType } from "@/types";
 import { formatDeadlineToServer, getContextMenuItems, transformDetails } from "./utils";
 import { findState } from "@/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function CalendarPage() {
+  const navigate = useNavigate();
   const ctxRef = useRef<ContextMenu & Readonly<ContextMenuProps>>(null);
   const {theme, showToast} = useAppContext();
 
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [ctxOrder, setCtxOrder] = useState<OrderType>();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -79,6 +81,10 @@ export default function CalendarPage() {
     closeModal();
   };
 
+  const handleClickByDate = (id: string) => {
+    navigate(`/${RouterMap.AccountTable}`, { state: { id } });
+  };
+  
   const handleSubmit = async (data: OrderFormType) => {
     const deadline = formatDeadlineToServer(data.deadline);
     const details = transformDetails(data.details);
@@ -122,7 +128,7 @@ export default function CalendarPage() {
           year={selectedYear}
           onChangeYear={setYear}
           onClickCtxMenu={handleContextMenu}
-          onClick={() => []}
+          onClick={handleClickByDate}
           theme={theme}
         />
 

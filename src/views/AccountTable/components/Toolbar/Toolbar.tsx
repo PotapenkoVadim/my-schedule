@@ -1,34 +1,49 @@
-import { InputSwitch, Toolbar, Calendar, CalendarChangeEvent } from "@/components";
-import { DateRangeType, ThemeVariant } from "@/types";
+import { ChangeEventHandler } from "react";
+import { InputSwitch, Toolbar, Calendar, CalendarChangeEvent, InputText } from "@/components";
+import { ThemeVariant } from "@/types";
 import styles from "./Toolbar.module.scss";
 
 export default function AccountTableToolbar({
   theme,
-  dates,
+  date,
   checked,
   onChangeDate,
-  onSwitch
+  onSwitch,
+  onChangeFilter,
+  filterValue
 }: {
   theme: ThemeVariant;
-  dates: DateRangeType;
+  date: Date;
   checked: boolean;
   onChangeDate: (event: CalendarChangeEvent) => void;
   onSwitch: () => void;
+  onChangeFilter: ChangeEventHandler<HTMLInputElement>;
+  filterValue?: string
 }) {
   return (
     <Toolbar
       className={styles["toolbar"]}
       data-theme={theme}
       start={
-        <Calendar
-          value={dates}
-          selectionMode="range"
-          onChange={onChangeDate}
-          dateFormat="dd.mm.yy"
-          readOnlyInput
-          showIcon
-          locale="ru"
-        />
+        <div className={styles.toolbar__fields}>
+          <Calendar
+            value={date}
+            onChange={onChangeDate}
+            dateFormat="yy"
+            view="year"
+            readOnlyInput
+            showIcon
+            locale="ru"
+          />
+          <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <InputText
+                placeholder="Найти заказ"
+                value={filterValue}
+                onChange={onChangeFilter}
+              />
+          </span>
+        </div>
       }
       end={
         <div className={styles["toolbar__order-show"]}>

@@ -1,30 +1,43 @@
-import { DataTable, Column } from "@/components";
+import { DataTable, Column, DataTableFilterMeta } from "@/components";
 import { OrderType, ThemeVariant } from "@/types";
 import {
   colorBodyTemplate,
   dateBodyTemplate,
   detailsBodyTemplate,
+  doneBodyTemplate,
   sumBodyTemplate
 } from "./templates";
 import styles from "./Table.module.scss";
 
 export default function AccountTable({
   theme,
-  data
+  data,
+  filters
 }: {
   theme: ThemeVariant;
   data?: Array<OrderType>;
+  filters: DataTableFilterMeta;
 }) {
   return (
-    <DataTable data-theme={theme} value={data} className={styles["table"]}>
+    <DataTable
+      paginator
+      rows={15}
+      selectionMode="single"
+      data-theme={theme}
+      value={data}
+      className={styles["table"]}
+      emptyMessage="Не найдено подходящего заказа."
+      globalFilterFields={["customer", "set"]}
+      filters={filters}
+    >
       <Column field="color" body={colorBodyTemplate} />
-      <Column field="customer" header="Заказчик" />
-      <Column field="set" header="Фотосет"></Column>
-      <Column field="deadline" header="Дедлайн" body={dateBodyTemplate} />
+      <Column sortable  field="customer" header="Заказчик" />
+      <Column sortable  field="set" header="Фотосет" />
+      <Column sortable  field="deadline" header="Дедлайн" body={dateBodyTemplate} />
       <Column header="Детализация" body={detailsBodyTemplate} />
       <Column header="Стоимость" body={sumBodyTemplate} />
-      <Column field="comment" header="Коментарий" />
-      <Column header="ACTIONS" />
+      <Column sortable  field="comment" header="Коментарий" />
+      <Column header="Выполнено" body={doneBodyTemplate} />
     </DataTable>
   );
 }
