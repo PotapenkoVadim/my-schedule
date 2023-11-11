@@ -12,6 +12,7 @@ export const formSchema: yup.ObjectSchema<OrderFormType> = yup.object().shape({
     .required("Необходимо указать фотосет."),
   comment: yup.string(),
   done: yup.bool(),
+  ready: yup.bool(),
   deadline: yup
   .array()
   .test("emptyDeadline", "Необходимо указать хотя бы одну дату", (value) => {
