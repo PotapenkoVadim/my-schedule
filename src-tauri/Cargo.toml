@@ -1,6 +1,6 @@
 [package]
 name = "my-schedule"
-version = "1.2.0"
+version = "2.0.0"
 description = "An application for accounting and displaying orders on the calendar"
 authors = ["potapenko@gmail.com"]
 license = ""
@@ -22,3 +22,6 @@ serde_json = "1.0"
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = 'abort'

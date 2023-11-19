@@ -8,17 +8,12 @@ use models::Order;
 use utils::{get_data, write_data, filter_orders_by_year};
 
 #[tauri::command]
-fn add_order(order: String, year: i32) -> String {
+fn add_order(order: String) {
     let order_data = serde_json::from_str(&order).unwrap();
     let mut data = get_data();
     data.push(order_data);
 
     write_data(data);
-
-    let orders = get_data();
-    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
-
-    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
@@ -30,22 +25,17 @@ fn get_orders(year: i32) -> String {
 }
 
 #[tauri::command]
-fn remove_order(order_id: String, year: i32) -> String {
+fn remove_order(order_id: String) {
     let mut data = get_data();
     if let Some(index) = data.iter().position(|order| order.id == order_id) {
         data.remove(index);
     }
 
     write_data(data);
-
-    let orders = get_data();
-    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
-
-    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 #[tauri::command]
-fn change_order(order_id: String, updated_order: String, year: i32) -> String {
+fn change_order(order_id: String, updated_order: String) {
     let new_order: Order = serde_json::from_str(&updated_order).unwrap();
     let mut data = get_data();
     if let Some(order) = data.iter_mut().find(|obj| obj.id == order_id) {
@@ -56,15 +46,11 @@ fn change_order(order_id: String, updated_order: String, year: i32) -> String {
         order.deadline = new_order.deadline;
         order.comment = new_order.comment;
         order.done = new_order.done;
+        order.ready = new_order.ready;
         order.details = new_order.details;
     }
 
     write_data(data);
-
-    let orders = get_data();
-    let filtered_orders: Vec<Order> = filter_orders_by_year(&orders, year);
-
-    serde_json::to_string(&filtered_orders).unwrap()
 }
 
 fn main() {

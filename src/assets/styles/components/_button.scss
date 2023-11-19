@@ -1,0 +1,12 @@
+@import "../variables.scss";
+
+.p-button {
+  background: $button;
+  border-color: $button;
+
+  &:enabled:hover {
+    background: $button;
+    border-color: $button;
+    opacity: 0.75;
+  }
+}

@@ -9,6 +9,7 @@ pub struct Order {
     pub deadline: Vec<String>,
     pub comment: String,
     pub done: bool,
+    pub ready: bool,
     pub details: Vec<OrderDetails>
 }
 

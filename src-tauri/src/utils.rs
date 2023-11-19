@@ -38,17 +38,19 @@ pub fn get_data() -> Vec<Order> {
 
 pub fn filter_orders_by_year(orders: &Vec<Order>, year: i32) -> Vec<Order> {
   orders.iter()
-      .filter(|order| {
-          if let Some(deadline) = order.deadline.get(0) {
-              if let Ok(datetime) = DateTime::<Utc>::from_str(deadline) {
-                  let day = datetime.checked_add_signed(Duration::days(1)).unwrap();
-
-                  return day.year() == year;
-              }
-          }
-
-          false
-      })
-      .cloned()
-      .collect()
+    .filter(|order| {
+        order.deadline.iter().any(|deadline| {
+            if let Ok(datetime) = DateTime::<Utc>::from_str(deadline) {
+                let day = datetime.checked_add_signed(Duration::days(1)).unwrap();
+    
+                if day.year() == year {
+                    return true;
+                }
+            }
+    
+            false
+        })
+    })
+    .cloned()
+    .collect()
 }

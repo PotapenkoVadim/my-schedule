@@ -1,0 +1,17 @@
+@import "@styles/variables.scss";
+
+.toolbar {
+  &__order-show {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__fields {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+}

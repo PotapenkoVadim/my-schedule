@@ -1,11 +1,9 @@
 import { MouseEvent } from "react";
 import cn from "classnames";
-import { Tooltip } from "primereact/tooltip";
-import { Button, Icon } from "../../components";
-import { ButtonVariant, IconSize, IconVariant } from "../../enums";
+import { Button, Tooltip } from "@/components";
 import { findOrderByDate, getBackgroundColor, getBorderColor, getDaysByWeeksOfYear, getTextColor } from "./utils";
-import { MONTHS, WEEKS } from "./consts";
-import { Order } from "../../interfacies";
+import { MONTHS, WEEKS } from "./constants";
+import { OrderType, ThemeVariant } from "@/types";
 import styles from "./Calendar.module.scss";
 
 export default function Calendar({
@@ -13,15 +11,22 @@ export default function Calendar({
   year,
   onClick,
   onChangeYear,
-  onClickCtxMenu
+  onClickCtxMenu,
+  theme
 }: {
-  orders: Array<Order>
+  orders?: Array<OrderType>
   year: number;
   onClick: (id: string) => void;
   onChangeYear: (newYear: number) => void;
-  onClickCtxMenu?: (x: number, y: number, order?: Order) => void;
+  onClickCtxMenu?: (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+    order?: OrderType,
+    date?: Date | null
+  ) => void;
+  theme?: ThemeVariant
 }) {
   const dates = getDaysByWeeksOfYear(year);
+  const currentDate = new Date().toDateString();
 
   const setPrevYear = () => onChangeYear(year - 1);
   const setNextYear = () => onChangeYear(year + 1);
@@ -51,27 +56,19 @@ export default function Calendar({
   const handleContextMenu = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, date: Date | null) => {
     const findedOrder = findOrderByDate(date, orders);
 
-    if (onClickCtxMenu && findedOrder) {
+    if (onClickCtxMenu) {
       e.preventDefault();
-  
-      const {pageX, pageY} = e;
-  
-      onClickCtxMenu(pageX, pageY, findedOrder);
+      onClickCtxMenu(e, findedOrder, date);
     }
   };
 
   return (
-    <div id="calendar" className={styles["calendar"]}>
+    <div id="calendar" data-theme={theme} className={styles["calendar"]}>
       <div className={styles["calendar__toolbar"]}>
-        <div>Год: {year}</div>
-        <div>
-          <Button data-testid="calendar-btn-left" onClick={setPrevYear} variant={ButtonVariant.ICON}>
-            <Icon variant={IconVariant.ARROW_BACK} size={IconSize.SMALL}/>
-          </Button>
-
-          <Button data-testid="calendar-btn-right" onClick={setNextYear} variant={ButtonVariant.ICON}>
-            <Icon variant={IconVariant.ARROW_FORWARD} size={IconSize.SMALL} />
-          </Button>
+        <div className={styles["calendar__year"]}>Год: {year}</div>
+        <div className={styles["calendar__buttons"]}>
+          <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
+          <Button onClick={setNextYear} icon="pi pi-arrow-right" />
         </div>
       </div>
 
@@ -94,12 +91,15 @@ export default function Calendar({
                       style={{
                         border: `1px solid ${getBorderColor(item, orders)}`,
                         background: getBackgroundColor(item, orders),
-                        color: getTextColor(item, orders)
+                        color: getTextColor(item, orders, theme)
                       }}
                       key={index}
                       className={cn([
                         styles["calendar__day"],
-                        { [styles["calendar__day_hover"]]: Boolean(item) }
+                        { 
+                          [styles["calendar__day_hover"]]: Boolean(item),
+                          [styles["calendar__day_active"]]: item?.toDateString() === currentDate
+                        }
                       ])}
                       data-pr-tooltip={getTooltipText(item)}
                       data-pr-position="top"

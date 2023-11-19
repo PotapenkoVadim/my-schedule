@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import * as path from 'path'
 import react from "@vitejs/plugin-react";
 import eslint from "vite-plugin-eslint";
 
@@ -32,5 +33,13 @@ export default defineConfig(async () => ({
   },
   optimizeDeps: {
     include: ['react-hook-form']
+  },
+  resolve: {
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+      { find: '@styles', replacement: path.resolve(__dirname, 'src/assets/styles') },
+      { find: '@app', replacement: path.resolve(__dirname, 'src/app') },
+      { find: '@views', replacement: path.resolve(__dirname, 'src/views') },
+    ]
   }
 }));

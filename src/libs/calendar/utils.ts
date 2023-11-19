@@ -1,4 +1,4 @@
-import { Order } from "../../interfacies";
+import { OrderType, ThemeVariant } from "@/types";
 import { YearType } from "./types";
 
 export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
@@ -48,19 +48,30 @@ export const getDaysByWeeksOfYear = (year: number): Array<YearType> => {
   });
 };
 
-export const getBackgroundColor = (date: Date | null, orders?: Array<Order>): string => {
+export const getBackgroundColor = (date: Date | null, orders?: Array<OrderType>): string => {
   const findedOrder = findOrderByDate(date, orders);
 
   const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
   const isWeekendOrder = checkWeekend(findedOrder?.deadline);
   const isShowWeekendOrder = !isWeekend || isWeekendOrder;
 
+  if (findedOrder?.ready && !findedOrder.done && isShowWeekendOrder) {
+    return `
+      repeating-linear-gradient(
+        45deg,
+        #${findedOrder.color!},
+        #${findedOrder.color!} 10px,
+        rgba(0, 0, 0, 0) 10px,
+        rgba(0, 0, 0, 0) 20px)
+    `;
+  }
+
   return findedOrder && !findedOrder.done && isShowWeekendOrder
     ? `#${findedOrder.color!}`
     : "transparent";
 };
 
-export const getBorderColor = (date: Date | null, orders?: Array<Order>): string => {
+export const getBorderColor = (date: Date | null, orders?: Array<OrderType>): string => {
   const findedOrder = findOrderByDate(date, orders);
 
   const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
@@ -72,9 +83,10 @@ export const getBorderColor = (date: Date | null, orders?: Array<Order>): string
     : "transparent";
 };
 
-export const getTextColor = (date: Date | null, orders?: Array<Order>): string => {
-  function getContrastYIQ(hexcolor?: string){
-    if (!hexcolor || hexcolor === "000") return "white";
+export const getTextColor = (date: Date | null, orders?: Array<OrderType>, theme?: ThemeVariant): string => {
+  function getContrastYIQ(hexcolor?: string) {
+    if (!hexcolor) return defaultColor;
+    if (hexcolor === "000") return "white";
     if (hexcolor === "ffffff") return "black";
 
     const r = parseInt(hexcolor.substring(1,3),16);
@@ -90,11 +102,13 @@ export const getTextColor = (date: Date | null, orders?: Array<Order>): string =
   const isWeekend = date ? [0, 6].includes(date.getDay()) : false;
   const isWeekendOrder = checkWeekend(findedOrder?.deadline);
   const isShowWeekendOrder = !isWeekend || isWeekendOrder;
+  const isShoudGetColor = isShowWeekendOrder && !findedOrder?.done;
+  const defaultColor = theme === "dark" ? "white" : "black";
 
-  return isShowWeekendOrder ? getContrastYIQ(findedOrder?.color) : "white";
+  return isShoudGetColor ? getContrastYIQ(findedOrder?.color) : defaultColor;
 };
 
-export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
+export const findOrderByDate = (day: Date | null, orders?: Array<OrderType>) => {
   const sortedOrders = orders?.sort((a, b) => {
     const start = new Date(a?.deadline![a.deadline!.length - 1]);
     const end = new Date(b?.deadline![b.deadline!.length - 1]);
@@ -104,10 +118,14 @@ export const findOrderByDate = (day: Date | null, orders?: Array<Order>) => {
 
   return sortedOrders?.find(item => {
     if (item.deadline && day) {
-      const start = item.deadline[0];
-      const end = item.deadline[1] ?? item.deadline[0];
+      const start = new Date(item.deadline[0]);
+      const end = new Date(item.deadline[1] ?? item.deadline[0]);
 
-      if (day >= new Date(start) && day <= new Date(end)) {
+      day.setHours(0, 0, 0, 0);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
+
+      if (day >= start && day <= end) {
         return true;
       }
     }

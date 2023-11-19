@@ -1,14 +1,27 @@
 // Colors
-$text-color: #f6f6f6;
-$background-color: #2f2f2f;
-$dark: #202020;
-$light: #909090;
-$secondary-text: #a0a0a0;
-$light-white: #fefefe;
+$white: #f6f6f6;
+$light: #f9f9f9;
+$martinique: #202020;
+$secondary-dark: #353535;
+$dark: #2f2f2f;
+$zircon: #f8f7f4;
+$dark-text: #555555;
+$button: #7f7f7f;
+$safe: #aaa;
 $red: #d0312d;
 $blue: #0066CC;
 
-// Fonts
-$fonts: 16px;
+$dark-theme: (
+  "text-color": $white,
+  "secondary-background": $secondary-dark,
+  "background": $dark
+);
 
-$tablet: 1200px;
+$light-theme: (
+  "text-color": $dark,
+  "secondary-background": $light,
+  "background": $zircon
+);
+
+// Fonts
+$fonts: 14px;
