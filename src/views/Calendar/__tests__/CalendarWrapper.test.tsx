@@ -6,53 +6,12 @@ import { useAppContext, useOrderContext } from "@/App/context";
 import { MONTHS } from "@/libs/calendar/constants";
 import { OrderType } from "@/types";
 import { ContextMenu } from "primereact/contextmenu";
+import { ordersMockData } from "@/__mocks__/order";
 
 const handleSelectedYearMock = vi.fn();
 const navigateMock = vi.fn();
 const ctxShowMock = vi.fn();
 const setCtxDataMock = vi.fn();
-const orders: Array<OrderType> = [
-  {
-    "id": "1688309101651",
-    "color": "3700ad",
-    "customer": "Dy Bless",
-    "set": "Arcane",
-    "deadline": [
-      "2023-01-09T21:00:00.000Z",
-      "2023-01-11T21:00:00.000Z"
-    ],
-    "comment": "",
-    "done": false,
-    "ready": false,
-    "details": [
-      {
-        "count": 3,
-        "description": "замена фона",
-        "sum": 2400
-      }
-    ]
-  },
-  {
-    "id": "1688311890288",
-    "color": "f0ed93",
-    "customer": "Н.Викулова",
-    "set": "Сейлор сложное",
-    "deadline": [
-      "2023-01-02T21:00:00.000Z",
-      "2023-01-05T21:00:00.000Z"
-    ],
-    "comment": "",
-    "done": false,
-    "ready": false,
-    "details": [
-      {
-        "count": 1,
-        "description": "биг панорама",
-        "sum": 2000
-      }
-    ]
-  }
-];
 
 const mocks = vi.hoisted(() => {
   return {
@@ -122,7 +81,7 @@ describe("CalendarWrapper", () => {
   });
 
   it("should call navigateMock", async () => {
-    const {container} = renderComponent(orders);
+    const {container} = renderComponent(ordersMockData);
     const node = container.querySelector(
       "#calendar > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3)"
     )!;
@@ -135,7 +94,7 @@ describe("CalendarWrapper", () => {
   it("should call context actions", async () => {
     const user = userEvent.setup();
     const ctxRef = {current: {show: ctxShowMock}} as any;
-    const {container} = renderComponent(orders, ctxRef);
+    const {container} = renderComponent(ordersMockData, ctxRef);
     const node = container.querySelector(
       "#calendar > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(3)"
     )!;
