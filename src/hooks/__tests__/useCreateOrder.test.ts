@@ -20,10 +20,12 @@ describe("useCreateOrder", () => {
     expect(result.current.isLoadingCreateOrder).toBeTruthy();
   });
 
-  it("should return default values when handleCreateOrder is successful", async () => {
+  it("should return default values when handleCreateOrder is successful", () => {
     const {result} = renderHook(useCreateOrder);
 
-    await result.current.handleCreateOrder({order: "1"});
+    act(async () => {
+      await result.current.handleCreateOrder({order: "1"});
+    });
 
     expect(result.current.isErrorCreateOrder).toBeFalsy();
     expect(result.current.isLoadingCreateOrder).toBeFalsy();

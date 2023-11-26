@@ -20,10 +20,12 @@ describe("useDeleteOrder", () => {
     expect(result.current.isLoadingDeleteOrder).toBeTruthy();
   });
 
-  it("should return default values when handleDeleteOrder is successful", async () => {
+  it("should return default values when handleDeleteOrder is successful", () => {
     const {result} = renderHook(useDeleteOrder);
 
-    await result.current.handleDeleteOrder({orderId: "1"});
+    act(async () => {
+      await result.current.handleDeleteOrder({orderId: "1"});
+    });
 
     expect(result.current.isErrorDeleteOrder).toBeFalsy();
     expect(result.current.isLoadingDeleteOrder).toBeFalsy();

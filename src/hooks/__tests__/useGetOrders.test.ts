@@ -22,10 +22,12 @@ describe("useGetOrders", () => {
     expect(result.current.orders).toBeUndefined();
   });
 
-  it("should return default values when handleGetOrders is successful", async () => {
+  it("should return default values when handleGetOrders is successful", () => {
     const {result} = renderHook(useGetOrders);
 
-    await result.current.handleGetOrders({year: 2023});
+    act(async () => {
+      await result.current.handleGetOrders({year: 2023});
+    });
 
     expect(result.current.isErrorOrders).toBeFalsy();
     expect(result.current.isErrorOrders).toBeFalsy();
