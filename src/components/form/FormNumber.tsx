@@ -23,6 +23,7 @@ const FormNumber = <T extends FieldValues = FieldValues>({
       render={({ field }) => (
         <span className={cn("p-float-label", styles.form__field, className)}>
           <InputNumber
+            data-testid="formNumber"
             className={styles["form__field-content"]}
             value={field.value}
             onChange={(e) => field.onChange(e.value as PathValue<T, Path<T>>)}

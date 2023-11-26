@@ -86,7 +86,6 @@ export default function Calendar({
                     <div
                       onContextMenu={(e) => handleContextMenu(e, item)}
                       data-pr-disabled={isDisabledDay(item)}
-                      id="calendarDay"
                       onClick={() => handleDayClick(item)}
                       style={{
                         border: `1px solid ${getBorderColor(item, orders)}`,
