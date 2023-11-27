@@ -5,6 +5,7 @@ import { Calendar } from "@/libs";
 import { RouterMap } from "@/constants";
 import { OrderType } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { useListenAppWindow } from "@/hooks";
 
 export default function CalendarWrapper({
   selectedYear,
@@ -14,8 +15,10 @@ export default function CalendarWrapper({
   setSelectedYear: (year: number) => void;
 }) {
   const navigate = useNavigate();
-  const {theme} = useAppContext();
-  const {orders, loading, ctxRef, setCtxData} = useOrderContext();
+  const {theme, switchTheme} = useAppContext();
+  const {orders, loading, ctxRef, setCtxData, handleNewOrder} = useOrderContext();
+
+  useListenAppWindow(handleNewOrder, switchTheme);
 
   const setYear = (newYear: number) => setSelectedYear(newYear);
   const handleContextMenu = (e: MouseEvent<HTMLDivElement>, order?: OrderType, date?: Date | null) => {

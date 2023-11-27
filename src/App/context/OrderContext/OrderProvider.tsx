@@ -57,6 +57,10 @@ export default function OrderProvider({
     openModal();
   };
 
+  const handleNewOrder = useCallback(() => {
+    openModal();
+  }, []);
+
   const handleCtxEdit = () => openModal();
   const handleCtxDone = async () => {
     if (ctxOrder) {
@@ -145,9 +149,17 @@ export default function OrderProvider({
       loading,
       ctxRef,
       setCtxData,
-      handleGetOrders
+      handleGetOrders,
+      handleNewOrder
     };
-  }, [orders, loading, ctxRef, setCtxData, handleGetOrders]);
+  }, [
+    orders,
+    loading,
+    ctxRef,
+    setCtxData,
+    handleGetOrders,
+    handleNewOrder
+  ]);
 
   return (
     <OrderContext.Provider value={value}>

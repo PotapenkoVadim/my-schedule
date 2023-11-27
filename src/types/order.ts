@@ -43,4 +43,5 @@ export type OrderContextType = {
   ctxRef: RefObject<ContextMenu & Readonly<ContextMenuProps>>
   setCtxData: (data: {order?: OrderType, date?: Date | null}) => void;
   handleGetOrders: (options: RequestOrderType) => Promise<void>;
+  handleNewOrder: () => void;
 };
