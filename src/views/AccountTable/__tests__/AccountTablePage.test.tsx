@@ -18,6 +18,15 @@ vi.mock("react-router-dom", async (importOriginal) => {
   };
 });
 
+vi.mock("@/hooks", async (importOriginal) => {
+  const mod = await importOriginal<typeof import("@/hooks")>();
+
+  return {
+    ...mod,
+    useListenAppWindow: vi.fn(),
+  };
+});
+
 vi.mock("@/App/context", async (importOriginal) => {
   const mod = await importOriginal<typeof import("@/App/context")>();
 
@@ -40,7 +49,8 @@ const MockComponent = (loading: boolean, orders: Array<OrderType> | undefined) =
     loading,
     ctxRef: {current: null},
     setCtxData: vi.fn(),
-    handleGetOrders: vi.fn()
+    handleGetOrders: vi.fn(),
+    handleNewOrder: vi.fn()
   });
 
   return render(<AccountTablePage />);

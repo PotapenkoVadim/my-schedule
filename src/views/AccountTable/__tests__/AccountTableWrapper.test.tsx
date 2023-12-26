@@ -38,19 +38,30 @@ vi.mock("@/App/context", async (importOriginal) => {
   };
 });
 
+vi.mock("@/hooks", async (importOriginal) => {
+  const mod = await importOriginal<typeof import("@/hooks")>();
+
+  return {
+    ...mod,
+    useListenAppWindow: vi.fn(),
+  };
+});
+
 const renderComponent = (orders?: Array<OrderType>, ctxRef?: {current: ContextMenu}) => {
   vi.mocked(useOrderContext).mockReturnValue({
     orders: orders || [],
     loading: false,
     ctxRef: ctxRef || {current: null},
     setCtxData: setCtxDataMock,
-    handleGetOrders: vi.fn()
+    handleGetOrders: vi.fn(),
+    handleNewOrder: vi.fn()
   });
 
   vi.mocked(useAppContext).mockReturnValue({
     theme: "dark",
     handleChangeTheme: vi.fn(),
-    showToast: vi.fn()
+    showToast: vi.fn(),
+    switchTheme: vi.fn()
   });
 
   return render(<AccountTableWrapper selectedDate={new Date()} setSelectedDate={setSelectedDateMock} />);

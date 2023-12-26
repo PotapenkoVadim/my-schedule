@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import { OrderType } from "@/types";
 import AccountTable from "../Table/Table";
 import AccountTableToolbar from "../Toolbar/Toolbar";
+import { useListenAppWindow } from "@/hooks";
 
 export default function AccountTableWrapper({
   selectedDate,
@@ -24,8 +25,10 @@ export default function AccountTableWrapper({
   setSelectedDate: (date: Date) => void;
 }) {
   const {state} = useLocation();
-  const {theme} = useAppContext();
-  const {orders, loading, ctxRef, setCtxData} = useOrderContext();
+  const {theme, switchTheme} = useAppContext();
+  const {orders, loading, ctxRef, setCtxData, handleNewOrder} = useOrderContext();
+
+  useListenAppWindow(handleNewOrder, switchTheme);
 
   const [globalFilterValue, setGlobalFilterValue] = useState<string>();
   const [isShowDone, setIsShowDone] = useState(false);
@@ -69,6 +72,12 @@ export default function AccountTableWrapper({
       }
     }
   }, [state, orders, globalFilterValue]);
+
+  useEffect(() => {
+    if (state?.selectedYear && state.selectedYear !== selectedDate) {
+      setSelectedDate(new Date(state?.selectedYear, 0, 1));
+    }
+  }, []);
 
   const filteredOrders = orders?.filter(item => isShowDone ? true : !item.done);
 

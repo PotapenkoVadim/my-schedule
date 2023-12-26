@@ -14,6 +14,10 @@ export default function AppProvider() {
     setTheme(theme);
   }, []);
 
+  const switchTheme = useCallback(() => {
+    setTheme(theme => theme === "dark" ? "light" : "dark");
+  }, []);
+
   const showToast = useCallback((type: ToastType, message: string) => {
     if (toast.current) {
       toast.current.show({
@@ -28,9 +32,10 @@ export default function AppProvider() {
     return {
       theme,
       handleChangeTheme,
-      showToast
+      showToast,
+      switchTheme
     };
-  }, [theme, handleChangeTheme, showToast]);
+  }, [theme, handleChangeTheme, showToast, switchTheme]);
 
   return (
     <AppContext.Provider value={value}>
