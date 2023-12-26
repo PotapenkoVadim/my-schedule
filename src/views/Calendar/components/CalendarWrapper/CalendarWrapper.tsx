@@ -29,7 +29,7 @@ export default function CalendarWrapper({
   };
 
   const handleClickByDate = (id: string) => {
-    navigate(`/${RouterMap.AccountTable}`, { state: { id } });
+    navigate(`/${RouterMap.AccountTable}`, { state: { id, selectedYear } });
   };
 
   let content;

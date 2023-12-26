@@ -73,6 +73,12 @@ export default function AccountTableWrapper({
     }
   }, [state, orders, globalFilterValue]);
 
+  useEffect(() => {
+    if (state?.selectedYear && state.selectedYear !== selectedDate) {
+      setSelectedDate(new Date(state?.selectedYear, 0, 1));
+    }
+  }, []);
+
   const filteredOrders = orders?.filter(item => isShowDone ? true : !item.done);
 
   let content;
