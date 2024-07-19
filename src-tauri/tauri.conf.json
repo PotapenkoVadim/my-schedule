@@ -8,11 +8,19 @@
   },
   "package": {
     "productName": "my-schedule",
-    "version": "0.1.0"
+    "version": "3.0.0"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "icons/32x32.png",
+      "iconAsTemplate": true
+    },
     "allowlist": {
-      "all": false
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      }
     },
     "bundle": {
       "active": true,
@@ -29,7 +37,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "my-schedule",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -59,7 +67,8 @@
         "height": 600,
         "resizable": true,
         "title": "My Schedule",
-        "width": 800
+        "width": 800,
+        "maximized": true
       }
     ]
   }
