@@ -10,7 +10,6 @@ import { Dropdown } from "primereact/dropdown";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
-import { addLocale } from "primereact/api";
 import { ContextMenu } from "primereact/contextmenu";
 import { Dialog } from "primereact/dialog";
 import { ColorPicker } from "primereact/colorpicker";
@@ -18,8 +17,6 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { InputNumber } from "primereact/inputnumber";
-
-addLocale("ru", { firstDayOfWeek: 1 });
 
 export {
   Button,
@@ -42,5 +39,8 @@ export {
   Divider,
   InputNumber,
 };
+
+export * from "./theme-switcher/theme-switcher";
+export * from "./logo/logo";
 
 export * from "./types";

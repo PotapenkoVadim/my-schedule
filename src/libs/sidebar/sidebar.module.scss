@@ -1,0 +1,33 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.sidebar {
+  @include dark-theme("secondary-background");
+  @include light-theme("secondary-background");
+
+  padding: 14px 8px;
+
+  &__button {
+    position: fixed;
+    bottom: 4%;
+    right: 2%;
+  }
+
+  &__logo {
+    margin-top: 36px;
+    padding: 0 36px;
+  }
+
+  &__menu {
+    margin-top: 36px;
+    font-size: 1.15rem;
+  }
+
+  &__switcher {
+    margin-top: 36px;
+  }
+
+  :global(.p-menuitem-text) {
+    padding-left: 8px;
+  }
+}

@@ -1,6 +1,8 @@
 import { APP_DESCRIPTION, APP_TITLE } from "@/constants";
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
+import { Sidebar } from "@/libs";
+import { AppProvider } from "@/context";
 import "@/assets/global.scss";
 
 const inter = Roboto_Mono({ subsets: ["latin", "cyrillic"] });
@@ -17,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AppProvider>
+          <Sidebar />
+          {children}
+        </AppProvider>
+      </body>
     </html>
   );
 }

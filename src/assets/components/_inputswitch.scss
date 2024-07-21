@@ -1,0 +1,11 @@
+@import "../variables";
+
+.p-inputswitch[aria-checked="true"] .p-inputswitch-slider {
+  transition: 0.4s;
+  background: $button;
+}
+
+.p-inputswitch[aria-checked="true"]:not(.p-disabled):hover .p-inputswitch-slider {
+  background: $button;
+  opacity: 0.75;
+}

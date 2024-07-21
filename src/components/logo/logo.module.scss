@@ -1,0 +1,14 @@
+.logo {
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+
+  &:enabled:hover {
+    background-color: inherit;
+    color: inherit;
+  }
+}

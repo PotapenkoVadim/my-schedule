@@ -1,0 +1,19 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.theme {
+  @include dark-theme("secondary-background");
+  @include light-theme("secondary-background");
+  
+  padding: 0 16px;
+
+  &__switcher {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.94rem;
+    font-style: italic;
+    font-weight: 600;
+  }
+}
