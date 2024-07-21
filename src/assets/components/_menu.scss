@@ -13,11 +13,6 @@
       color: map-get($light-theme, "text-color");
       font-weight: 600;
     }
-
-    & .p-menuitem-content:hover .p-menuitem-icon,
-    & .p-menuitem-content:hover .p-menuitem-text {
-      color: map-get($dark-theme, "text-color");
-    }
   }
 
   &[data-theme="dark"] {

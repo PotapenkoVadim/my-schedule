@@ -1,0 +1,112 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.page {
+  @include light-theme("background");
+
+  &[data-theme="dark"] {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+
+  &__container {
+    position: absolute;
+    top: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  &__shape {
+    border-radius: 9999px;
+    position: relative;
+    opacity: .5;
+    filter: blur(90px);
+
+    &_one {
+      width: 400px;
+      height: 400px;
+      animation: one 12s infinite;
+      background-color: rgb(255 72 173);
+    }
+
+    &_two {
+      width: 325px;
+      height: 325px;
+      animation: two 10s infinite;
+      background-color: rgb(30 0 255);
+    }
+
+    &_three {
+      width: 250px;
+      height: 250px;
+      animation: one 7s infinite;
+      background-color: rgb(140 0 215);
+    }
+  }
+
+  &__title {
+    font-size: 3.25rem;
+  }
+}
+
+@keyframes one {
+  0% {
+    left: 0;
+    top: 0;
+  }
+
+  25% {
+    left: -120px;
+    top: 80px;
+  }
+
+  50% {
+    left: 10px;
+    top: 170px;
+  }
+
+  75% {
+    left: 50px;
+    top: 100px;
+  }
+
+  100% {
+    left: 0;
+    top: 0;
+  }
+}
+
+@keyframes two {
+  0% {
+    left: 0;
+    top: 0;
+  }
+
+  25% {
+    left: 70px;
+    top: 10px;
+  }
+
+  50% {
+    left: 50px;
+    top: 100px;
+  }
+
+  75% {
+    left: 10px;
+    top: 70px;
+  }
+
+  100% {
+    left: 0;
+    top: 0;
+  }
+}

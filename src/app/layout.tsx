@@ -21,8 +21,8 @@ export default function RootLayout({
     <html lang="ru">
       <body className={inter.className}>
         <AppProvider>
-          <Sidebar />
           {children}
+          <Sidebar />
         </AppProvider>
       </body>
     </html>
