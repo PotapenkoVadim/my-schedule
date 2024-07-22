@@ -1,11 +1,14 @@
 import { APP_DESCRIPTION, APP_TITLE } from "@/constants";
 import type { Metadata } from "next";
-import { Roboto_Mono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { Sidebar } from "@/libs";
 import { AppProvider } from "@/context";
 import "@/assets/global.scss";
 
-const inter = Roboto_Mono({ subsets: ["latin", "cyrillic"] });
+const inter = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin", "cyrillic"],
+});
 
 export const metadata: Metadata = {
   title: APP_TITLE,

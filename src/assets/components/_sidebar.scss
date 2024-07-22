@@ -1,0 +1,10 @@
+.p-sidebar {
+  & .p-sidebar-content,
+  & .p-sidebar-header {
+    padding: 0;
+  }
+
+  & .p-menuitem-text {
+    padding-left: 8px;
+  }
+}

@@ -4,6 +4,8 @@
 .page {
   @include light-theme("background");
 
+  overflow: hidden;
+
   &[data-theme="dark"] {
     background-color: #000;
     color: #fff;
@@ -33,31 +35,41 @@
     &_one {
       width: 400px;
       height: 400px;
-      animation: one 12s infinite;
+      animation: shape-one-animation 12s infinite;
       background-color: rgb(255 72 173);
     }
 
     &_two {
       width: 325px;
       height: 325px;
-      animation: two 10s infinite;
+      animation: shape-two-animation 10s infinite;
       background-color: rgb(30 0 255);
     }
 
     &_three {
       width: 250px;
       height: 250px;
-      animation: one 7s infinite;
+      animation: shape-one-animation 7s infinite;
       background-color: rgb(140 0 215);
     }
   }
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    font-weight: 600;
+    text-align: center;
+  }
+
   &__title {
     font-size: 3.25rem;
+    line-height: 36px;
   }
 }
 
-@keyframes one {
+@keyframes shape-one-animation {
   0% {
     left: 0;
     top: 0;
@@ -84,7 +96,7 @@
   }
 }
 
-@keyframes two {
+@keyframes shape-two-animation {
   0% {
     left: 0;
     top: 0;

@@ -3,6 +3,7 @@
 
 .p-menu {
   border: 0;
+  padding: 0;
   background-color: transparent;
   width: 100%;
 
@@ -28,9 +29,14 @@
       color: map-get($light-theme, "text-color");
     }
   }
-}
 
-.p-menu .p-menuitem-content {
-  transition: .3s;
-  padding: 16px;
+  & .p-menuitem-content {
+    transition: .3s;
+    padding: 0;
+  }
+
+  & .p-menuitem-link {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
 }
