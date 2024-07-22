@@ -1,0 +1,12 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.page {
+  @include dark-theme("secondary-background");
+  @include light-theme("secondary-background");
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

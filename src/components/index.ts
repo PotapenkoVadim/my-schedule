@@ -17,6 +17,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { InputNumber } from "primereact/inputnumber";
+import { Password } from "primereact/password";
 
 export {
   Button,
@@ -38,9 +39,16 @@ export {
   InputTextarea,
   Divider,
   InputNumber,
+  Password,
 };
 
 export * from "./theme-switcher/theme-switcher";
 export * from "./logo/logo";
+export * from "./checkbox/checkbox";
+export * from "./shapes-background/shapes-background";
+export * from "./form-password/form-password";
+export * from "./form-error/form-error";
+export * from "./form-input/form-input";
+export * from "./loading-button/Loading-button";
 
 export * from "./types";

@@ -1,0 +1,11 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  &__spinner {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}

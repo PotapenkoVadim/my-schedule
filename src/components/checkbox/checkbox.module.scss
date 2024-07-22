@@ -1,0 +1,13 @@
+@import "@/assets/variables";
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  &__label {
+    color: $dark-text;
+    font-size: .96rem;
+  }
+}

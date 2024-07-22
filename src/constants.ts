@@ -10,3 +10,5 @@ export const enum PATHS {
   table = "/order-table",
   calendar = "/calendar",
 }
+
+export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";
