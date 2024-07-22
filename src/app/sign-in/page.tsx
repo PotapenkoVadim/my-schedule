@@ -1,20 +1,27 @@
 "use client";
 
 import { useAppContext } from "@/context";
+import { useFetch } from "@/hooks";
+import { signInService } from "@/services/sign-in";
 import { SignInForm } from "./libs";
-import { UserCredentials } from "./interfaces";
 import styles from "./page.module.scss";
 
 export default function SignInPage() {
   const { theme } = useAppContext();
 
-  const sigIn = (credentials: UserCredentials) => {
-    console.log("USER: ", credentials);
-  };
+  const { isLoading, handleFetch: sigIn } = useFetch({
+    queryFn: signInService,
+    onSuccess: (response) => {
+      console.log("RESPONSE: ", response);
+    },
+    onError: () => {
+      console.log("error");
+    },
+  });
 
   return (
     <main data-theme={theme} className={styles.page}>
-      <SignInForm theme={theme} onSubmit={sigIn} isLoading={false} />
+      <SignInForm theme={theme} onSubmit={sigIn} isLoading={isLoading} />
     </main>
   );
 }

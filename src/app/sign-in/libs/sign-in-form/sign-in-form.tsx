@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormPassword, FormInput, LoadingButton } from "@/components";
 import { ThemeVariant } from "@/types";
+import { UserCredentials } from "@/interfaces";
 import { formSchema } from "./form-schema";
-import { UserCredentials } from "../../interfaces";
 import styles from "./sign-in-form.module.scss";
 
 export function SignInForm({
@@ -38,6 +38,7 @@ export function SignInForm({
           name="username"
           placeholder="Username"
           error={errors.username?.message}
+          disabled={isLoading}
         />
 
         <FormPassword
@@ -46,6 +47,8 @@ export function SignInForm({
           name="password"
           placeholder="Password"
           error={errors.password?.message}
+          feedback={false}
+          disabled={isLoading}
         />
 
         <LoadingButton
