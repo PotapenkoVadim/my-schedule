@@ -1,2 +1,2 @@
-export * from "./getNavigateLinks";
+export * from "./get-navigate-links";
 export * from "./api";

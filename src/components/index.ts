@@ -50,5 +50,6 @@ export * from "./form-password/form-password";
 export * from "./form-error/form-error";
 export * from "./form-input/form-input";
 export * from "./loading-button/Loading-button";
+export * from "./sign-out-button/sign-out-button";
 
 export * from "./types";

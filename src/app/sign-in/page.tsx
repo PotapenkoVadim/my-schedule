@@ -3,7 +3,7 @@
 import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/hooks";
-import { signInService } from "@/services/sign-in";
+import { signInService } from "@/services";
 import { PATHS, SIGN_IN_ERROR } from "@/constants";
 import { useUserStore } from "@/stores/user";
 import { ShapesBackground } from "@/components";

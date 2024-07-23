@@ -11,6 +11,7 @@ const getApi = async <TR, TP = unknown>(
 
   const response = await fetch(`${hostUrl}${uri}?${getParams}`, {
     method: "GET",
+    credentials: "include",
     headers,
   });
 
@@ -28,6 +29,7 @@ const postApi = async <TR, TP = unknown>(
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "POST",
     headers,
+    credentials: "include",
     body: JSON.stringify(body),
   });
 
@@ -45,6 +47,7 @@ const deleteApi = async <TR, TP = unknown>(
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "DELETE",
     headers,
+    credentials: "include",
     body: JSON.stringify(body),
   });
 
@@ -62,6 +65,7 @@ const patchApi = async <TR, TP = unknown>(
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "PATCH",
     headers,
+    credentials: "include",
     body: JSON.stringify(body),
   });
 
