@@ -13,16 +13,20 @@ export const useFetch = <TR, TQ extends unknown[]>({
 }: FetchOptions<TR, TQ>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>();
 
   const handleFetch = useCallback(
     async (...args: TQ) => {
       try {
         setIsLoading(true);
+        setIsSuccess(undefined);
 
         const response = await queryFn?.(...args);
         if (onSuccess) await onSuccess(response);
+        setIsSuccess(true);
       } catch (error) {
         setIsError(true);
+        setIsSuccess(false);
         if (onError) await onError(error as Error);
       } finally {
         setIsLoading(false);
@@ -34,6 +38,7 @@ export const useFetch = <TR, TQ extends unknown[]>({
   return {
     isLoading,
     isError,
+    isSuccess,
     handleFetch,
   };
 };
