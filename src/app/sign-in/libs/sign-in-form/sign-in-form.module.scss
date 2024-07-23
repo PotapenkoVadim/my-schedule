@@ -2,17 +2,21 @@
 @import "@/assets/mixins";
 
 .form {
-  @include dark-theme("secondary-background");
-  @include light-theme("secondary-background");
+  @include dark-theme("background");
+  @include light-theme("background");
   
   border: 1px solid $secondary-dark;
   padding: 36px 24px;
   border-radius: 4px;
-  min-width: 400px;
+  width: 420px;
 
-  &[data-theme="dark"] {
-    border-color: $safe;
-    color: $safe;
+  &[data-theme="Dark"] {
+    border-color: rgb(255 255 255 / 35%);
+    color:  $safe;
+  }
+
+  &[data-theme="Light"] {
+    border-color: rgb(0 0 0 / 35%);
   }
 
   &__title {

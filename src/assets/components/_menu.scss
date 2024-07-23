@@ -7,7 +7,7 @@
   background-color: transparent;
   width: 100%;
 
-  &[data-theme="light"] {
+  &[data-theme="Light"] {
     & .p-menuitem-content .p-menuitem-icon,
     & .p-menuitem-content .p-menuitem-text {
       transition: .3s;
@@ -16,7 +16,7 @@
     }
   }
 
-  &[data-theme="dark"] {
+  &[data-theme="Dark"] {
     & .p-menuitem-content .p-menuitem-icon,
     & .p-menuitem-content .p-menuitem-text {
       transition: .3s;

@@ -3,17 +3,19 @@ $white: #f6f6f6;
 $light: #f9f9f9;
 $martinique: #202020;
 $secondary-dark: #353535;
-$dark: #2f2f2f;
+$dark: #272630;
 $zircon: #f8f7f4;
 $dark-text: #555;
-$button: #7f7f7f;
+$button: #3E60EE;
+$switcher: #7f7f7f;
 $safe: #aaa;
 $red: #d0312d;
 $blue: #06C;
 $dark-theme: (
   "text-color": $white,
   "secondary-background": $secondary-dark,
-  "background": $dark
+  "background": $dark,
+  "darkest-background": black
 );
 $light-theme: (
   "text-color": $dark,

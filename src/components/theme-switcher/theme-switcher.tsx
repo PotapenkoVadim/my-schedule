@@ -13,7 +13,8 @@ export function ThemeSwitcher({
   onSwitch: () => void;
   className?: string;
 }) {
-  const themeTitle = theme === "dark" ? DARK_THEME_TITLE : LIGHT_THEME_TITLE;
+  const isDarkTheme = theme === "Dark";
+  const themeTitle = isDarkTheme ? DARK_THEME_TITLE : LIGHT_THEME_TITLE;
 
   return (
     <div className={classnames(styles.theme, className)}>
@@ -21,11 +22,7 @@ export function ThemeSwitcher({
 
       <div className={styles.theme__switcher}>
         <span>{themeTitle}</span>
-        <InputSwitch
-          id="theme"
-          checked={theme === "dark"}
-          onChange={onSwitch}
-        />
+        <InputSwitch id="theme" checked={isDarkTheme} onChange={onSwitch} />
       </div>
     </div>
   );

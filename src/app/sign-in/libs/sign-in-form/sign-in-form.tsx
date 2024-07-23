@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import classnames from "classnames";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormPassword, FormInput, LoadingButton } from "@/components";
 import { ThemeVariant } from "@/types";
@@ -10,10 +11,12 @@ export function SignInForm({
   theme,
   isLoading,
   onSubmit,
+  className,
 }: {
   theme: ThemeVariant;
   isLoading: boolean;
   onSubmit: (data: UserCredentials) => void;
+  className?: string;
 }) {
   const {
     control,
@@ -30,7 +33,11 @@ export function SignInForm({
   const submit = handleSubmit((data) => onSubmit(data));
 
   return (
-    <form onSubmit={submit} data-theme={theme} className={styles.form}>
+    <form
+      onSubmit={submit}
+      data-theme={theme}
+      className={classnames(styles.form, className)}
+    >
       <div className={styles.form__title}>Вход в приложение:</div>
       <div className={styles.form__fields}>
         <FormInput

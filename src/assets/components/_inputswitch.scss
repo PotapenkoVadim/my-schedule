@@ -2,10 +2,10 @@
 
 .p-inputswitch[aria-checked="true"] .p-inputswitch-slider {
   transition: 0.4s;
-  background: $button;
+  background: $switcher;
 }
 
 .p-inputswitch[aria-checked="true"]:not(.p-disabled):hover .p-inputswitch-slider {
-  background: $button;
-  opacity: 0.75;
+  background: $switcher;
+  opacity: 0.7;
 }

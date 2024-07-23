@@ -2,11 +2,18 @@
 @import "@/assets/mixins";
 
 .page {
-  @include dark-theme("secondary-background");
-  @include light-theme("secondary-background");
+  @include light-theme("background");
+  @include dark-theme("darkest-background");
 
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
+
+  &__form {
+    z-index: 1;
+    opacity: .9;
+  }
 }

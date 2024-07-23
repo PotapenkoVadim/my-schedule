@@ -9,6 +9,15 @@ export const enum PATHS {
   home = "/",
   table = "/order-table",
   calendar = "/calendar",
+  signIn = "/sign-in",
 }
 
 export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";
+export const SIGN_IN_ERROR = "Не удалось войти! Попробуйте, позже.";
+
+export const TOAST_TITLE = {
+  error: "Ошибка",
+  info: "Инфо",
+  warn: "Предупреждение",
+  success: "Успех",
+};

@@ -1,5 +1,6 @@
-import { UserCredentials } from "@/interfaces";
+import { UserCredentials, UserEntity } from "@/interfaces";
 import { postApi } from "@/utils";
 
-export const signInService = async (credentials: UserCredentials) =>
-  postApi("/sign-in", credentials);
+export const signInService = async (
+  credentials: UserCredentials,
+): Promise<UserEntity> => postApi("/sign-in", credentials);

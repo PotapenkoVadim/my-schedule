@@ -3,13 +3,7 @@
 
 .page {
   @include light-theme("background");
-
-  overflow: hidden;
-
-  &[data-theme="dark"] {
-    background-color: #000;
-    color: #fff;
-  }
+  @include dark-theme("darkest-background");
   
   position: relative;
   display: flex;
@@ -17,6 +11,7 @@
   justify-content: center;
   min-height: 100vh;
   min-width: 100vw;
+  overflow: hidden;
 
   &__content {
     display: flex;
@@ -25,6 +20,7 @@
     gap: 24px;
     font-weight: 600;
     text-align: center;
+    z-index: 1;
   }
 
   &__title {

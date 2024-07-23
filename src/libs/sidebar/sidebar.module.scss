@@ -2,8 +2,8 @@
 @import "@/assets/mixins";
 
 .sidebar {
-  @include dark-theme("secondary-background");
-  @include light-theme("secondary-background");
+  @include dark-theme("background");
+  @include light-theme("background");
 
   padding: 14px 8px;
 
