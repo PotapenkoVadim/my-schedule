@@ -2,7 +2,7 @@ import { UserScopes } from "@/types";
 import { UserEntity } from "@/interfaces";
 import { ReactNode } from "react";
 import { PERMISSIONS } from "@/constants";
-import { hasPermission } from "@/utils/has-permissions";
+import { hasPermission } from "@/utils";
 
 export function PermissionGuard({
   children,

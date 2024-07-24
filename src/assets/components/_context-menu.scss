@@ -1,0 +1,21 @@
+@import "@/assets/variables";
+
+.p-contextmenu {
+  &[data-theme="Dark"] {
+    & .p-menuitem-icon,
+    & .p-menuitem-text {
+      color: $dark-text !important;
+    }
+    
+    background-color: $zircon !important;
+  }
+
+  &[data-theme="Light"] {
+    & .p-menuitem-icon,
+    & .p-menuitem-text {
+      color: $safe !important;
+    }
+
+    background-color: $dark !important;
+  }
+}
