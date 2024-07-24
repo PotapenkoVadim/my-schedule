@@ -3,43 +3,53 @@
 import { useState } from "react";
 import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
-import { useOrderContext, useOrder, useSession } from "@/hooks";
+import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
 import { ContextMenu, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import { useOrderStore } from "@/stores/order";
-import { getContextMenuItems } from "@/utils";
+import {
+  formatDeadlineToServer,
+  getContextMenuItems,
+  transformDetails,
+} from "@/utils";
 import { OrderListEntity } from "@/interfaces";
-import { PATHS } from "@/constants";
+import { PATHS, WENT_WRONG_ERROR } from "@/constants";
+import { OrderFormType, OrderStatus } from "@/types";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
-  const [orderList] = useOrderStore(({ orderList }) => [orderList]);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [orderList, setOrderList] = useOrderStore(
+    ({ orderList, setOrderList }) => [orderList, setOrderList],
+  );
 
   const router = useRouter();
-  const { theme } = useAppContext();
-  const { isSessionLoading } = useSession();
-
-  const onSuccess = (response?: OrderListEntity) => {
-    console.log("SUCCESS: ", response);
-  };
-
-  const onError = () => console.log("ERROR");
-
-  const { isLoading } = useOrder({
-    onSuccess,
-    onError,
-  });
-
+  const { theme, showToast } = useAppContext();
+  const { isSessionLoading, isSessionError, isSessionSuccess } = useSession();
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
-    useOrderContext();
+    useOrderMenuCtx();
 
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => {
     setIsOpenModal(false);
     resetContextState();
   };
+
+  const onSuccess = (response?: OrderListEntity) => {
+    setOrderList(response || null);
+    closeModal();
+  };
+
+  const onError = () => {
+    showToast("error", WENT_WRONG_ERROR);
+    closeModal();
+  };
+
+  const { addOrder, editOrder, isLoading } = useOrder({
+    onSuccess,
+    onError,
+  });
 
   const handleClick = (id: number) => {
     // TODO: provide state to table
@@ -57,8 +67,23 @@ export default function CalendarPage() {
   const handleDelete = () => console.log("CTX DELETE");
   const handleReady = () => console.log("CTX READY");
 
+  const onSubmit = (data: OrderFormType) => {
+    const order = {
+      ...data,
+      status: OrderStatus[0],
+      deadline: formatDeadlineToServer(data.deadline),
+      details: transformDetails(data.details),
+    };
+
+    if (ctxOrder) {
+      editOrder(ctxOrder.id, { ...order, status: ctxOrder.status });
+    } else {
+      addOrder(order);
+    }
+  };
+
   let content;
-  if (isSessionLoading) {
+  if (isSessionLoading || (!isSessionSuccess && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -86,9 +111,9 @@ export default function CalendarPage() {
           isOpen={isOpenModal}
           ctxDate={ctxDate}
           order={ctxOrder}
-          onClose={closeModal}
           isLoading={isLoading}
-          onSubmit={(data) => console.log("SUBMIT: ", data)}
+          onClose={closeModal}
+          onSubmit={onSubmit}
         />
       </>
     );

@@ -1,6 +1,6 @@
 import { OrderEntity } from "@/interfaces";
 
-export const enum OrderStatus {
+export enum OrderStatus {
   InProgress,
   Ready,
   Done,
@@ -9,7 +9,7 @@ export const enum OrderStatus {
 export type OrderFormType = Partial<
   Omit<
     OrderEntity,
-    "deadline" | "id" | "orderListId" | "createdAt" | "updatedAt"
+    "deadline" | "id" | "orderListId" | "createdAt" | "updatedAt" | "status"
   >
 > & {
   deadline?: Array<Date>;

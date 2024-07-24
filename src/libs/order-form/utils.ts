@@ -17,7 +17,11 @@ export const getDefaultFormValues = (
 ): OrderFormType =>
   order
     ? {
-        ...order,
+        color: order.color,
+        customer: order.customer,
+        photoSet: order.photoSet,
+        comment: order.comment,
+        details: order.details,
         deadline: order?.deadline?.map((item) => new Date(item)) || undefined,
       }
     : {

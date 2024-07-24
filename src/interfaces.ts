@@ -47,6 +47,16 @@ export interface OrderEntity {
   updatedAt: string;
 }
 
+export interface OrderDto {
+  color?: string;
+  customer?: string;
+  photoSet?: string;
+  deadline?: Array<string>;
+  comment?: string;
+  status?: OrderStatus | string;
+  details?: Array<Partial<OrderDetailsEntity>>;
+}
+
 export interface OrderListEntity {
   id: number;
   items?: Array<OrderEntity>;
