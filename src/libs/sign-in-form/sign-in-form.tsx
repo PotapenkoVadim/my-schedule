@@ -1,7 +1,9 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import classnames from "classnames";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormPassword, FormInput, LoadingButton } from "@/components";
+import { FormPassword, FormInput, Button } from "@/components";
 import { ThemeVariant } from "@/types";
 import { UserCredentials } from "@/interfaces";
 import { formSchema } from "./form-schema";
@@ -43,7 +45,7 @@ export function SignInForm({
         <FormInput
           control={control}
           name="username"
-          placeholder="Username"
+          label="Username"
           error={errors.username?.message}
           disabled={isLoading}
         />
@@ -52,19 +54,19 @@ export function SignInForm({
           toggleMask
           control={control}
           name="password"
-          placeholder="Password"
+          label="Password"
           error={errors.password?.message}
           feedback={false}
           disabled={isLoading}
         />
 
-        <LoadingButton
+        <Button
           type="submit"
           loading={isLoading}
           className={styles.form__button}
         >
           Войти
-        </LoadingButton>
+        </Button>
       </div>
     </form>
   );

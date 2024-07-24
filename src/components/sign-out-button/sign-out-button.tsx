@@ -1,7 +1,7 @@
 import { UserEntity } from "@/interfaces";
 import { PermissionGuard } from "@/libs";
 import { UserScopes } from "@/types";
-import { LoadingButton } from "../loading-button/Loading-button";
+import { Button } from "@/components";
 
 export function SignOutButton({
   user,
@@ -18,13 +18,9 @@ export function SignOutButton({
 
   return (
     <PermissionGuard currentUser={user} scopes={[UserScopes.allowCommon]}>
-      <LoadingButton
-        loading={isLoading}
-        onClick={onSignOut}
-        className={className}
-      >
+      <Button loading={isLoading} onClick={onSignOut} className={className}>
         Выйти
-      </LoadingButton>
+      </Button>
     </PermissionGuard>
   );
 }

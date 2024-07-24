@@ -17,6 +17,10 @@ export const enum PATHS {
 export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";
 export const SIGN_IN_ERROR = "Не удалось войти! Попробуйте, позже.";
 export const WENT_WRONG_ERROR = "Что-то пошло не так. Попробуйте, позже.";
+export const REQUIRED_CUSTOMER_ERROR = "Укажите заказчика";
+export const REQUIRED_PHOTO_SET_ERROR = "Укажите фотосет";
+export const REQUIRED_DEADLINE_ERROR = "Укажите хотя бы одну дату";
+export const REQUIRED_DETAILS_ERROR = "Укажите детализацию заказа";
 
 export const TOAST_TITLE = {
   error: "Ошибка",

@@ -7,7 +7,7 @@ import { signInService } from "@/services";
 import { PATHS, SIGN_IN_ERROR } from "@/constants";
 import { useUserStore } from "@/stores/user";
 import { Spinner, ShapesBackground } from "@/components";
-import { SignInForm } from "./libs";
+import { SignInForm } from "@/libs";
 import styles from "./page.module.scss";
 
 export default function SignInPage() {

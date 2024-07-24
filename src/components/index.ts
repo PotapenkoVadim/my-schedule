@@ -49,8 +49,11 @@ export * from "./shapes-background/shapes-background";
 export { FormInput } from "./form-input/form-input";
 export { FormPassword } from "./form-password/form-password";
 export * from "./form-error/form-error";
-export * from "./loading-button/Loading-button";
 export * from "./sign-out-button/sign-out-button";
 export * from "./spinner/spinner";
+export * from "./form-color-picker/form-color-picker";
+export * from "./form-textarea/form-textarea";
+export * from "./form-calendar/form-calendar";
+export * from "./form-number/form-number";
 
 export * from "./types";

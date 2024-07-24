@@ -1,0 +1,32 @@
+.form {
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-top: 24px;
+  }
+
+  &__comment {
+    margin-top: 12px;
+  }
+
+  &__picker {
+    flex: 1;
+  }
+
+  &__textfield {
+    flex: 8;
+  }
+
+  &__date {
+    flex: 6;
+  }
+}
