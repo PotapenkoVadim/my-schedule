@@ -1,3 +1,5 @@
+"use client";
+
 import { Controller, Control, FieldValues } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { FormError } from "../form-error/form-error";
