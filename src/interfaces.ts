@@ -1,4 +1,4 @@
-import { ThemeVariant, UserRole } from "./types";
+import { OrderStatus, ThemeVariant, UserRole } from "./types";
 
 export interface UserCredentials {
   username: string;
@@ -20,6 +20,36 @@ export interface UserEntity {
   hash: string;
   salt: string;
   settings: {};
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderDetailsEntity {
+  id: number;
+  count: string;
+  description: string;
+  sum: string;
+  orderId: number;
+}
+
+export interface OrderEntity {
+  id: number;
+  color: string;
+  customer: string;
+  photoSet: string;
+  deadline: Array<string>;
+  comment: string;
+  status: OrderStatus;
+  details: Array<OrderDetailsEntity>;
+  orderListId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderListEntity {
+  id: number;
+  items: Array<OrderEntity>;
+  ownerId: number;
   createdAt: string;
   updatedAt: string;
 }

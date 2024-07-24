@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { Button, ButtonProps } from "primereact/button";
-import { ProgressSpinner } from "primereact/progressspinner";
+import { ProgressSpinner } from "@/components";
 import styles from "./loading-button.module.scss";
 
 export function LoadingButton({

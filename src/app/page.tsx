@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { useRouter } from "next/navigation";
 import { APP_TITLE, APP_DESCRIPTION, PATHS } from "@/constants";
 import { useAppContext } from "@/context";
-import { Button, ProgressSpinner, ShapesBackground } from "@/components";
+import { Button, Spinner, ShapesBackground } from "@/components";
 import { useUserStore } from "@/stores/user";
 import { useSession } from "@/hooks";
 import styles from "./page.module.scss";
@@ -21,7 +21,7 @@ export default function Home() {
 
   let content;
   if (isSessionLoading) {
-    content = <ProgressSpinner />;
+    content = <Spinner />;
   } else {
     content = (
       <>

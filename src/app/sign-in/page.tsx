@@ -6,7 +6,7 @@ import { useFetch, useSession } from "@/hooks";
 import { signInService } from "@/services";
 import { PATHS, SIGN_IN_ERROR } from "@/constants";
 import { useUserStore } from "@/stores/user";
-import { ProgressSpinner, ShapesBackground } from "@/components";
+import { Spinner, ShapesBackground } from "@/components";
 import { SignInForm } from "./libs";
 import styles from "./page.module.scss";
 
@@ -29,7 +29,7 @@ export default function SignInPage() {
 
   let content;
   if (isSessionLoading || (!isSessionSuccess && !isSessionError)) {
-    content = <ProgressSpinner />;
+    content = <Spinner isPage />;
   } else {
     content = (
       <>
