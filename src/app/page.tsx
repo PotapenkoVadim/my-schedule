@@ -13,14 +13,14 @@ export default function Home() {
   const router = useRouter();
   const { theme } = useAppContext();
   const [user] = useUserStore(({ user }) => [user]);
-  const { isSessionLoading } = useSession();
+  const { isSessionLoading, isSessionError } = useSession();
 
   const moveTo = () => {
     router.push(!user ? PATHS.signIn : PATHS.calendar);
   };
 
   let content;
-  if (isSessionLoading) {
+  if (isSessionLoading || (!user && !isSessionError)) {
     content = <Spinner />;
   } else {
     content = (

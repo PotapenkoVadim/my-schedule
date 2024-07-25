@@ -1,9 +1,9 @@
 import { OrderEntity } from "@/interfaces";
 
 export enum OrderStatus {
-  InProgress,
-  Ready,
-  Done,
+  InProgress = "InProgress",
+  Ready = "Ready",
+  Done = "Done",
 }
 
 export type OrderFormType = Partial<

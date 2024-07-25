@@ -1,0 +1,10 @@
+.dialog {
+  min-width: 410px;
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+}

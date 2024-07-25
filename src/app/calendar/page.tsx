@@ -2,31 +2,38 @@
 
 import { useState } from "react";
 import { useAppContext } from "@/context";
+import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
 import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
-import { ContextMenu, Spinner } from "@/components";
+import { ContextMenu, DialogModal, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import { useOrderStore } from "@/stores/order";
 import {
   formatDeadlineToServer,
   getContextMenuItems,
+  handleDoneStatus,
+  handleReadyStatus,
   transformDetails,
 } from "@/utils";
 import { OrderListEntity } from "@/interfaces";
-import { PATHS, WENT_WRONG_ERROR } from "@/constants";
+import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
+import { useUserStore } from "@/stores/user";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [dialogModal, setDialogModal] = useState<"delete" | "ready" | "done">();
+
+  const [user] = useUserStore(({ user }) => [user]);
   const [orderList, setOrderList] = useOrderStore(
     ({ orderList, setOrderList }) => [orderList, setOrderList],
   );
 
   const router = useRouter();
   const { theme, showToast } = useAppContext();
-  const { isSessionLoading, isSessionError, isSessionSuccess } = useSession();
+  const { isSessionLoading, isSessionError } = useSession();
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
     useOrderMenuCtx();
 
@@ -36,17 +43,24 @@ export default function CalendarPage() {
     resetContextState();
   };
 
+  const closeDialogModal = () => {
+    setDialogModal(undefined);
+    resetContextState();
+  };
+
   const onSuccess = (response?: OrderListEntity) => {
     setOrderList(response || null);
     closeModal();
+    closeDialogModal();
   };
 
   const onError = () => {
     showToast("error", WENT_WRONG_ERROR);
     closeModal();
+    closeDialogModal();
   };
 
-  const { addOrder, editOrder, isLoading } = useOrder({
+  const { addOrder, editOrder, deleteOrder, isLoading } = useOrder({
     onSuccess,
     onError,
   });
@@ -63,14 +77,14 @@ export default function CalendarPage() {
   };
 
   const handleEdit = () => openModal();
-  const handleDone = () => console.log("CTX DONE");
-  const handleDelete = () => console.log("CTX DELETE");
-  const handleReady = () => console.log("CTX READY");
+  const handleDone = () => setDialogModal("done");
+  const handleDelete = () => setDialogModal("delete");
+  const handleReady = () => setDialogModal("ready");
 
-  const onSubmit = (data: OrderFormType) => {
+  const onSubmitOrderForm = (data: OrderFormType) => {
     const order = {
       ...data,
-      status: OrderStatus[0],
+      status: OrderStatus.InProgress,
       deadline: formatDeadlineToServer(data.deadline),
       details: transformDetails(data.details),
     };
@@ -82,8 +96,29 @@ export default function CalendarPage() {
     }
   };
 
+  const handleDeleteOrder = () => {
+    if (ctxOrder?.id) {
+      deleteOrder(ctxOrder?.id);
+    }
+  };
+
+  const handleStatusOrder = (status: string) => {
+    if (ctxOrder) {
+      editOrder(ctxOrder.id, {
+        ...omit(ctxOrder, ["id", "orderListId"]),
+        status,
+      });
+    }
+  };
+
+  const dialogModalActions = {
+    delete: handleDeleteOrder,
+    done: () => handleStatusOrder(handleDoneStatus(ctxOrder)),
+    ready: () => handleStatusOrder(handleReadyStatus(ctxOrder)),
+  };
+
   let content;
-  if (isSessionLoading || (!isSessionSuccess && !isSessionError)) {
+  if (isSessionLoading || (!user && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -96,6 +131,7 @@ export default function CalendarPage() {
           orders={orderList?.items || []}
           onClick={handleClick}
         />
+
         <ContextMenu
           ref={ctxRef}
           data-theme={theme}
@@ -107,13 +143,22 @@ export default function CalendarPage() {
             handleReady,
           )}
         />
+
         <OrderModal
           isOpen={isOpenModal}
           ctxDate={ctxDate}
           order={ctxOrder}
           isLoading={isLoading}
           onClose={closeModal}
-          onSubmit={onSubmit}
+          onSubmit={onSubmitOrderForm}
+        />
+
+        <DialogModal
+          isOpen={Boolean(dialogModal)}
+          isLoading={isLoading}
+          onClose={closeDialogModal}
+          title={dialogModal ? DIALOG_ACTION_TITLES[dialogModal] : undefined}
+          onSuccess={dialogModal ? dialogModalActions[dialogModal] : undefined}
         />
       </>
     );

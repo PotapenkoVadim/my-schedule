@@ -38,3 +38,9 @@ export const PERMISSIONS = {
   [UserRole[UserRole.User]]: [UserScopes.allowOrder, UserScopes.allowCommon],
   [UserRole[UserRole.Guest]]: [UserScopes.allowCommon],
 };
+
+export const DIALOG_ACTION_TITLES = {
+  delete: "Вы действительно хотите удалить заказ?",
+  done: "Установить статус заказа Сдан?",
+  ready: "Установить статус заказа Готово?",
+};

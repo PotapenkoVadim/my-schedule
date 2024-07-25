@@ -9,4 +9,10 @@
     border-color: $button;
     opacity: 0.75;
   }
+
+  &.p-button-outlined.p-button-danger {
+    color: $red;
+    background: inherit;
+    border-color: $red;
+  }
 }
