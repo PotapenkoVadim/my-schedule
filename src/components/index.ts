@@ -56,5 +56,6 @@ export * from "./form-textarea/form-textarea";
 export * from "./form-calendar/form-calendar";
 export * from "./form-number/form-number";
 export * from "./dialog-modal/dialog-modal";
+export * from "./list-items/list-items";
 
 export * from "./types";

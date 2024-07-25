@@ -1,5 +1,5 @@
 import { getSessionService } from "@/services";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
 import { useFetch } from "./use-fetch";
@@ -18,11 +18,11 @@ export const useSession = () => {
     },
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!user) {
       handleFetch();
     }
-  }, [user]);
+  }, [user, handleFetch]);
 
   return {
     isSessionError: isError,

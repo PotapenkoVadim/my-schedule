@@ -2,7 +2,7 @@ import { OrderFormType, OrderStatus } from "@/types";
 import { OrderEntity } from "@/interfaces";
 
 const defaultFormValues = {
-  color: "000000",
+  color: "ff0000",
   customer: "",
   photoSet: "",
   deadline: undefined,

@@ -33,7 +33,7 @@ export function Calendar({
     date?: Date | null,
   ) => void;
 }) {
-  const dates = getDaysByWeeksOfYear(2024);
+  const dates = getDaysByWeeksOfYear(year);
   const currentDate = new Date().toDateString();
 
   const setPrevYear = () => onChangeYear(year - 1);
