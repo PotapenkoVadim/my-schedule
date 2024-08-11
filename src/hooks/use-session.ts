@@ -22,7 +22,7 @@ export const useSession = () => {
     if (!user) {
       handleFetch();
     }
-  }, [user, handleFetch]);
+  }, [user]);
 
   return {
     isSessionError: isError,
