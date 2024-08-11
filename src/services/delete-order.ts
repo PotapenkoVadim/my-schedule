@@ -5,4 +5,4 @@ export const deleteOrderService = (
   id: number,
   currentYear: number,
 ): Promise<OrderListEntity> =>
-  deleteApi(`/order-list/item/${id}`, { currentYear });
+  deleteApi(`/order-list/item/${id}?currentYear=${currentYear}`);

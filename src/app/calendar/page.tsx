@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
-import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
+import { useOrderMenuCtx, useOrder, useSession, useFetch } from "@/hooks";
 import { ContextMenu, DialogModal, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import { useOrderStore } from "@/stores/order";
@@ -17,6 +17,7 @@ import { OrderListEntity } from "@/interfaces";
 import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
 import { useUserStore } from "@/stores/user";
+import { getOrdersService } from "@/services";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
@@ -59,6 +60,12 @@ export default function CalendarPage() {
   };
 
   const { addOrder, editOrder, deleteOrder, isLoading } = useOrder({
+    onSuccess,
+    onError,
+  });
+
+  const { handleFetch: getOrders, isLoading: isGetOrdersLoading } = useFetch({
+    queryFn: getOrdersService,
     onSuccess,
     onError,
   });
@@ -109,6 +116,16 @@ export default function CalendarPage() {
     }
   };
 
+  const handleChangeYear = async (year: number) => {
+    if (user?.orders?.id) {
+      await getOrders(user.orders.id, year);
+      setYear(year);
+    }
+  };
+
+  const isLoadingPage =
+    isSessionLoading || isGetOrdersLoading || (!user && !isSessionError);
+
   const dialogModalActions = {
     delete: handleDeleteOrder,
     done: () => handleStatusOrder(handleDoneStatus(ctxOrder)),
@@ -116,7 +133,7 @@ export default function CalendarPage() {
   };
 
   let content;
-  if (isSessionLoading || (!user && !isSessionError)) {
+  if (isLoadingPage) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -124,7 +141,7 @@ export default function CalendarPage() {
         <Calendar
           theme={theme}
           year={year}
-          onChangeYear={setYear}
+          onChangeYear={handleChangeYear}
           onClickCtxMenu={handleContextMenu}
           orders={orderList?.items || []}
           onClick={handleClick}

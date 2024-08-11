@@ -4,3 +4,4 @@ export * from "./get-session";
 export * from "./add-order";
 export * from "./edit-order";
 export * from "./delete-order";
+export * from "./get-orders";
