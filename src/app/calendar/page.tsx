@@ -9,11 +9,9 @@ import { ContextMenu, DialogModal, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import { useOrderStore } from "@/stores/order";
 import {
-  formatDeadlineToServer,
   getContextMenuItems,
   handleDoneStatus,
   handleReadyStatus,
-  transformDetails,
 } from "@/utils";
 import { OrderListEntity } from "@/interfaces";
 import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
@@ -85,8 +83,7 @@ export default function CalendarPage() {
     const order = {
       ...data,
       status: OrderStatus.InProgress,
-      deadline: formatDeadlineToServer(data.deadline),
-      details: transformDetails(data.details),
+      currentYear: year,
     };
 
     if (ctxOrder) {
@@ -98,7 +95,7 @@ export default function CalendarPage() {
 
   const handleDeleteOrder = () => {
     if (ctxOrder?.id) {
-      deleteOrder(ctxOrder?.id);
+      deleteOrder(ctxOrder?.id, year);
     }
   };
 
@@ -107,6 +104,7 @@ export default function CalendarPage() {
       editOrder(ctxOrder.id, {
         ...omit(ctxOrder, ["id", "orderListId"]),
         status,
+        currentYear: year,
       });
     }
   };

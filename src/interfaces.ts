@@ -19,7 +19,7 @@ export interface UserEntity {
   role: UserRole;
   hash: string;
   salt: string;
-  settings?: {};
+  settings?: UserSettingsEntity;
   orders?: OrderListEntity;
   createdAt: string;
   updatedAt: string;
@@ -27,9 +27,9 @@ export interface UserEntity {
 
 export interface OrderDetailsEntity {
   id: number;
-  count: string;
+  count: number;
   description: string;
-  sum: string;
+  sum: number;
   orderId: number;
 }
 
@@ -38,7 +38,7 @@ export interface OrderEntity {
   color: string;
   customer: string;
   photoSet: string;
-  deadline: Array<string>;
+  deadline: Array<Date> | Date;
   comment?: string;
   status: OrderStatus;
   details: Array<OrderDetailsEntity>;
@@ -51,10 +51,11 @@ export interface OrderDto {
   color?: string;
   customer?: string;
   photoSet?: string;
-  deadline?: Array<string>;
+  deadline?: Array<Date> | Date;
   comment?: string;
   status?: OrderStatus | string;
   details?: Array<Partial<OrderDetailsEntity>>;
+  currentYear: number;
 }
 
 export interface OrderListEntity {

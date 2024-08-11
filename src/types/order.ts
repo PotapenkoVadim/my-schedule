@@ -7,10 +7,5 @@ export enum OrderStatus {
 }
 
 export type OrderFormType = Partial<
-  Omit<
-    OrderEntity,
-    "deadline" | "id" | "orderListId" | "createdAt" | "updatedAt" | "status"
-  >
-> & {
-  deadline?: Array<Date>;
-};
+  Omit<OrderEntity, "id" | "orderListId" | "createdAt" | "updatedAt" | "status">
+>;

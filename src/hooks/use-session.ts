@@ -20,7 +20,7 @@ export const useSession = () => {
 
   useEffect(() => {
     if (!user) {
-      handleFetch();
+      handleFetch(new Date().getFullYear());
     }
   }, [user]);
 
