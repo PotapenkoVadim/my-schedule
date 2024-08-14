@@ -1,6 +1,13 @@
 "use client";
 
-import { ChangeEventHandler, SyntheticEvent, useState } from "react";
+import {
+  ChangeEvent,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { useSearchParams } from "next/navigation";
 import { OrderStatus, ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
 import { useOrderStore } from "@/stores/order";
@@ -18,8 +25,11 @@ export function OrderTable({
   year: Date;
   changeYear: (date: Date) => void;
 }) {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("id");
+
   const [isShowDone, setIsShowDone] = useState(false);
-  const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [globalFilterValue, setGlobalFilterValue] = useState<string>();
   const [filters, setFilters] = useState<DataTableFilterMeta>({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
@@ -35,22 +45,37 @@ export function OrderTable({
     }
   };
 
-  const onGlobalFilterChange: ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    const { value } = event.target;
+  const changeFilter = useCallback(
+    (value: string) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore see: https://primereact.org/datatable/
+      filters.global.value = value;
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore see: https://primereact.org/datatable/
-    filters.global.value = value;
+      setFilters(filters);
+      setGlobalFilterValue(value);
+    },
+    [filters],
+  );
 
-    setFilters(filters);
-    setGlobalFilterValue(value);
+  const onGlobalFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    changeFilter(event.target.value);
   };
 
   const filteredOrders = orderList?.items?.filter((item) =>
     isShowDone ? true : item.status !== OrderStatus.Done,
   );
+
+  useEffect(() => {
+    if (orderId && orderList) {
+      const selectedOrder = orderList.items?.find(
+        (item) => item.id === Number(orderId),
+      );
+
+      if (selectedOrder && globalFilterValue === undefined) {
+        changeFilter(selectedOrder.photoSet);
+      }
+    }
+  }, [orderId, orderList, globalFilterValue, changeFilter]);
 
   return (
     <div className={styles.table}>

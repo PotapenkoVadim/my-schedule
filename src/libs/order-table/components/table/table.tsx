@@ -26,7 +26,7 @@ export function Table({
       data-theme={theme}
       value={data}
       emptyMessage="Не найдено подходящего заказа."
-      globalFilterFields={["customer", "set"]}
+      globalFilterFields={["customer", "photoSet"]}
       filters={filters}
     >
       <Column field="color" body={colorBodyTemplate} />

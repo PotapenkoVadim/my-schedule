@@ -21,11 +21,13 @@ import { getOrdersService } from "@/services";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
-  const [year, setYear] = useState(new Date().getFullYear());
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [dialogModal, setDialogModal] = useState<"delete" | "ready" | "done">();
 
-  const [user] = useUserStore(({ user }) => [user]);
+  const [user, selectedYear, changeYear] = useUserStore(
+    ({ user, selectedYear, changeYear }) => [user, selectedYear, changeYear],
+  );
+
   const [orderList, setOrderList] = useOrderStore(
     ({ orderList, setOrderList }) => [orderList, setOrderList],
   );
@@ -71,9 +73,7 @@ export default function CalendarPage() {
   });
 
   const handleClick = (id: number) => {
-    // TODO: provide state to table
-    console.log("ID: ", id);
-    router.push(`/${PATHS.table}`);
+    router.push(`${PATHS.table}?id=${id}`);
   };
 
   const handleAdd = () => {
@@ -90,7 +90,7 @@ export default function CalendarPage() {
     const order = {
       ...data,
       status: OrderStatus.InProgress,
-      currentYear: year,
+      currentYear: selectedYear,
     };
 
     if (ctxOrder) {
@@ -102,7 +102,7 @@ export default function CalendarPage() {
 
   const handleDeleteOrder = () => {
     if (ctxOrder?.id) {
-      deleteOrder(ctxOrder?.id, year);
+      deleteOrder(ctxOrder?.id, selectedYear);
     }
   };
 
@@ -111,7 +111,7 @@ export default function CalendarPage() {
       editOrder(ctxOrder.id, {
         ...omit(ctxOrder, ["id", "orderListId"]),
         status,
-        currentYear: year,
+        currentYear: selectedYear,
       });
     }
   };
@@ -119,7 +119,7 @@ export default function CalendarPage() {
   const handleChangeYear = async (year: number) => {
     if (user?.orders?.id) {
       await getOrders(user.orders.id, year);
-      setYear(year);
+      changeYear(year);
     }
   };
 
@@ -140,7 +140,7 @@ export default function CalendarPage() {
       <>
         <Calendar
           theme={theme}
-          year={year}
+          year={selectedYear}
           onChangeYear={handleChangeYear}
           onClickCtxMenu={handleContextMenu}
           orders={orderList?.items || []}

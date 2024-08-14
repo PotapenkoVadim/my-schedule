@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useAppContext } from "@/context";
 import { OrderTable } from "@/libs";
 import { useUserStore } from "@/stores/user";
@@ -9,12 +8,14 @@ import { Spinner } from "@/components";
 import styles from "./page.module.scss";
 
 export default function OrderTablePage() {
-  const [selectedYear, setSelectedYear] = useState(new Date());
-
   const { theme } = useAppContext();
   const { isSessionLoading, isSessionError } = useSession();
 
-  const [user] = useUserStore(({ user }) => [user]);
+  const [user, selectedYear, changeYear] = useUserStore(
+    ({ user, selectedYear, changeYear }) => [user, selectedYear, changeYear],
+  );
+
+  const setSelectedYear = (date: Date) => changeYear(date.getFullYear());
 
   let content;
   if (isSessionLoading || (!user && !isSessionError)) {
@@ -23,7 +24,7 @@ export default function OrderTablePage() {
     content = (
       <OrderTable
         theme={theme}
-        year={selectedYear}
+        year={new Date(String(selectedYear))}
         changeYear={setSelectedYear}
       />
     );
