@@ -1,4 +1,4 @@
-import { UserRole, UserScopes } from "./types";
+import { DialogVariant, UserRole, UserScopes } from "./types";
 
 export const APP_TITLE = "My Schedule";
 export const APP_DESCRIPTION =
@@ -40,7 +40,7 @@ export const PERMISSIONS = {
 };
 
 export const DIALOG_ACTION_TITLES = {
-  delete: "Вы действительно хотите удалить заказ?",
-  done: "Установить статус заказа Сдан?",
-  ready: "Установить статус заказа Готово?",
+  [DialogVariant.delete]: "Вы действительно хотите удалить заказ?",
+  [DialogVariant.done]: "Установить статус заказа Сдан?",
+  [DialogVariant.ready]: "Установить статус заказа Готово?",
 };

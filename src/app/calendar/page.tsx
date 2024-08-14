@@ -15,14 +15,14 @@ import {
 } from "@/utils";
 import { OrderListEntity } from "@/interfaces";
 import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
-import { OrderFormType, OrderStatus } from "@/types";
+import { DialogVariant, OrderFormType, OrderStatus } from "@/types";
 import { useUserStore } from "@/stores/user";
 import { getOrdersService } from "@/services";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [dialogModal, setDialogModal] = useState<"delete" | "ready" | "done">();
+  const [dialogModal, setDialogModal] = useState<DialogVariant>();
 
   const [user, selectedYear, changeYear] = useUserStore(
     ({ user, selectedYear, changeYear }) => [user, selectedYear, changeYear],
@@ -82,9 +82,9 @@ export default function CalendarPage() {
   };
 
   const handleEdit = () => openModal();
-  const handleDone = () => setDialogModal("done");
-  const handleDelete = () => setDialogModal("delete");
-  const handleReady = () => setDialogModal("ready");
+  const handleDone = () => setDialogModal(DialogVariant.done);
+  const handleDelete = () => setDialogModal(DialogVariant.delete);
+  const handleReady = () => setDialogModal(DialogVariant.ready);
 
   const onSubmitOrderForm = (data: OrderFormType) => {
     const order = {
@@ -127,9 +127,9 @@ export default function CalendarPage() {
     isSessionLoading || isGetOrdersLoading || (!user && !isSessionError);
 
   const dialogModalActions = {
-    delete: handleDeleteOrder,
-    done: () => handleStatusOrder(handleDoneStatus(ctxOrder)),
-    ready: () => handleStatusOrder(handleReadyStatus(ctxOrder)),
+    [DialogVariant.delete]: handleDeleteOrder,
+    [DialogVariant.done]: () => handleStatusOrder(handleDoneStatus(ctxOrder)),
+    [DialogVariant.ready]: () => handleStatusOrder(handleReadyStatus(ctxOrder)),
   };
 
   let content;
