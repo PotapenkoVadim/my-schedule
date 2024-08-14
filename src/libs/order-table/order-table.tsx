@@ -10,19 +10,23 @@ import {
 import { useSearchParams } from "next/navigation";
 import { OrderStatus, ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
-import { useOrderStore } from "@/stores/order";
 import { DataTableFilterMeta } from "@/components";
 import { FilterMatchMode } from "primereact/api";
+import { OrderListEntity } from "@/interfaces";
 import { Table, Toolbar } from "./components";
 import styles from "./order-table.module.scss";
 
 export function OrderTable({
   theme,
   year,
+  orderList,
+  isLoading,
   changeYear,
 }: {
   theme: ThemeVariant;
   year: Date;
+  orderList: OrderListEntity | null;
+  isLoading: boolean;
   changeYear: (date: Date) => void;
 }) {
   const searchParams = useSearchParams();
@@ -33,8 +37,6 @@ export function OrderTable({
   const [filters, setFilters] = useState<DataTableFilterMeta>({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
-
-  const [orderList] = useOrderStore(({ orderList }) => [orderList]);
 
   const switchShowDone = () => setIsShowDone(!isShowDone);
   const handleChangeDate = (
@@ -89,7 +91,12 @@ export function OrderTable({
         filterValue={globalFilterValue}
       />
 
-      <Table filters={filters} theme={theme} data={filteredOrders} />
+      <Table
+        isLoading={isLoading}
+        filters={filters}
+        theme={theme}
+        data={filteredOrders}
+      />
     </div>
   );
 }

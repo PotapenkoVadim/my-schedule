@@ -13,10 +13,12 @@ export function Table({
   theme,
   data,
   filters,
+  isLoading,
 }: {
   theme: ThemeVariant;
   data?: Array<OrderEntity>;
   filters: DataTableFilterMeta;
+  isLoading: boolean;
 }) {
   return (
     <DataTable
@@ -28,6 +30,7 @@ export function Table({
       emptyMessage="Не найдено подходящего заказа."
       globalFilterFields={["customer", "photoSet"]}
       filters={filters}
+      loading={isLoading}
     >
       <Column field="color" body={colorBodyTemplate} />
       <Column sortable field="customer" header="Заказчик" />
