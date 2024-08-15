@@ -38,7 +38,7 @@ export interface OrderEntity {
   color: string;
   customer: string;
   photoSet: string;
-  deadline: Array<Date> | Date;
+  deadline: Array<Date>;
   comment?: string;
   status: OrderStatus;
   details: Array<OrderDetailsEntity>;

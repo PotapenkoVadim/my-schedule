@@ -81,7 +81,7 @@ export const findOrderByDate = (
   });
 };
 
-export const checkWeekend = (date?: Array<string>) => {
+export const checkWeekend = (date?: Array<Date>) => {
   if (date) {
     const startDay = date[0] ? new Date(date[0]).getDay() : null;
     const endDay = date[1] ? new Date(date[1]).getDay() : null;
