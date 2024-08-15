@@ -49,9 +49,10 @@ export function Toolbar({
           <span className="p-input-icon-left">
             <i className="pi pi-search" />
             <InputText
-              placeholder="Поиск по заказчику"
+              placeholder="Поиск по заказчику и фотосету"
               value={filterValue}
               onChange={onChangeFilter}
+              className={styles.toolbar__search}
             />
           </span>
         </div>
