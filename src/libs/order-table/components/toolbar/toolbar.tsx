@@ -1,6 +1,7 @@
 import { ChangeEventHandler, SyntheticEvent } from "react";
 import {
   Toolbar as BaseToolbar,
+  Button,
   Calendar,
   InputSwitch,
   InputText,
@@ -17,6 +18,7 @@ export function Toolbar({
   onChangeDate,
   onSwitch,
   onChangeFilter,
+  onAddOrder,
   filterValue,
 }: {
   theme: ThemeVariant;
@@ -27,6 +29,7 @@ export function Toolbar({
   ) => void;
   onSwitch: () => void;
   onChangeFilter: ChangeEventHandler<HTMLInputElement>;
+  onAddOrder: () => void;
   filterValue?: string;
 }) {
   locale("ru");
@@ -37,6 +40,8 @@ export function Toolbar({
       data-theme={theme}
       start={
         <div className={styles.toolbar__fields}>
+          <Button onClick={onAddOrder} icon="pi pi-plus" />
+
           <Calendar
             value={date}
             onChange={onChangeDate}

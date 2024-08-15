@@ -15,6 +15,7 @@ export function OrderTable({
   isLoading,
   orderId,
   changeYear,
+  onAddOrder,
 }: {
   theme: ThemeVariant;
   year: Date;
@@ -22,6 +23,7 @@ export function OrderTable({
   isLoading: boolean;
   orderId: string | null;
   changeYear: (date: Date) => void;
+  onAddOrder: () => void;
 }) {
   const selectedOrder = orderList?.items?.find(
     (item) => item.id === Number(orderId),
@@ -61,6 +63,7 @@ export function OrderTable({
         onSwitch={switchShowDone}
         theme={theme}
         filterValue={globalFilterValue}
+        onAddOrder={onAddOrder}
       />
 
       <Table

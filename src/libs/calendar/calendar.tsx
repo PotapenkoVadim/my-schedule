@@ -19,6 +19,7 @@ export function Calendar({
   theme,
   year,
   onClick,
+  onAddOrder,
   onChangeYear,
   onClickCtxMenu,
 }: {
@@ -26,6 +27,7 @@ export function Calendar({
   theme: ThemeVariant;
   year: number;
   onClick: (id: number) => void;
+  onAddOrder: () => void;
   onChangeYear: (year: number) => void;
   onClickCtxMenu?: (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
@@ -78,6 +80,7 @@ export function Calendar({
       <div className={styles.calendar__toolbar}>
         <div className={styles.calendar__year}>Год: {year}</div>
         <div className={styles.calendar__buttons}>
+          <Button onClick={onAddOrder} icon="pi pi-plus" />
           <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
           <Button onClick={setNextYear} icon="pi pi-arrow-right" />
         </div>

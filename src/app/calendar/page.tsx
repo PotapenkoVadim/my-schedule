@@ -145,6 +145,7 @@ export default function CalendarPage() {
           onClickCtxMenu={handleContextMenu}
           orders={orderList?.items || []}
           onClick={handleClick}
+          onAddOrder={handleAdd}
         />
 
         <ContextMenu
