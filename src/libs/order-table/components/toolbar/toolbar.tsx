@@ -1,4 +1,5 @@
 import { ChangeEventHandler, SyntheticEvent } from "react";
+import { useRouter } from "next/navigation";
 import {
   Toolbar as BaseToolbar,
   Button,
@@ -9,6 +10,7 @@ import {
 import { ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
 import { locale, addLocale } from "primereact/api";
+import { PATHS } from "@/constants";
 import styles from "./toolbar.module.scss";
 
 export function Toolbar({
@@ -37,11 +39,16 @@ export function Toolbar({
   locale("ru");
   addLocale("ru", { firstDayOfWeek: 1 });
 
+  const router = useRouter();
+
+  const moveToCalendar = () => router.push(PATHS.calendar);
+
   return (
     <BaseToolbar
       data-theme={theme}
       start={
         <div className={styles.toolbar__fields}>
+          <Button onClick={moveToCalendar} icon="pi pi-calendar" />
           {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
 
           <Calendar

@@ -20,6 +20,7 @@ export function Calendar({
   year,
   isLogIn,
   onClick,
+  onTable,
   onAddOrder,
   onChangeYear,
   onClickCtxMenu,
@@ -31,6 +32,7 @@ export function Calendar({
   onClick: (id: number) => void;
   onAddOrder: () => void;
   onChangeYear: (year: number) => void;
+  onTable: () => void;
   onClickCtxMenu?: (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     order?: OrderEntity,
@@ -83,7 +85,7 @@ export function Calendar({
         <div className={styles.calendar__year}>Год: {year}</div>
         <div className={styles.calendar__buttons}>
           {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
-
+          <Button onClick={onTable} icon="pi pi-table" />
           <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
           <Button onClick={setNextYear} icon="pi pi-arrow-right" />
         </div>

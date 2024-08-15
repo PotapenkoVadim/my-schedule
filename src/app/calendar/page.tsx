@@ -72,8 +72,8 @@ export default function CalendarPage() {
     onError,
   });
 
-  const handleClick = (id: number) => {
-    router.push(`${PATHS.table}?id=${id}`);
+  const handleClick = (id?: number) => {
+    router.push(id ? `${PATHS.table}?id=${id}` : PATHS.table);
   };
 
   const handleAdd = () => {
@@ -142,11 +142,12 @@ export default function CalendarPage() {
           theme={theme}
           year={selectedYear}
           isLogIn={Boolean(user)}
+          orders={orderList?.items || []}
           onChangeYear={handleChangeYear}
           onClickCtxMenu={handleContextMenu}
-          orders={orderList?.items || []}
           onClick={handleClick}
           onAddOrder={handleAdd}
+          onTable={handleClick}
         />
 
         <ContextMenu
