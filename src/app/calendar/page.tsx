@@ -82,9 +82,17 @@ export default function CalendarPage() {
   };
 
   const handleEdit = () => openModal();
-  const handleDone = () => setDialogModal(DialogVariant.done);
-  const handleDelete = () => setDialogModal(DialogVariant.delete);
-  const handleReady = () => setDialogModal(DialogVariant.ready);
+  const handleDone = () => {
+    if (ctxOrder) setDialogModal(DialogVariant.done);
+  };
+
+  const handleDelete = () => {
+    if (ctxOrder) setDialogModal(DialogVariant.delete);
+  };
+
+  const handleReady = () => {
+    if (ctxOrder) setDialogModal(DialogVariant.ready);
+  };
 
   const onSubmitOrderForm = (data: OrderFormType) => {
     const order = {
