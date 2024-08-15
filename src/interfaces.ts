@@ -17,8 +17,6 @@ export interface UserEntity {
   id: number;
   username: string;
   role: UserRole;
-  hash: string;
-  salt: string;
   settings?: UserSettingsEntity;
   orders?: OrderListEntity;
   createdAt: string;
