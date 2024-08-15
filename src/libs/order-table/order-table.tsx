@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  ChangeEvent,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { useSearchParams } from "next/navigation";
+import { ChangeEvent, SyntheticEvent } from "react";
 import { OrderStatus, ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
-import { DataTableFilterMeta } from "@/components";
-import { FilterMatchMode } from "primereact/api";
 import { OrderListEntity } from "@/interfaces";
 import { Table, Toolbar } from "./components";
+import { useOrderTable } from "./hooks";
 import styles from "./order-table.module.scss";
 
 export function OrderTable({
@@ -21,24 +13,28 @@ export function OrderTable({
   year,
   orderList,
   isLoading,
+  orderId,
   changeYear,
 }: {
   theme: ThemeVariant;
   year: Date;
   orderList: OrderListEntity | null;
   isLoading: boolean;
+  orderId: string | null;
   changeYear: (date: Date) => void;
 }) {
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get("id");
+  const selectedOrder = orderList?.items?.find(
+    (item) => item.id === Number(orderId),
+  );
 
-  const [isShowDone, setIsShowDone] = useState(false);
-  const [globalFilterValue, setGlobalFilterValue] = useState<string>();
-  const [filters, setFilters] = useState<DataTableFilterMeta>({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  });
+  const {
+    changeFilter,
+    filters,
+    isShowDone,
+    switchShowDone,
+    globalFilterValue,
+  } = useOrderTable(selectedOrder?.photoSet, selectedOrder?.status);
 
-  const switchShowDone = () => setIsShowDone(!isShowDone);
   const handleChangeDate = (
     event: FormEvent<Date, SyntheticEvent<Element, Event>>,
   ) => {
@@ -47,19 +43,7 @@ export function OrderTable({
     }
   };
 
-  const changeFilter = useCallback(
-    (value: string) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore see: https://primereact.org/datatable/
-      filters.global.value = value;
-
-      setFilters(filters);
-      setGlobalFilterValue(value);
-    },
-    [filters],
-  );
-
-  const onGlobalFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     changeFilter(event.target.value);
   };
 
@@ -67,25 +51,13 @@ export function OrderTable({
     isShowDone ? true : item.status !== OrderStatus.Done,
   );
 
-  useEffect(() => {
-    if (orderId && orderList) {
-      const selectedOrder = orderList.items?.find(
-        (item) => item.id === Number(orderId),
-      );
-
-      if (selectedOrder && globalFilterValue === undefined) {
-        changeFilter(selectedOrder.photoSet);
-      }
-    }
-  }, [orderId, orderList, globalFilterValue, changeFilter]);
-
   return (
     <div className={styles.table}>
       <Toolbar
         checked={isShowDone}
         date={year}
         onChangeDate={handleChangeDate}
-        onChangeFilter={onGlobalFilterChange}
+        onChangeFilter={handleFilterChange}
         onSwitch={switchShowDone}
         theme={theme}
         filterValue={globalFilterValue}

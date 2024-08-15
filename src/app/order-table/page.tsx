@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppContext } from "@/context";
+import { useSearchParams } from "next/navigation";
 import { OrderTable } from "@/libs";
 import { useUserStore } from "@/stores/user";
 import { useFetch, useSession } from "@/hooks";
@@ -11,6 +12,9 @@ import { WENT_WRONG_ERROR } from "@/constants";
 import styles from "./page.module.scss";
 
 export default function OrderTablePage() {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("id");
+
   const { theme, showToast } = useAppContext();
   const { isSessionLoading, isSessionError } = useSession();
 
@@ -48,6 +52,7 @@ export default function OrderTablePage() {
         orderList={orderList}
         isLoading={isGetOrdersLoading}
         changeYear={handleChangeYear}
+        orderId={orderId}
       />
     );
   }
