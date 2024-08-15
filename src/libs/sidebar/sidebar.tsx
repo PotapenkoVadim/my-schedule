@@ -16,10 +16,12 @@ import { PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { useUserStore } from "@/stores/user";
 import { useFetch } from "@/hooks";
 import { signOutService } from "@/services";
+import { useOrderStore } from "@/stores/order";
 import styles from "./sidebar.module.scss";
 
 export function Sidebar() {
   const { theme, switchTheme, showToast } = useAppContext();
+  const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
   const [user, removeUser] = useUserStore(({ user, removeUser }) => [
     user,
     removeUser,
@@ -30,7 +32,10 @@ export function Sidebar() {
 
   const { isLoading, handleFetch } = useFetch({
     queryFn: signOutService,
-    onSuccess: removeUser,
+    onSuccess: () => {
+      removeUser();
+      setOrderList(null);
+    },
     onError: () => showToast("error", WENT_WRONG_ERROR),
   });
 
