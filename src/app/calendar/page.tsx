@@ -141,6 +141,7 @@ export default function CalendarPage() {
         <Calendar
           theme={theme}
           year={selectedYear}
+          isLogIn={Boolean(user)}
           onChangeYear={handleChangeYear}
           onClickCtxMenu={handleContextMenu}
           orders={orderList?.items || []}

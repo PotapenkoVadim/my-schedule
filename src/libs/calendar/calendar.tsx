@@ -18,6 +18,7 @@ export function Calendar({
   orders,
   theme,
   year,
+  isLogIn,
   onClick,
   onAddOrder,
   onChangeYear,
@@ -25,6 +26,7 @@ export function Calendar({
 }: {
   orders?: Array<OrderEntity>;
   theme: ThemeVariant;
+  isLogIn: boolean;
   year: number;
   onClick: (id: number) => void;
   onAddOrder: () => void;
@@ -55,7 +57,7 @@ export function Calendar({
   ) => {
     const findedOrder = findOrderByDate(date, orders);
 
-    if (onClickCtxMenu) {
+    if (onClickCtxMenu && isLogIn) {
       e.preventDefault();
       onClickCtxMenu(e, findedOrder, date);
     }
@@ -80,7 +82,8 @@ export function Calendar({
       <div className={styles.calendar__toolbar}>
         <div className={styles.calendar__year}>Год: {year}</div>
         <div className={styles.calendar__buttons}>
-          <Button onClick={onAddOrder} icon="pi pi-plus" />
+          {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
+
           <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
           <Button onClick={setNextYear} icon="pi pi-arrow-right" />
         </div>

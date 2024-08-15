@@ -14,11 +14,13 @@ export function OrderTable({
   orderList,
   isLoading,
   orderId,
+  isLogIn,
   changeYear,
   onAddOrder,
 }: {
   theme: ThemeVariant;
   year: Date;
+  isLogIn: boolean;
   orderList: OrderListEntity | null;
   isLoading: boolean;
   orderId: string | null;
@@ -64,6 +66,7 @@ export function OrderTable({
         theme={theme}
         filterValue={globalFilterValue}
         onAddOrder={onAddOrder}
+        isLogIn={isLogIn}
       />
 
       <Table

@@ -83,6 +83,7 @@ export default function OrderTablePage() {
           changeYear={handleChangeYear}
           orderId={orderId}
           onAddOrder={openModal}
+          isLogIn={Boolean(user)}
         />
 
         <OrderModal

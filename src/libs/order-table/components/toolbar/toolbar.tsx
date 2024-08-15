@@ -15,6 +15,7 @@ export function Toolbar({
   theme,
   date,
   checked,
+  isLogIn,
   onChangeDate,
   onSwitch,
   onChangeFilter,
@@ -24,6 +25,7 @@ export function Toolbar({
   theme: ThemeVariant;
   date: Date;
   checked: boolean;
+  isLogIn: boolean;
   onChangeDate: (
     event: FormEvent<Date, SyntheticEvent<Element, Event>>,
   ) => void;
@@ -40,7 +42,7 @@ export function Toolbar({
       data-theme={theme}
       start={
         <div className={styles.toolbar__fields}>
-          <Button onClick={onAddOrder} icon="pi pi-plus" />
+          {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
 
           <Calendar
             value={date}
