@@ -3,6 +3,7 @@ import { PATHS } from "@/constants";
 export const getNavigateLinks = (
   navigateTo: (href: string) => void,
   onBeforeNavigate: () => void,
+  isAdmin: boolean,
 ) => [
   {
     path: PATHS.calendar,
@@ -10,7 +11,7 @@ export const getNavigateLinks = (
     label: "Календарь",
     command: () => {
       onBeforeNavigate();
-      navigateTo("/calendar");
+      navigateTo(PATHS.calendar);
     },
   },
   {
@@ -19,7 +20,20 @@ export const getNavigateLinks = (
     label: "Таблица заказов",
     command: () => {
       onBeforeNavigate();
-      navigateTo("/order-table");
+      navigateTo(PATHS.table);
     },
   },
+  ...(isAdmin
+    ? [
+        {
+          path: PATHS.adminPanel,
+          icon: "pi pi-cog",
+          label: "Админка",
+          command: () => {
+            onBeforeNavigate();
+            navigateTo(PATHS.adminPanel);
+          },
+        },
+      ]
+    : []),
 ];

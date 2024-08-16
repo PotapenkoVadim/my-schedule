@@ -10,7 +10,7 @@ import {
   SignOutButton,
   ThemeSwitcher,
 } from "@/components";
-import { getNavigateLinks } from "@/utils";
+import { getNavigateLinks, isAdmin } from "@/utils";
 import { useAppContext } from "@/context";
 import { PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { useFetch, useSession } from "@/hooks";
@@ -42,7 +42,11 @@ export function Sidebar() {
     router.push(PATHS.home);
   };
 
-  const navigateLinks = getNavigateLinks(router.push, toggleSidebar);
+  const navigateLinks = getNavigateLinks(
+    router.push,
+    toggleSidebar,
+    isAdmin(currentUser),
+  );
 
   return (
     <>

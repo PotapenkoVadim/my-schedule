@@ -12,6 +12,7 @@ export const enum PATHS {
   table = "/order-table",
   calendar = "/calendar",
   signIn = "/sign-in",
+  adminPanel = "/admin-panel",
 }
 
 export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";

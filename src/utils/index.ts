@@ -5,3 +5,4 @@ export * from "./get-context-menu-item";
 export * from "./handle-done-status";
 export * from "./handle-ready-status";
 export * from "./calculate-details";
+export * from "./is-admin";
