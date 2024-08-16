@@ -41,7 +41,7 @@ export function OrderForm({
 
   return (
     <FormProvider {...formMethods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.form__row}>
           <FormColorPicker
             className={styles.form__picker}

@@ -28,3 +28,15 @@
     min-width: 44px;
   }
 }
+
+@media (width <= 480px) {
+  .details {
+    &__row {
+      flex-direction: column;
+    }
+
+    &__delete {
+      width: 100%;
+    }
+  }
+}

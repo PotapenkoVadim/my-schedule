@@ -2,7 +2,6 @@ import { OrderEntity } from "@/interfaces";
 import { Dialog } from "@/components";
 import { OrderFormType } from "@/types";
 import { OrderForm } from "../order-form/order-form";
-import styles from "./order-modal.module.scss";
 
 export function OrderModal({
   isOpen,
@@ -22,12 +21,7 @@ export function OrderModal({
   const title = order ? "Редактировать" : "Создать";
 
   return (
-    <Dialog
-      className={styles.modal}
-      visible={isOpen}
-      onHide={onClose}
-      header={title}
-    >
+    <Dialog visible={isOpen} onHide={onClose} header={title} draggable={false}>
       <OrderForm
         order={order}
         onSubmit={onSubmit}

@@ -7,7 +7,7 @@
     font-weight: 600;
   }
 
-  &__fields {
+  &__row {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -15,5 +15,18 @@
 
   &__search {
     width: 320px;
+  }
+}
+
+@media (width <= 760px) {
+  .toolbar {
+    &__row_right {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__search {
+      width: 100%;
+    }
   }
 }

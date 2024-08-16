@@ -1,4 +1,5 @@
 import { ChangeEventHandler, SyntheticEvent } from "react";
+import classnames from "classnames";
 import { useRouter } from "next/navigation";
 import {
   Toolbar as BaseToolbar,
@@ -49,35 +50,41 @@ export function Toolbar({
     <BaseToolbar
       data-theme={theme}
       start={
-        <div className={styles.toolbar__fields}>
-          <Button onClick={moveToCalendar} icon="pi pi-calendar" />
-          {Boolean(user) && (
-            <PermissionGuard
-              currentUser={user}
-              scopes={[UserScopes.allowOrder]}
-            >
-              <Button onClick={onAddOrder} icon="pi pi-plus" />
-            </PermissionGuard>
-          )}
+        <div
+          className={classnames(styles.toolbar__row, styles.toolbar__row_right)}
+        >
+          <div className={styles.toolbar__row}>
+            <Button onClick={moveToCalendar} icon="pi pi-calendar" />
+            {Boolean(user) && (
+              <PermissionGuard
+                currentUser={user}
+                scopes={[UserScopes.allowOrder]}
+              >
+                <Button onClick={onAddOrder} icon="pi pi-plus" />
+              </PermissionGuard>
+            )}
 
-          <Calendar
-            value={date}
-            onChange={onChangeDate}
-            dateFormat="yy"
-            view="year"
-            readOnlyInput
-            showIcon
-            locale="ru"
-          />
-          <span className="p-input-icon-left">
+            <Calendar
+              value={date}
+              onChange={onChangeDate}
+              dateFormat="yy"
+              view="year"
+              readOnlyInput
+              showIcon
+              locale="ru"
+            />
+          </div>
+
+          <div
+            className={classnames("p-input-icon-left", styles.toolbar__search)}
+          >
             <i className="pi pi-search" />
             <InputText
               placeholder="Поиск по заказчику и фотосету"
               value={filterValue}
               onChange={onChangeFilter}
-              className={styles.toolbar__search}
             />
-          </span>
+          </div>
         </div>
       }
       end={

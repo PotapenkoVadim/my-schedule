@@ -30,3 +30,26 @@
     flex: 6;
   }
 }
+
+@media (width <= 760px) {
+  .form {
+    width: 90vw;
+    
+    &__row {
+      flex-direction: column;
+    }
+
+    &__picker {
+      align-self: flex-start;
+      width: 30px;
+    }
+
+    &__date {
+      width: 100%;
+
+      & > * {
+        width: 100%;
+      }
+    }
+  }
+}
