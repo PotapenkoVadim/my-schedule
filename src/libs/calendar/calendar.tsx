@@ -2,8 +2,10 @@ import { MouseEvent } from "react";
 import classnames from "classnames";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Tooltip } from "@/components";
-import { ThemeVariant } from "@/types";
-import { OrderEntity } from "@/interfaces";
+import { ThemeVariant, UserScopes } from "@/types";
+import { OrderEntity, UserEntity } from "@/interfaces";
+import { hasPermission } from "@/utils";
+import { PERMISSIONS } from "@/constants";
 import {
   findOrderByDate,
   getBackgroundColor,
@@ -12,13 +14,14 @@ import {
   getTextColor,
 } from "./utils";
 import { MONTHS, WEEKS } from "./constants";
+import { PermissionGuard } from "../permission-guard/permission-guard";
 import styles from "./calendar.module.scss";
 
 export function Calendar({
   orders,
   theme,
   year,
-  isLogIn,
+  user,
   onClick,
   onTable,
   onAddOrder,
@@ -27,7 +30,7 @@ export function Calendar({
 }: {
   orders?: Array<OrderEntity>;
   theme: ThemeVariant;
-  isLogIn: boolean;
+  user: UserEntity | null;
   year: number;
   onClick: (id: number) => void;
   onAddOrder: () => void;
@@ -39,6 +42,7 @@ export function Calendar({
     date?: Date | null,
   ) => void;
 }) {
+  const isLogIn = Boolean(user);
   const dates = getDaysByWeeksOfYear(year);
   const currentDate = new Date().toDateString();
 
@@ -46,10 +50,10 @@ export function Calendar({
   const setNextYear = () => onChangeYear(year + 1);
 
   const handleDayClick = (date: Date | null) => {
-    const findedOrder = findOrderByDate(date, orders);
+    const selectedOrder = findOrderByDate(date, orders);
 
-    if (findedOrder) {
-      onClick(findedOrder.id);
+    if (selectedOrder) {
+      onClick(selectedOrder.id);
     }
   };
 
@@ -57,25 +61,27 @@ export function Calendar({
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     date: Date | null,
   ) => {
-    const findedOrder = findOrderByDate(date, orders);
+    const order = findOrderByDate(date, orders);
+    const permission = user?.role ? PERMISSIONS[user.role] : [];
+    const isAllowed = hasPermission([UserScopes.allowOrder], permission);
 
-    if (onClickCtxMenu && isLogIn) {
+    if (onClickCtxMenu && isLogIn && isAllowed) {
       e.preventDefault();
-      onClickCtxMenu(e, findedOrder, date);
+      onClickCtxMenu(e, order, date);
     }
   };
 
   const isDisabledDay = (date: Date | null) => {
-    const findedOrder = findOrderByDate(date, orders);
+    const order = findOrderByDate(date, orders);
 
-    return !findedOrder;
+    return !order;
   };
 
   const getTooltipText = (date: Date | null) => {
-    const findedOrder = findOrderByDate(date, orders);
+    const order = findOrderByDate(date, orders);
 
-    if (findedOrder) {
-      return `${findedOrder.customer}: ${findedOrder.photoSet}`;
+    if (order) {
+      return `${order.customer}: ${order.photoSet}`;
     }
   };
 
@@ -84,10 +90,23 @@ export function Calendar({
       <div className={styles.calendar__toolbar}>
         <div className={styles.calendar__year}>Год: {year}</div>
         <div className={styles.calendar__buttons}>
-          {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
+          {isLogIn && (
+            <PermissionGuard
+              currentUser={user}
+              scopes={[UserScopes.allowOrder]}
+            >
+              <Button onClick={onAddOrder} icon="pi pi-plus" />
+            </PermissionGuard>
+          )}
+
           <Button onClick={onTable} icon="pi pi-table" />
-          <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
-          <Button onClick={setNextYear} icon="pi pi-arrow-right" />
+
+          {isLogIn && (
+            <>
+              <Button onClick={setPrevYear} icon="pi pi-arrow-left" />
+              <Button onClick={setNextYear} icon="pi pi-arrow-right" />
+            </>
+          )}
         </div>
       </div>
 

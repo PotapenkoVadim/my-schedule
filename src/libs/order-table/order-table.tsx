@@ -3,7 +3,7 @@
 import { ChangeEvent, SyntheticEvent } from "react";
 import { OrderStatus, ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
-import { OrderListEntity } from "@/interfaces";
+import { OrderListEntity, UserEntity } from "@/interfaces";
 import { Table, Toolbar } from "./components";
 import { useOrderTable } from "./hooks";
 import styles from "./order-table.module.scss";
@@ -14,13 +14,13 @@ export function OrderTable({
   orderList,
   isLoading,
   orderId,
-  isLogIn,
+  user,
   changeYear,
   onAddOrder,
 }: {
   theme: ThemeVariant;
   year: Date;
-  isLogIn: boolean;
+  user: UserEntity | null;
   orderList: OrderListEntity | null;
   isLoading: boolean;
   orderId: string | null;
@@ -66,7 +66,7 @@ export function OrderTable({
         theme={theme}
         filterValue={globalFilterValue}
         onAddOrder={onAddOrder}
-        isLogIn={isLogIn}
+        user={user}
       />
 
       <Table

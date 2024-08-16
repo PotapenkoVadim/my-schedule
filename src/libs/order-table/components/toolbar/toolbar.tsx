@@ -7,17 +7,19 @@ import {
   InputSwitch,
   InputText,
 } from "@/components";
-import { ThemeVariant } from "@/types";
+import { ThemeVariant, UserScopes } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
 import { locale, addLocale } from "primereact/api";
 import { PATHS } from "@/constants";
+import { UserEntity } from "@/interfaces";
+import { PermissionGuard } from "@/libs/permission-guard/permission-guard";
 import styles from "./toolbar.module.scss";
 
 export function Toolbar({
   theme,
   date,
   checked,
-  isLogIn,
+  user,
   onChangeDate,
   onSwitch,
   onChangeFilter,
@@ -27,7 +29,7 @@ export function Toolbar({
   theme: ThemeVariant;
   date: Date;
   checked: boolean;
-  isLogIn: boolean;
+  user: UserEntity | null;
   onChangeDate: (
     event: FormEvent<Date, SyntheticEvent<Element, Event>>,
   ) => void;
@@ -49,7 +51,14 @@ export function Toolbar({
       start={
         <div className={styles.toolbar__fields}>
           <Button onClick={moveToCalendar} icon="pi pi-calendar" />
-          {isLogIn && <Button onClick={onAddOrder} icon="pi pi-plus" />}
+          {Boolean(user) && (
+            <PermissionGuard
+              currentUser={user}
+              scopes={[UserScopes.allowOrder]}
+            >
+              <Button onClick={onAddOrder} icon="pi pi-plus" />
+            </PermissionGuard>
+          )}
 
           <Calendar
             value={date}
