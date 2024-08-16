@@ -1,10 +1,10 @@
-import { getSessionService } from "@/services";
+import { getSessionService, signOutService } from "@/services";
 import { useEffect } from "react";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
 import { useFetch } from "./use-fetch";
 
-export const useSession = () => {
+export const useSession = (onError?: () => void) => {
   const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
   const [user, setUser, removeUser] = useUserStore(
     ({ user, setUser, removeUser }) => [user, setUser, removeUser],
@@ -20,6 +20,15 @@ export const useSession = () => {
     },
   });
 
+  const { isLoading: isSignOutLoading, handleFetch: singOut } = useFetch({
+    queryFn: signOutService,
+    onSuccess: () => {
+      removeUser();
+      setOrderList(null);
+    },
+    onError,
+  });
+
   useEffect(() => {
     if (!user) {
       handleFetch(new Date().getFullYear());
@@ -30,8 +39,9 @@ export const useSession = () => {
     currentUser: user,
     setCurrentUser: setUser,
     removeCurrentUser: removeUser,
+    singOut,
     isSessionError: isError,
-    isSessionLoading: isLoading,
+    isSessionLoading: isLoading || isSignOutLoading,
     isSessionSuccess: isSuccess,
   };
 };

@@ -1,0 +1,33 @@
+.list {
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    width: 50%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    & > * {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+@media (width <= 780px) {
+  .list {
+    &__item {
+      width: 100%;
+    }
+
+    &__title {
+      text-align: center;
+    }
+  }
+}

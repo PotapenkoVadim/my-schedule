@@ -8,3 +8,21 @@
     margin-top: 24px;
   }
 }
+
+@media (width <= 420px) {
+  .dialog {
+    min-width: 100%;
+    width: 100%;
+
+    &__buttons {
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    &__button {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

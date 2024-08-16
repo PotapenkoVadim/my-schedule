@@ -13,28 +13,18 @@ import {
 import { getNavigateLinks, isAdmin } from "@/utils";
 import { useAppContext } from "@/context";
 import { PATHS, WENT_WRONG_ERROR } from "@/constants";
-import { useFetch, useSession } from "@/hooks";
-import { signOutService } from "@/services";
-import { useOrderStore } from "@/stores/order";
+import { useSession } from "@/hooks";
 import styles from "./sidebar.module.scss";
 
 export function Sidebar() {
   const { theme, switchTheme, showToast } = useAppContext();
-  const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { currentUser, removeCurrentUser } = useSession();
-
-  const { isLoading, handleFetch } = useFetch({
-    queryFn: signOutService,
-    onSuccess: () => {
-      removeCurrentUser();
-      setOrderList(null);
-    },
-    onError: () => showToast("error", WENT_WRONG_ERROR),
-  });
+  const { currentUser, isSessionLoading, singOut } = useSession(() =>
+    showToast("error", WENT_WRONG_ERROR),
+  );
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const moveToHome = () => {
@@ -73,8 +63,8 @@ export function Sidebar() {
         <SignOutButton
           user={currentUser}
           className={styles.sidebar__button}
-          onSignOut={handleFetch}
-          isLoading={isLoading}
+          onSignOut={singOut}
+          isLoading={isSessionLoading}
         />
       </BaseSidebar>
 

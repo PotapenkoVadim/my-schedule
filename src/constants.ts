@@ -45,3 +45,5 @@ export const DIALOG_ACTION_TITLES = {
   [DialogVariant.done]: "Установить статус заказа Сдан?",
   [DialogVariant.ready]: "Установить статус заказа Готово?",
 };
+
+export const DELETE_USER_TEXT = "Вы действительно хотите удалить пользователя?";
