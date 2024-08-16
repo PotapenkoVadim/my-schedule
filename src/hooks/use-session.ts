@@ -5,8 +5,10 @@ import { useOrderStore } from "@/stores/order";
 import { useFetch } from "./use-fetch";
 
 export const useSession = () => {
-  const [user, setUser] = useUserStore(({ user, setUser }) => [user, setUser]);
   const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
+  const [user, setUser, removeUser] = useUserStore(
+    ({ user, setUser, removeUser }) => [user, setUser, removeUser],
+  );
 
   const { handleFetch, isError, isLoading, isSuccess } = useFetch({
     queryFn: getSessionService,
@@ -25,6 +27,9 @@ export const useSession = () => {
   }, [user]);
 
   return {
+    currentUser: user,
+    setCurrentUser: setUser,
+    removeCurrentUser: removeUser,
     isSessionError: isError,
     isSessionLoading: isLoading,
     isSessionSuccess: isSuccess,

@@ -13,8 +13,7 @@ import {
 import { getNavigateLinks } from "@/utils";
 import { useAppContext } from "@/context";
 import { PATHS, WENT_WRONG_ERROR } from "@/constants";
-import { useUserStore } from "@/stores/user";
-import { useFetch } from "@/hooks";
+import { useFetch, useSession } from "@/hooks";
 import { signOutService } from "@/services";
 import { useOrderStore } from "@/stores/order";
 import styles from "./sidebar.module.scss";
@@ -22,18 +21,16 @@ import styles from "./sidebar.module.scss";
 export function Sidebar() {
   const { theme, switchTheme, showToast } = useAppContext();
   const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
-  const [user, removeUser] = useUserStore(({ user, removeUser }) => [
-    user,
-    removeUser,
-  ]);
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
+  const { currentUser, removeCurrentUser } = useSession();
+
   const { isLoading, handleFetch } = useFetch({
     queryFn: signOutService,
     onSuccess: () => {
-      removeUser();
+      removeCurrentUser();
       setOrderList(null);
     },
     onError: () => showToast("error", WENT_WRONG_ERROR),
@@ -70,7 +67,7 @@ export function Sidebar() {
         />
 
         <SignOutButton
-          user={user}
+          user={currentUser}
           className={styles.sidebar__button}
           onSignOut={handleFetch}
           isLoading={isLoading}

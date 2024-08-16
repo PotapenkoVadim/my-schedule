@@ -4,37 +4,30 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
-import { useOrderMenuCtx, useOrder, useSession, useFetch } from "@/hooks";
+import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
 import { ContextMenu, DialogModal, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
-import { useOrderStore } from "@/stores/order";
 import {
   getContextMenuItems,
   handleDoneStatus,
   handleReadyStatus,
 } from "@/utils";
-import { OrderListEntity } from "@/interfaces";
 import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { DialogVariant, OrderFormType, OrderStatus } from "@/types";
-import { useUserStore } from "@/stores/user";
-import { getOrdersService } from "@/services";
+import { useSelectedYearStore } from "@/stores";
 import styles from "./page.module.scss";
 
 export default function CalendarPage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [dialogModal, setDialogModal] = useState<DialogVariant>();
 
-  const [user, selectedYear, changeYear] = useUserStore(
-    ({ user, selectedYear, changeYear }) => [user, selectedYear, changeYear],
-  );
-
-  const [orderList, setOrderList] = useOrderStore(
-    ({ orderList, setOrderList }) => [orderList, setOrderList],
+  const [selectedYear, changeYear] = useSelectedYearStore(
+    ({ selectedYear, changeYear }) => [selectedYear, changeYear],
   );
 
   const router = useRouter();
   const { theme, showToast } = useAppContext();
-  const { isSessionLoading, isSessionError } = useSession();
+  const { currentUser, isSessionLoading, isSessionError } = useSession();
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
     useOrderMenuCtx();
 
@@ -49,8 +42,7 @@ export default function CalendarPage() {
     resetContextState();
   };
 
-  const onSuccess = (response?: OrderListEntity) => {
-    setOrderList(response || null);
+  const onSuccess = () => {
     closeModal();
     closeDialogModal();
   };
@@ -61,16 +53,15 @@ export default function CalendarPage() {
     closeDialogModal();
   };
 
-  const { addOrder, editOrder, deleteOrder, isLoading } = useOrder({
-    onSuccess,
-    onError,
-  });
-
-  const { handleFetch: getOrders, isLoading: isGetOrdersLoading } = useFetch({
-    queryFn: getOrdersService,
-    onSuccess,
-    onError,
-  });
+  const {
+    orderList,
+    addOrder,
+    getOrders,
+    editOrder,
+    deleteOrder,
+    isLoading,
+    isGetOrdersLoading,
+  } = useOrder({ onSuccess, onError });
 
   const handleClick = (id?: number) => {
     router.push(id ? `${PATHS.table}?id=${id}` : PATHS.table);
@@ -125,14 +116,14 @@ export default function CalendarPage() {
   };
 
   const handleChangeYear = async (year: number) => {
-    if (user?.orders?.id) {
-      await getOrders(user.orders.id, year);
+    if (currentUser?.orders?.id) {
+      await getOrders(currentUser.orders.id, year);
       changeYear(year);
     }
   };
 
   const isLoadingPage =
-    isSessionLoading || isGetOrdersLoading || (!user && !isSessionError);
+    isSessionLoading || isGetOrdersLoading || (!currentUser && !isSessionError);
 
   const dialogModalActions = {
     [DialogVariant.delete]: handleDeleteOrder,
@@ -149,7 +140,7 @@ export default function CalendarPage() {
         <Calendar
           theme={theme}
           year={selectedYear}
-          user={user}
+          user={currentUser}
           orders={orderList?.items || []}
           onChangeYear={handleChangeYear}
           onClickCtxMenu={handleContextMenu}
