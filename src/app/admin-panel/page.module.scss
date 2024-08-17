@@ -7,4 +7,15 @@
 
   min-height: 100vh;
   padding: 36px;
+
+  &__button {
+    margin-top: 32px;
+  }
+}
+
+@media (width <= 780px) {
+  .page__button {
+    display: block;
+    width: 100%;
+  }
 }

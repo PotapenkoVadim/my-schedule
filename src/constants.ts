@@ -47,3 +47,8 @@ export const DIALOG_ACTION_TITLES = {
 };
 
 export const DELETE_USER_TEXT = "Вы действительно хотите удалить пользователя?";
+
+export const EDIT_USER_TEXT = "Редактировать пользователя";
+export const ADD_USER_TEXT = "Создать нового пользователя";
+export const EDIT_TEXT = "Редактировать";
+export const ADD_TEXT = "Создать";

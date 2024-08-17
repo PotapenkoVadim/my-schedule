@@ -34,5 +34,3 @@ export function FormPassword<T extends FieldValues = FieldValues>(
     </div>
   );
 }
-
-export default FormPassword;

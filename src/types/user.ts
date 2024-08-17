@@ -1,7 +1,9 @@
+import { UserEntity } from "@/interfaces";
+
 export enum UserRole {
-  Admin,
-  User,
-  Guest,
+  Admin = "Admin",
+  User = "User",
+  Guest = "Guest",
 }
 
 export const enum UserScopes {
@@ -9,3 +11,7 @@ export const enum UserScopes {
   allowUser,
   allowCommon,
 }
+
+export type UserFormType = Pick<UserEntity, "role" | "username"> & {
+  password: string;
+};

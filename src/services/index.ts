@@ -7,3 +7,5 @@ export * from "./delete-order";
 export * from "./get-orders";
 export * from "./get-users";
 export * from "./delete-user";
+export * from "./add-user";
+export * from "./edit-user";

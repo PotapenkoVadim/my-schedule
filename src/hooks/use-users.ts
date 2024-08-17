@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { UserEntity } from "@/interfaces";
-import { deleteUserService, getUsersService } from "@/services";
+import {
+  addUserService,
+  deleteUserService,
+  editUserService,
+  getUsersService,
+} from "@/services";
 import { useFetch } from "./use-fetch";
 
 export const useUsers = ({
@@ -26,7 +31,28 @@ export const useUsers = ({
   const { handleFetch: deleteUser, isLoading: isDeleteLoading } = useFetch({
     queryFn: deleteUserService,
     onSuccess: (response) => {
-      setUsers((users) => users?.filter((item) => item.id === response?.id));
+      setUsers((users) => users?.filter((item) => item.id !== response?.id));
+      if (onSuccess) onSuccess();
+    },
+    onError,
+  });
+
+  const { handleFetch: addUser, isLoading: isAddLoading } = useFetch({
+    queryFn: addUserService,
+    onSuccess: (response) => {
+      setUsers((users) => (users && response ? [...users, response] : users));
+      if (onSuccess) onSuccess();
+    },
+    onError,
+  });
+
+  const { handleFetch: editUser, isLoading: isEditLoading } = useFetch({
+    queryFn: editUserService,
+    onSuccess: (response) => {
+      setUsers((users) =>
+        users?.map((item) => (item.id === response?.id ? response : item)),
+      );
+      if (onSuccess) onSuccess();
     },
     onError,
   });
@@ -36,7 +62,11 @@ export const useUsers = ({
   return {
     users,
     isLoading,
+    isAddLoading,
+    isEditLoading,
     getUsers,
     deleteUser,
+    addUser,
+    editUser,
   };
 };

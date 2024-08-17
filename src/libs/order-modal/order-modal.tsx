@@ -1,6 +1,7 @@
 import { OrderEntity } from "@/interfaces";
 import { Dialog } from "@/components";
 import { OrderFormType } from "@/types";
+import { ADD_TEXT, EDIT_TEXT } from "@/constants";
 import { OrderForm } from "../order-form/order-form";
 
 export function OrderModal({
@@ -18,10 +19,10 @@ export function OrderModal({
   onSubmit: (data: OrderFormType) => void;
   ctxDate?: Date;
 }) {
-  const title = order ? "Редактировать" : "Создать";
+  const title = order ? EDIT_TEXT : ADD_TEXT;
 
   return (
-    <Dialog visible={isOpen} onHide={onClose} header={title} draggable={false}>
+    <Dialog visible={isOpen} onHide={onClose} header={title}>
       <OrderForm
         order={order}
         onSubmit={onSubmit}
