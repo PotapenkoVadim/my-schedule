@@ -54,11 +54,13 @@ export function Sidebar() {
           className={styles.sidebar__menu}
         />
 
-        <ThemeSwitcher
-          theme={theme}
-          onSwitch={switchTheme}
-          className={styles.sidebar__switcher}
-        />
+        {Boolean(currentUser) && (
+          <ThemeSwitcher
+            theme={theme}
+            onSwitch={switchTheme}
+            className={styles.sidebar__switcher}
+          />
+        )}
 
         <SignOutButton
           user={currentUser}

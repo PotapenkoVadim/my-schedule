@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useAppContext } from "@/context";
-import { useSearchParams } from "next/navigation";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
 import { useOrder, useSession } from "@/hooks";
@@ -12,9 +11,6 @@ import { OrderFormType, OrderStatus } from "@/types";
 import styles from "./page.module.scss";
 
 export default function OrderTablePage() {
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get("id");
-
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const openModal = () => setIsOpenModal(true);
@@ -67,7 +63,6 @@ export default function OrderTablePage() {
           orderList={orderList}
           isLoading={isGetOrdersLoading}
           changeYear={handleChangeYear}
-          orderId={orderId}
           onAddOrder={openModal}
           user={currentUser}
         />
@@ -83,8 +78,10 @@ export default function OrderTablePage() {
   }
 
   return (
-    <main data-theme={theme} className={styles.page}>
-      {content}
-    </main>
+    <Suspense>
+      <main data-theme={theme} className={styles.page}>
+        {content}
+      </main>
+    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, SyntheticEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import { OrderStatus, ThemeVariant } from "@/types";
 import { FormEvent } from "primereact/ts-helpers";
 import { OrderListEntity, UserEntity } from "@/interfaces";
@@ -13,7 +14,6 @@ export function OrderTable({
   year,
   orderList,
   isLoading,
-  orderId,
   user,
   changeYear,
   onAddOrder,
@@ -23,10 +23,12 @@ export function OrderTable({
   user: UserEntity | null;
   orderList: OrderListEntity | null;
   isLoading: boolean;
-  orderId: string | null;
   changeYear: (date: Date) => void;
   onAddOrder: () => void;
 }) {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("id");
+
   const selectedOrder = orderList?.items?.find(
     (item) => item.id === Number(orderId),
   );

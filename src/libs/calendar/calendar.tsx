@@ -23,7 +23,6 @@ export function Calendar({
   year,
   user,
   onClick,
-  onTable,
   onAddOrder,
   onChangeYear,
   onClickCtxMenu,
@@ -32,10 +31,9 @@ export function Calendar({
   theme: ThemeVariant;
   user: UserEntity | null;
   year: number;
-  onClick: (id: number) => void;
+  onClick: (id?: number) => void;
   onAddOrder: () => void;
   onChangeYear: (year: number) => void;
-  onTable: () => void;
   onClickCtxMenu?: (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     order?: OrderEntity,
@@ -99,7 +97,7 @@ export function Calendar({
             </PermissionGuard>
           )}
 
-          <Button onClick={onTable} icon="pi pi-table" />
+          <Button onClick={() => onClick()} icon="pi pi-table" />
 
           {isLogIn && (
             <>

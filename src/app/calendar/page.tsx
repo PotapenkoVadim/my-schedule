@@ -146,7 +146,6 @@ export default function CalendarPage() {
           onClickCtxMenu={handleContextMenu}
           onClick={handleClick}
           onAddOrder={handleAdd}
-          onTable={handleClick}
         />
 
         <ContextMenu
