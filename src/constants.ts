@@ -6,6 +6,8 @@ export const APP_DESCRIPTION =
 
 export const DARK_THEME_TITLE = "Темная";
 export const LIGHT_THEME_TITLE = "Светлая";
+export const DARK_THEME = "Dark";
+export const LIGHT_THEME = "Light";
 
 export const enum PATHS {
   home = "/",
