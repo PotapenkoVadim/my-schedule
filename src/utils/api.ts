@@ -1,4 +1,4 @@
-const hostUrl = process.env.NEXT_PUBLIC_API_HOST;
+const hostUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api`;
 const headers = {
   "Content-type": "application/json",
 };
