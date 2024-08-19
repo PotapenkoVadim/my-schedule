@@ -54,7 +54,7 @@ export function Toolbar({
           className={classnames(styles.toolbar__row, styles.toolbar__row_right)}
         >
           <div className={styles.toolbar__row}>
-            <Button onClick={moveToCalendar} icon="pi pi-calendar" />
+            <Button onClick={moveToCalendar} icon="pi pi-table" />
             {Boolean(user) && (
               <PermissionGuard
                 currentUser={user}
