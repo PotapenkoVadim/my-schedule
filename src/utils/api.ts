@@ -1,13 +1,19 @@
 import { getToken } from "./auth-storage";
 
+type Methods = "GET" | "POST" | "DELETE" | "PATCH";
 const hostUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api`;
 
-const getHeaders = () => {
+const getParams = <T>(method: Methods, body?: T): RequestInit => {
   const accessToken = getToken()?.value || "no_token";
 
   return {
-    "Content-type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
+    method,
+    credentials: "include",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    ...(Boolean(body) && { body: JSON.stringify(body) }),
   };
 };
 
@@ -15,13 +21,10 @@ const getApi = async <TR, TP = unknown>(
   uri: string,
   params?: TP,
 ): Promise<TR> => {
-  const getParams = new URLSearchParams(params || "").toString();
+  const queryParams = new URLSearchParams(params || "").toString();
+  const fetchParams = getParams("GET");
 
-  const response = await fetch(`${hostUrl}${uri}?${getParams}`, {
-    method: "GET",
-    credentials: "include",
-    headers: getHeaders(),
-  });
+  const response = await fetch(`${hostUrl}${uri}?${queryParams}`, fetchParams);
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -34,12 +37,8 @@ const postApi = async <TR, TP = unknown>(
   uri: string,
   body?: TP,
 ): Promise<TR> => {
-  const response = await fetch(`${hostUrl}${uri}`, {
-    method: "POST",
-    headers: getHeaders(),
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
+  const fetchParams = getParams("POST", body);
+  const response = await fetch(`${hostUrl}${uri}`, fetchParams);
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -52,12 +51,8 @@ const deleteApi = async <TR, TP = unknown>(
   uri: string,
   body?: TP,
 ): Promise<TR> => {
-  const response = await fetch(`${hostUrl}${uri}`, {
-    method: "DELETE",
-    headers: getHeaders(),
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
+  const fetchParams = getParams("DELETE", body);
+  const response = await fetch(`${hostUrl}${uri}`, fetchParams);
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -70,12 +65,8 @@ const patchApi = async <TR, TP = unknown>(
   uri: string,
   body?: TP,
 ): Promise<TR> => {
-  const response = await fetch(`${hostUrl}${uri}`, {
-    method: "PATCH",
-    headers: getHeaders(),
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
+  const fetchParams = getParams("PATCH", body);
+  const response = await fetch(`${hostUrl}${uri}`, fetchParams);
 
   if (!response.ok) {
     throw new Error(response.statusText);
