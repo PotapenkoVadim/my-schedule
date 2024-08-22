@@ -22,7 +22,7 @@ export function Sidebar() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { currentUser, isSessionLoading, singOut } = useSession(() =>
+  const { currentUser, isSessionLoading, signOut } = useSession(() =>
     showToast("error", WENT_WRONG_ERROR),
   );
 
@@ -65,7 +65,7 @@ export function Sidebar() {
         <SignOutButton
           user={currentUser}
           className={styles.sidebar__button}
-          onSignOut={singOut}
+          onSignOut={signOut}
           isLoading={isSessionLoading}
         />
       </BaseSidebar>

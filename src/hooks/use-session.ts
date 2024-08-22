@@ -1,10 +1,15 @@
-import { getSessionService, signOutService } from "@/services";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getSessionService, signInService } from "@/services";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
+import { setToken, removeToken } from "@/utils";
+import { currentYear, PATHS } from "@/constants";
 import { useFetch } from "./use-fetch";
 
 export const useSession = (onError?: () => void) => {
+  const router = useRouter();
+
   const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
   const [user, setUser, removeUser] = useUserStore(
     ({ user, setUser, removeUser }) => [user, setUser, removeUser],
@@ -20,18 +25,27 @@ export const useSession = (onError?: () => void) => {
     },
   });
 
-  const { isLoading: isSignOutLoading, handleFetch: singOut } = useFetch({
-    queryFn: signOutService,
-    onSuccess: () => {
-      removeUser();
-      setOrderList(null);
+  const signOut = useCallback(() => {
+    removeToken();
+    removeUser();
+    setOrderList(null);
+  }, [setOrderList, removeUser]);
+
+  const { isLoading: isSignInLoading, handleFetch: sigIn } = useFetch({
+    queryFn: signInService,
+    onSuccess: async (response) => {
+      if (!response) throw new Error();
+
+      setToken(response.token);
+      await handleFetch(currentYear);
+      router.push(PATHS.calendar);
     },
     onError,
   });
 
   useEffect(() => {
     if (!user) {
-      handleFetch(new Date().getFullYear());
+      handleFetch(currentYear);
     }
   }, [user]);
 
@@ -39,9 +53,11 @@ export const useSession = (onError?: () => void) => {
     currentUser: user,
     setCurrentUser: setUser,
     removeCurrentUser: removeUser,
-    singOut,
+    signOut,
+    sigIn,
     isSessionError: isError,
-    isSessionLoading: isLoading || isSignOutLoading,
+    isSessionLoading: isLoading,
     isSessionSuccess: isSuccess,
+    isSignInLoading,
   };
 };

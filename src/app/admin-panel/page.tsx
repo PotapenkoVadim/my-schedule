@@ -21,7 +21,7 @@ export default function AdminPanel() {
   const [isOpenUserModal, setIsOpenUserModal] = useState(false);
   const [editedUser, setEditedUser] = useState<UserEntity>();
   const [deletedUser, setDeletedUser] = useState<number>();
-  const { currentUser, isSessionLoading, isSessionError, singOut } =
+  const { currentUser, isSessionLoading, isSessionError, signOut } =
     useSession(onError);
 
   if (!currentUser || (currentUser && !isAdmin(currentUser))) {
@@ -61,7 +61,7 @@ export default function AdminPanel() {
   };
 
   const handleSignOut = () => {
-    singOut();
+    signOut();
     router.push(PATHS.home);
   };
 

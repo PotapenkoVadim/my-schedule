@@ -54,3 +54,8 @@ export const EDIT_USER_TEXT = "Редактировать пользовател
 export const ADD_USER_TEXT = "Создать нового пользователя";
 export const EDIT_TEXT = "Редактировать";
 export const ADD_TEXT = "Создать";
+
+export const TOKEN_KEY = "auth_token";
+export const TOKEN_TTL_MS = 2592000000;
+
+export const currentYear = new Date().getFullYear();

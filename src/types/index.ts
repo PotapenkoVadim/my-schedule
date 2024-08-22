@@ -4,3 +4,4 @@ export * from "./toast";
 export * from "./user";
 export * from "./order";
 export * from "./dialog";
+export * from "./auth";

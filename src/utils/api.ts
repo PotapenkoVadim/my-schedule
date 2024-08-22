@@ -1,6 +1,14 @@
+import { getToken } from "./auth-storage";
+
 const hostUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api`;
-const headers = {
-  "Content-type": "application/json",
+
+const getHeaders = () => {
+  const accessToken = getToken()?.value || "no_token";
+
+  return {
+    "Content-type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
 };
 
 const getApi = async <TR, TP = unknown>(
@@ -12,7 +20,7 @@ const getApi = async <TR, TP = unknown>(
   const response = await fetch(`${hostUrl}${uri}?${getParams}`, {
     method: "GET",
     credentials: "include",
-    headers,
+    headers: getHeaders(),
   });
 
   if (!response.ok) {
@@ -28,7 +36,7 @@ const postApi = async <TR, TP = unknown>(
 ): Promise<TR> => {
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "POST",
-    headers,
+    headers: getHeaders(),
     credentials: "include",
     body: JSON.stringify(body),
   });
@@ -46,7 +54,7 @@ const deleteApi = async <TR, TP = unknown>(
 ): Promise<TR> => {
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "DELETE",
-    headers,
+    headers: getHeaders(),
     credentials: "include",
     body: JSON.stringify(body),
   });
@@ -64,7 +72,7 @@ const patchApi = async <TR, TP = unknown>(
 ): Promise<TR> => {
   const response = await fetch(`${hostUrl}${uri}`, {
     method: "PATCH",
-    headers,
+    headers: getHeaders(),
     credentials: "include",
     body: JSON.stringify(body),
   });
