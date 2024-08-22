@@ -1,6 +1,5 @@
 "use client";
 
-import classnames from "classnames";
 import { useRouter } from "next/navigation";
 import { APP_TITLE, APP_DESCRIPTION, PATHS } from "@/constants";
 import { useAppContext } from "@/context";
@@ -36,7 +35,7 @@ export default function Home() {
   }
 
   return (
-    <main data-theme={theme} className={classnames(styles.page)}>
+    <main data-theme={theme} className={styles.page}>
       {content}
     </main>
   );
