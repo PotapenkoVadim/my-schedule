@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { APP_TITLE, APP_DESCRIPTION, PATHS } from "@/constants";
+import { APP_TITLE, APP_DESCRIPTION } from "@/constants";
 import { useAppContext } from "@/context";
 import { Button, Spinner, ShapesBackground } from "@/components";
 import { useSession } from "@/hooks";
+import { getInitialPath } from "@/utils";
 import styles from "./page.module.scss";
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
   const { currentUser, isSessionLoading, isSessionError } = useSession();
 
   const moveTo = () => {
-    router.push(!currentUser ? PATHS.signIn : PATHS.calendar);
+    router.push(getInitialPath(currentUser));
   };
 
   let content;

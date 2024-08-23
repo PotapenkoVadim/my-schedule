@@ -7,3 +7,4 @@ export * from "./handle-ready-status";
 export * from "./calculate-details";
 export * from "./is-admin";
 export * from "./auth-storage";
+export * from "./get-initial-path";

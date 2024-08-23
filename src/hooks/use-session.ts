@@ -1,15 +1,12 @@
 import { useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { getSessionService, signInService } from "@/services";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
 import { setToken, removeToken } from "@/utils";
-import { currentYear, PATHS } from "@/constants";
+import { currentYear } from "@/constants";
 import { useFetch } from "./use-fetch";
 
 export const useSession = (onError?: () => void) => {
-  const router = useRouter();
-
   const [setOrderList] = useOrderStore(({ setOrderList }) => [setOrderList]);
   const [user, setUser, removeUser] = useUserStore(
     ({ user, setUser, removeUser }) => [user, setUser, removeUser],
@@ -33,12 +30,11 @@ export const useSession = (onError?: () => void) => {
 
   const { isLoading: isSignInLoading, handleFetch: sigIn } = useFetch({
     queryFn: signInService,
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       if (!response) throw new Error();
 
       setToken(response.token);
-      await handleFetch(currentYear);
-      router.push(PATHS.calendar);
+      handleFetch(currentYear);
     },
     onError,
   });

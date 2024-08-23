@@ -4,7 +4,12 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
-import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
+import {
+  useOrderMenuCtx,
+  useOrder,
+  useSession,
+  usePrivateRoute,
+} from "@/hooks";
 import { ContextMenu, DialogModal, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import {
@@ -28,6 +33,8 @@ export default function CalendarPage() {
   const router = useRouter();
   const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
+  const { isApprove } = usePrivateRoute(currentUser, "onlyUser");
+
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
     useOrderMenuCtx();
 
@@ -123,7 +130,10 @@ export default function CalendarPage() {
   };
 
   const isLoadingPage =
-    isSessionLoading || isGetOrdersLoading || (!currentUser && !isSessionError);
+    isSessionLoading ||
+    isGetOrdersLoading ||
+    (!currentUser && !isSessionError) ||
+    !isApprove;
 
   const dialogModalActions = {
     [DialogVariant.delete]: handleDeleteOrder,

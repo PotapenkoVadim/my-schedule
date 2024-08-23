@@ -1,40 +1,36 @@
 "use client";
 
 import { useAppContext } from "@/context";
-import { useSession } from "@/hooks";
+import { usePrivateRoute, useSession } from "@/hooks";
 import { Spinner, ShapesBackground } from "@/components";
 import { SignInForm } from "@/libs";
+import { WENT_WRONG_ERROR } from "@/constants";
 import styles from "./page.module.scss";
 
 export default function SignInPage() {
-  const { theme } = useAppContext();
+  const { theme, showToast } = useAppContext();
   const {
     currentUser,
     sigIn,
     isSessionLoading,
     isSessionError,
     isSignInLoading,
-  } = useSession();
+  } = useSession(() => showToast("error", WENT_WRONG_ERROR));
+  const { isApprove } = usePrivateRoute(currentUser, "onlyLoggedOut");
 
   let content;
-  if (isSessionLoading || (!currentUser && !isSessionError)) {
+  if (isSessionLoading || !isApprove || (!currentUser && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
       <>
         <ShapesBackground />
-        {!currentUser ? (
-          <SignInForm
-            theme={theme}
-            onSubmit={sigIn}
-            isLoading={isSignInLoading}
-            className={styles.page__form}
-          />
-        ) : (
-          <div className={styles.page__greeting}>
-            Привет, {currentUser.username}!
-          </div>
-        )}
+        <SignInForm
+          theme={theme}
+          onSubmit={sigIn}
+          isLoading={isSignInLoading}
+          className={styles.page__form}
+        />
       </>
     );
   }

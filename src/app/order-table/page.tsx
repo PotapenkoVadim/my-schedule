@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import { useAppContext } from "@/context";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
-import { useOrder, useSession } from "@/hooks";
+import { useOrder, usePrivateRoute, useSession } from "@/hooks";
 import { Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
@@ -18,6 +18,7 @@ export default function OrderTablePage() {
 
   const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
+  const { isApprove } = usePrivateRoute(currentUser, "onlyUser");
 
   const [selectedYear, changeYear] = useSelectedYearStore(
     ({ selectedYear, changeYear }) => [selectedYear, changeYear],
@@ -52,7 +53,7 @@ export default function OrderTablePage() {
   };
 
   let content;
-  if (isSessionLoading || (!currentUser && !isSessionError)) {
+  if (isSessionLoading || !isApprove || (!currentUser && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (

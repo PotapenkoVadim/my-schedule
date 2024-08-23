@@ -17,6 +17,14 @@ export const enum PATHS {
   adminPanel = "/admin-panel",
 }
 
+export const PATH_TITLES: Record<keyof typeof PATHS, string> = {
+  signIn: "Войти в приложение",
+  calendar: "Календарь",
+  table: "Таблица заказов",
+  adminPanel: "Админка",
+  home: "Стартовая страница",
+};
+
 export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";
 export const SIGN_IN_ERROR = "Не удалось войти! Попробуйте, позже.";
 export const WENT_WRONG_ERROR = "Что-то пошло не так. Попробуйте, позже.";
