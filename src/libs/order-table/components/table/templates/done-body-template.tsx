@@ -1,5 +1,7 @@
 import { OrderEntity } from "@/interfaces";
 
 export function doneBodyTemplate(order: OrderEntity, mode: "Ready" | "Done") {
-  return <div>{order.status === mode ? "Да" : "Нет"}</div>;
+  const isDoneText = order.status === "Done" || order.status === mode;
+
+  return <div>{isDoneText ? "Да" : "Нет"}</div>;
 }

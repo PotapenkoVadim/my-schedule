@@ -83,7 +83,9 @@ export function OrderForm({
         />
 
         <Divider />
-        <OrderDetails error={errors.details?.message} />
+        <OrderDetails
+          error={errors.details?.message || errors.details?.root?.message}
+        />
         <Divider />
 
         <Button loading={isLoading} className={styles.form__button}>
