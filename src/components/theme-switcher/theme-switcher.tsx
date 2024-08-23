@@ -1,7 +1,6 @@
 import { InputSwitch } from "primereact/inputswitch";
 import classnames from "classnames";
 import { ThemeVariant } from "@/types";
-import { DARK_THEME_TITLE, LIGHT_THEME_TITLE } from "@/constants";
 import styles from "./theme-switcher.module.scss";
 
 export function ThemeSwitcher({
@@ -14,16 +13,16 @@ export function ThemeSwitcher({
   className?: string;
 }) {
   const isDarkTheme = theme === "Dark";
-  const themeTitle = isDarkTheme ? DARK_THEME_TITLE : LIGHT_THEME_TITLE;
+  const themeIcon = isDarkTheme ? "pi pi-sun" : "pi pi-moon";
 
   return (
     <div className={classnames(styles.theme, className)}>
       <div>Переключить тему:</div>
 
-      <div className={styles.theme__switcher}>
-        <span>{themeTitle}</span>
+      <label className={styles.theme__switcher}>
         <InputSwitch id="theme" checked={isDarkTheme} onChange={onSwitch} />
-      </div>
+        <span className={themeIcon} />
+      </label>
     </div>
   );
 }

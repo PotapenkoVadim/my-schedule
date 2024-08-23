@@ -9,11 +9,12 @@
 
   &__switcher {
     margin-top: 8px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 14px;
+    gap: 32px;
     font-size: 0.94rem;
     font-style: italic;
     font-weight: 600;
+    cursor: pointer;
   }
 }
