@@ -7,3 +7,4 @@ export * from "./sign-in-form/sign-in-form";
 export * from "./order-table/order-table";
 export * from "./user-form/user-form";
 export * from "./user-modal/user-modal";
+export * from "./user-generator/user-generator";

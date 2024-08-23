@@ -1,0 +1,31 @@
+@import "@/assets/variables";
+
+.generator {
+  padding: 14px;
+  border: 1px solid $dark-text;
+  border-radius: 2px;
+
+  &__message {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.22rem;
+  }
+
+  &__text {
+    font-size: .98rem;
+    line-height: 20px;
+  }
+
+  &__content {
+    margin-top: 16px;
+  }
+
+  &__buttons {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}

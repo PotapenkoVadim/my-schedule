@@ -15,6 +15,7 @@ export const enum PATHS {
   calendar = "/calendar",
   signIn = "/sign-in",
   adminPanel = "/admin-panel",
+  about = "/about",
 }
 
 export const PATH_TITLES: Record<keyof typeof PATHS, string> = {
@@ -23,6 +24,7 @@ export const PATH_TITLES: Record<keyof typeof PATHS, string> = {
   table: "Таблица заказов",
   adminPanel: "Админка",
   home: "Стартовая страница",
+  about: "О проекте",
 };
 
 export const REQUIRED_FIELD_ERROR = "Укажите обязательное поле.";
@@ -41,13 +43,9 @@ export const TOAST_TITLE = {
 };
 
 export const PERMISSIONS = {
-  [UserRole[UserRole.Admin]]: [
-    UserScopes.allowOrder,
-    UserScopes.allowUser,
-    UserScopes.allowCommon,
-  ],
+  [UserRole[UserRole.Admin]]: [UserScopes.allowUser, UserScopes.allowCommon],
   [UserRole[UserRole.User]]: [UserScopes.allowOrder, UserScopes.allowCommon],
-  [UserRole[UserRole.Guest]]: [UserScopes.allowCommon],
+  [UserRole[UserRole.Guest]]: [UserScopes.allowOrder, UserScopes.allowCommon],
 };
 
 export const DIALOG_ACTION_TITLES = {

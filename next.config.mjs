@@ -3,6 +3,9 @@ const nextConfig = {
   trailingSlash: true,
   output: 'export',
   reactStrictMode: false,
+  images: {
+    unoptimized: true
+  },
   webpack(config, options) {
     config.module.rules.push({
       test: /\.svg$/,

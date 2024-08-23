@@ -9,3 +9,4 @@ export * from "./delete-user";
 export * from "./add-user";
 export * from "./edit-user";
 export * from "./edit-user-settings";
+export * from "./generate-guest";

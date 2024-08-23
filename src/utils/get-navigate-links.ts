@@ -7,8 +7,8 @@ export const getNavigateLinks = (
   onBeforeNavigate: () => void,
   user: UserEntity | null,
 ) => {
-  const routes = [];
   const isUserAdmin = isAdmin(user);
+  const routes = [];
 
   if (!user) {
     routes.push({
@@ -56,6 +56,16 @@ export const getNavigateLinks = (
       },
     });
   }
+
+  routes.push({
+    path: PATHS.about,
+    icon: "pi pi-info-circle",
+    label: PATH_TITLES.about,
+    command: () => {
+      onBeforeNavigate();
+      navigateTo(PATHS.about);
+    },
+  });
 
   return routes;
 };
