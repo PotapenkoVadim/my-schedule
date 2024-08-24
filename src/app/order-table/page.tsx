@@ -5,7 +5,7 @@ import { useAppContext } from "@/context";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
 import { useOrder, usePrivateRoute, useSession } from "@/hooks";
-import { Spinner } from "@/components";
+import { PageContent, Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
 import styles from "./page.module.scss";
@@ -81,7 +81,7 @@ export default function OrderTablePage() {
   return (
     <Suspense>
       <main data-theme={theme} className={styles.page}>
-        {content}
+        <PageContent>{content}</PageContent>
       </main>
     </Suspense>
   );

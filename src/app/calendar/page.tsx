@@ -10,7 +10,7 @@ import {
   useSession,
   usePrivateRoute,
 } from "@/hooks";
-import { ContextMenu, DialogModal, Spinner } from "@/components";
+import { ContextMenu, DialogModal, PageContent, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import {
   getContextMenuItems,
@@ -192,7 +192,7 @@ export default function CalendarPage() {
 
   return (
     <main data-theme={theme} className={styles.page}>
-      {content}
+      <PageContent>{content}</PageContent>
     </main>
   );
 }

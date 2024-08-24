@@ -6,6 +6,7 @@ import { UserGenerator } from "@/libs";
 import adminImage from "@/assets/images/admin.png";
 import calendarImage from "@/assets/images/calendar.png";
 import tableImage from "@/assets/images/table.png";
+import { PageContent } from "@/components";
 import styles from "./page.module.scss";
 
 export default function AboutPage() {
@@ -19,7 +20,7 @@ export default function AboutPage() {
 
   return (
     <main data-theme={theme} className={styles.page}>
-      <div className={styles.page__content}>
+      <PageContent>
         <h1 className={styles.page__title}>My Schedule</h1>
 
         <div className={styles.page__text}>
@@ -51,7 +52,7 @@ export default function AboutPage() {
             alt={alt}
           />
         ))}
-      </div>
+      </PageContent>
     </main>
   );
 }

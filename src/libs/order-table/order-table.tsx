@@ -7,7 +7,6 @@ import { FormEvent } from "primereact/ts-helpers";
 import { OrderListEntity, UserEntity } from "@/interfaces";
 import { Table, Toolbar } from "./components";
 import { useOrderTable } from "./hooks";
-import styles from "./order-table.module.scss";
 
 export function OrderTable({
   theme,
@@ -58,7 +57,7 @@ export function OrderTable({
   );
 
   return (
-    <div className={styles.table}>
+    <>
       <Toolbar
         checked={isShowDone}
         date={year}
@@ -77,6 +76,6 @@ export function OrderTable({
         theme={theme}
         data={filteredOrders}
       />
-    </div>
+    </>
   );
 }

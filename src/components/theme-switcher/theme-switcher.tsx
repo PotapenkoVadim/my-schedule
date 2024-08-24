@@ -20,8 +20,8 @@ export function ThemeSwitcher({
       <div>Переключить тему:</div>
 
       <label className={styles.theme__switcher}>
-        <InputSwitch id="theme" checked={isDarkTheme} onChange={onSwitch} />
         <span className={themeIcon} />
+        <InputSwitch id="theme" checked={isDarkTheme} onChange={onSwitch} />
       </label>
     </div>
   );

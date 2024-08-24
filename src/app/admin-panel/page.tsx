@@ -5,7 +5,13 @@ import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { usePrivateRoute, useSession, useUsers } from "@/hooks";
 import { DELETE_USER_TEXT, PATHS, WENT_WRONG_ERROR } from "@/constants";
-import { Button, DialogModal, Spinner, UserList } from "@/components";
+import {
+  Button,
+  DialogModal,
+  PageContent,
+  Spinner,
+  UserList,
+} from "@/components";
 import { UserModal } from "@/libs";
 import { UserEntity } from "@/interfaces";
 import { UserFormType } from "@/types";
@@ -113,7 +119,7 @@ export default function AdminPanel() {
 
   return (
     <main data-theme={theme} className={styles.page}>
-      {content}
+      <PageContent>{content}</PageContent>
     </main>
   );
 }

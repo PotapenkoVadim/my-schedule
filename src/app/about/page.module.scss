@@ -6,12 +6,6 @@
   @include dark-theme("darkest-background");
 
   min-height: 100vh;
-  
-  &__content {
-    max-width: 1436px;
-    margin: 0 auto;
-    padding: 24px;
-  }
 
   &__title {
     text-align: center;

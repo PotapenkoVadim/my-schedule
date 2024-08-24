@@ -59,5 +59,6 @@ export * from "./dialog-modal/dialog-modal";
 export * from "./list-items/list-items";
 export * from "./user-list/user-list";
 export * from "./form-select/form-select";
+export * from "./page-content/page-content";
 
 export * from "./types";

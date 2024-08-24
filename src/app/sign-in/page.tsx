@@ -2,7 +2,7 @@
 
 import { useAppContext } from "@/context";
 import { usePrivateRoute, useSession } from "@/hooks";
-import { Spinner, ShapesBackground } from "@/components";
+import { Spinner, ShapesBackground, PageContent } from "@/components";
 import { SignInForm } from "@/libs";
 import { WENT_WRONG_ERROR } from "@/constants";
 import styles from "./page.module.scss";
@@ -37,7 +37,7 @@ export default function SignInPage() {
 
   return (
     <main data-theme={theme} className={styles.page}>
-      {content}
+      <PageContent>{content}</PageContent>
     </main>
   );
 }
