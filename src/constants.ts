@@ -48,8 +48,10 @@ export const PERMISSIONS = {
 
 export const DIALOG_ACTION_TITLES = {
   [DialogVariant.delete]: "Вы действительно хотите удалить заказ?",
-  [DialogVariant.done]: "Установить статус заказа Сдан?",
-  [DialogVariant.ready]: "Установить статус заказа Готово?",
+  [DialogVariant.done]: "Установить статус заказа 'Сдан'?",
+  [DialogVariant.ready]: "Установить статус заказа 'Готово'?",
+  [DialogVariant.cancelDone]: "Отменить статус заказа 'Сдан'?",
+  [DialogVariant.cancelReady]: "Отменить статус заказа 'Готово'?",
 };
 
 export const DELETE_USER_TEXT = "Вы действительно хотите удалить пользователя?";

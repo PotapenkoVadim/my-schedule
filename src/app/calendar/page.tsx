@@ -81,7 +81,14 @@ export default function CalendarPage() {
 
   const handleEdit = () => openModal();
   const handleDone = () => {
-    if (ctxOrder) setDialogModal(DialogVariant.done);
+    if (!ctxOrder) return;
+
+    const variant =
+      ctxOrder.status === OrderStatus.Done
+        ? DialogVariant.cancelDone
+        : DialogVariant.done;
+
+    setDialogModal(variant);
   };
 
   const handleDelete = () => {
@@ -89,7 +96,14 @@ export default function CalendarPage() {
   };
 
   const handleReady = () => {
-    if (ctxOrder) setDialogModal(DialogVariant.ready);
+    if (!ctxOrder) return;
+
+    const variant =
+      ctxOrder.status === OrderStatus.Ready
+        ? DialogVariant.cancelReady
+        : DialogVariant.ready;
+
+    setDialogModal(variant);
   };
 
   const onSubmitOrderForm = (data: OrderFormType) => {
@@ -108,7 +122,7 @@ export default function CalendarPage() {
 
   const handleDeleteOrder = () => {
     if (ctxOrder?.id) {
-      deleteOrder(ctxOrder?.id, selectedYear);
+      deleteOrder(ctxOrder.id, selectedYear);
     }
   };
 
@@ -122,6 +136,9 @@ export default function CalendarPage() {
     }
   };
 
+  const switchDoneStatus = () => handleStatusOrder(handleDoneStatus(ctxOrder));
+  const switchReadyStatus = () =>
+    handleStatusOrder(handleReadyStatus(ctxOrder));
   const handleChangeYear = async (year: number) => {
     if (currentUser?.orders?.id) {
       await getOrders(currentUser.orders.id, year);
@@ -137,8 +154,10 @@ export default function CalendarPage() {
 
   const dialogModalActions = {
     [DialogVariant.delete]: handleDeleteOrder,
-    [DialogVariant.done]: () => handleStatusOrder(handleDoneStatus(ctxOrder)),
-    [DialogVariant.ready]: () => handleStatusOrder(handleReadyStatus(ctxOrder)),
+    [DialogVariant.done]: switchDoneStatus,
+    [DialogVariant.ready]: switchReadyStatus,
+    [DialogVariant.cancelDone]: switchDoneStatus,
+    [DialogVariant.cancelReady]: switchReadyStatus,
   };
 
   let content;
