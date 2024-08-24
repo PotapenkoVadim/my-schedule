@@ -38,3 +38,9 @@
     margin-top: 24px;
   }
 }
+
+@media (width <= 420px) {
+  .form {
+    width: 100%;
+  }
+}
