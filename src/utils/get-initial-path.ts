@@ -2,7 +2,7 @@ import { PATHS } from "@/constants";
 import { UserEntity } from "@/interfaces";
 import { UserRole } from "@/types";
 
-export const getInitialPath = (user: UserEntity | null) => {
+export const getInitialPath = (user?: UserEntity | null) => {
   switch (user?.role) {
     case UserRole.Admin:
       return PATHS.adminPanel;

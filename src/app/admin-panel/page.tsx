@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
-import { usePrivateRoute, useSession, useUsers } from "@/hooks";
+import { useSession, useUsers } from "@/hooks";
 import { DELETE_USER_TEXT, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import {
   Button,
@@ -16,9 +16,10 @@ import { UserModal } from "@/libs";
 import { UserEntity } from "@/interfaces";
 import { UserFormType } from "@/types";
 import { isAdmin } from "@/utils";
+import { withPrivateRoute } from "@/hoc";
 import styles from "./page.module.scss";
 
-export default function AdminPanel() {
+function AdminPanel() {
   const router = useRouter();
   const { theme, showToast } = useAppContext();
 
@@ -29,8 +30,6 @@ export default function AdminPanel() {
   const [deletedUser, setDeletedUser] = useState<number>();
   const { currentUser, isSessionLoading, isSessionError, signOut } =
     useSession(onError);
-
-  const { isApprove } = usePrivateRoute(currentUser, "onlyAdmin");
 
   const closeDeleteModal = () => setDeletedUser(undefined);
   const openUserModal = () => setIsOpenUserModal(true);
@@ -81,7 +80,7 @@ export default function AdminPanel() {
   }, [currentUser]);
 
   let content;
-  if (isSessionLoading || !isApprove || (!currentUser && !isSessionError)) {
+  if (isSessionLoading || (!currentUser && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -123,3 +122,5 @@ export default function AdminPanel() {
     </main>
   );
 }
+
+export default withPrivateRoute(AdminPanel, "onlyAdmin");

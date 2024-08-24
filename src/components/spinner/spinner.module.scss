@@ -1,4 +1,10 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .spinner {
+  @include light-theme("background");
+  @include dark-theme("darkest-background");
+  
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,16 +1,17 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "@/context";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
-import { useOrder, usePrivateRoute, useSession } from "@/hooks";
+import { useOrder, useSession } from "@/hooks";
 import { PageContent, Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
+import { withPrivateRoute } from "@/hoc";
 import styles from "./page.module.scss";
 
-export default function OrderTablePage() {
+function OrderTablePage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const openModal = () => setIsOpenModal(true);
@@ -18,7 +19,6 @@ export default function OrderTablePage() {
 
   const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
-  const { isApprove } = usePrivateRoute(currentUser, "onlyUser");
 
   const [selectedYear, changeYear] = useSelectedYearStore(
     ({ selectedYear, changeYear }) => [selectedYear, changeYear],
@@ -53,7 +53,7 @@ export default function OrderTablePage() {
   };
 
   let content;
-  if (isSessionLoading || !isApprove || (!currentUser && !isSessionError)) {
+  if (isSessionLoading || (!currentUser && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -79,10 +79,10 @@ export default function OrderTablePage() {
   }
 
   return (
-    <Suspense>
-      <main data-theme={theme} className={styles.page}>
-        <PageContent>{content}</PageContent>
-      </main>
-    </Suspense>
+    <main data-theme={theme} className={styles.page}>
+      <PageContent>{content}</PageContent>
+    </main>
   );
 }
+
+export default withPrivateRoute(OrderTablePage, "onlyUser");

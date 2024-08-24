@@ -1,13 +1,14 @@
 "use client";
 
 import { useAppContext } from "@/context";
-import { usePrivateRoute, useSession } from "@/hooks";
+import { useSession } from "@/hooks";
 import { Spinner, ShapesBackground, PageContent } from "@/components";
 import { SignInForm } from "@/libs";
 import { WENT_WRONG_ERROR } from "@/constants";
+import { withPrivateRoute } from "@/hoc";
 import styles from "./page.module.scss";
 
-export default function SignInPage() {
+function SignInPage() {
   const { theme, showToast } = useAppContext();
   const {
     currentUser,
@@ -16,10 +17,9 @@ export default function SignInPage() {
     isSessionError,
     isSignInLoading,
   } = useSession(() => showToast("error", WENT_WRONG_ERROR));
-  const { isApprove } = usePrivateRoute(currentUser, "onlyLoggedOut");
 
   let content;
-  if (isSessionLoading || !isApprove || (!currentUser && !isSessionError)) {
+  if (isSessionLoading || (!currentUser && !isSessionError)) {
     content = <Spinner isPage />;
   } else {
     content = (
@@ -41,3 +41,5 @@ export default function SignInPage() {
     </main>
   );
 }
+
+export default withPrivateRoute(SignInPage, "onlyLoggedOut");

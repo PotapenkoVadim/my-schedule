@@ -4,12 +4,7 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
-import {
-  useOrderMenuCtx,
-  useOrder,
-  useSession,
-  usePrivateRoute,
-} from "@/hooks";
+import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
 import { ContextMenu, DialogModal, PageContent, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import {
@@ -20,9 +15,10 @@ import {
 import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { DialogVariant, OrderFormType, OrderStatus } from "@/types";
 import { useSelectedYearStore } from "@/stores";
+import { withPrivateRoute } from "@/hoc";
 import styles from "./page.module.scss";
 
-export default function CalendarPage() {
+function CalendarPage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [dialogModal, setDialogModal] = useState<DialogVariant>();
 
@@ -33,7 +29,6 @@ export default function CalendarPage() {
   const router = useRouter();
   const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
-  const { isApprove } = usePrivateRoute(currentUser, "onlyUser");
 
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
     useOrderMenuCtx();
@@ -147,10 +142,7 @@ export default function CalendarPage() {
   };
 
   const isLoadingPage =
-    isSessionLoading ||
-    isGetOrdersLoading ||
-    (!currentUser && !isSessionError) ||
-    !isApprove;
+    isSessionLoading || isGetOrdersLoading || (!currentUser && !isSessionError);
 
   const dialogModalActions = {
     [DialogVariant.delete]: handleDeleteOrder,
@@ -215,3 +207,5 @@ export default function CalendarPage() {
     </main>
   );
 }
+
+export default withPrivateRoute(CalendarPage, "onlyUser");
