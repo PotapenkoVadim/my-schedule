@@ -1,0 +1,13 @@
+.p-inputtext,
+.p-password {
+  width: 100%;
+
+  & .p-password-input,
+  & .p-icon-field {
+    width: 100%;
+  }
+
+  & .p-input-icon {
+    top: 30%;
+  }
+}

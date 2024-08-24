@@ -1,0 +1,42 @@
+.details {
+  position: relative;
+  
+  &__add {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid lightgrey;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    cursor: pointer;
+    box-shadow: 0 0 1px grey;
+    transition: .3s;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    margin-top: 16px;
+  }
+
+  &__delete {
+    min-width: 44px;
+  }
+}
+
+@media (width <= 480px) {
+  .details {
+    &__row {
+      flex-direction: column;
+    }
+
+    &__delete {
+      width: 100%;
+    }
+  }
+}

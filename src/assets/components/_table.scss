@@ -1,0 +1,69 @@
+@import "../variables";
+@import "../mixins";
+
+.p-datatable {
+  @include dark-theme("background");
+  @include light-theme("background");
+
+  .p-datatable-tbody > tr > td {
+    border: none;
+  }
+
+  .p-datatable-thead > tr > th  {
+    border-color: $button;
+  }
+
+  &[data-theme="Dark"] {
+    box-shadow: 3px 3px 5px $martinique;
+
+    .p-paginator,
+    .p-datatable-header,
+    .p-datatable-tbody > tr > td {
+      color: map-get($dark-theme, "text-color");
+      background-color: map-get($dark-theme, "background");
+    }
+
+    .p-sortable-column-icon,
+    .p-datatable-thead > tr > th {
+      color: $button;
+      background-color: map-get($dark-theme, "background");
+
+      &:hover {
+        color: $dark !important;
+        background-color: $safe !important;
+
+        .p-sortable-column-icon {
+          color: $dark !important;
+          background-color: $safe !important;
+        }
+      }
+    }
+  }
+
+  &[data-theme="Light"] {
+    box-shadow: 3px 3px 5px $safe;
+
+    .p-paginator,
+    .p-datatable-header,
+    .p-datatable-tbody > tr > td {
+      color: map-get($light-theme, "text-color");
+      background-color: map-get($light-theme, "background");
+    }
+
+    .p-sortable-column-icon,
+    .p-datatable-thead > tr > th {
+      color: $dark;
+      background-color: map-get($light-theme, "background");
+
+      &:hover {
+        color: $zircon !important;
+        background-color: $safe !important;
+
+        .p-sortable-column-icon {
+          color: $zircon !important;
+          background-color: $safe !important;
+        }
+      }
+    }
+  }
+}

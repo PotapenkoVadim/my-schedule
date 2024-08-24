@@ -1,0 +1,20 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.page {
+  @include light-theme("background");
+  @include dark-theme("darkest-background");
+
+  min-height: 100vh;
+
+  &__button {
+    margin-top: 32px;
+  }
+}
+
+@media (width <= 780px) {
+  .page__button {
+    display: block;
+    width: 100%;
+  }
+}

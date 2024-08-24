@@ -1,0 +1,46 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.form {
+  @include dark-theme("background");
+  @include light-theme("background");
+  
+  border: 1px solid $secondary-dark;
+  padding: 36px 24px;
+  border-radius: 4px;
+  width: 420px;
+
+  &[data-theme="Dark"] {
+    border-color: rgb(255 255 255 / 35%);
+    color:  $safe;
+  }
+
+  &[data-theme="Light"] {
+    border-color: rgb(0 0 0 / 35%);
+  }
+
+  &__title {
+    font-size: 1.64rem;
+    font-weight: 600;
+  }
+
+  &__fields {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__button {
+    padding-right: 24px;
+    padding-left: 24px;
+    margin-top: 24px;
+  }
+}
+
+@media (width <= 420px) {
+  .form {
+    width: 100%;
+  }
+}

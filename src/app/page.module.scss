@@ -1,0 +1,30 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.page {
+  @include light-theme("background");
+  @include dark-theme("darkest-background");
+  
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    font-weight: 600;
+    text-align: center;
+    z-index: 1;
+  }
+
+  &__title {
+    font-size: 3.25rem;
+    line-height: 36px;
+  }
+}

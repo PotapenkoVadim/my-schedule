@@ -1,0 +1,10 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+
+  &__button {
+    display: block;
+    text-align: center;
+  }
+}

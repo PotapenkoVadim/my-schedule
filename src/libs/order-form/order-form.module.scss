@@ -1,0 +1,58 @@
+.form {
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-top: 24px;
+  }
+
+  &__comment {
+    margin-top: 12px;
+  }
+
+  &__picker {
+    flex: 1;
+    width: 26px;
+    height: 26px;
+  }
+
+  &__textfield {
+    flex: 8;
+  }
+
+  &__date {
+    flex: 6;
+  }
+}
+
+@media (width <= 780px) {
+  .form {
+    width: 90vw;
+    
+    &__row {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    &__picker {
+      align-self: flex-start;
+      width: 30px;
+    }
+
+    &__date {
+      width: 100%;
+
+      & > * {
+        width: 100%;
+      }
+    }
+  }
+}

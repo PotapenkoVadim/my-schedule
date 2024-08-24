@@ -1,1 +1,0 @@
-export const findState = (data: Array<boolean>) => data.find(Boolean);

@@ -1,0 +1,9 @@
+@import "@/assets/variables";
+
+.error {
+  color: $red !important;
+  font-size: .8rem;
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+}

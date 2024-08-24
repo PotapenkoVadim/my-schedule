@@ -1,0 +1,22 @@
+@import "primeicons/primeicons.css";
+@import "primereact/resources/themes/lara-light-cyan/theme.css";
+
+@import './variables';
+@import './mixins';
+@import './components/index';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root {
+  font-size: $fonts;
+  line-height: 24px;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}

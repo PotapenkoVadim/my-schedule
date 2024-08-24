@@ -1,0 +1,13 @@
+@import "../variables";
+
+.p-toast {
+  & .p-toast-message.p-toast-message-error {
+    border: solid $red;
+    color: $red;
+
+    & .p-toast-message-icon {
+      color: $red;
+      margin-right: 4px;
+    }
+  }
+} 

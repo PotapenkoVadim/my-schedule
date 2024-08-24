@@ -1,0 +1,41 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.sidebar {
+  @include dark-theme("background");
+  @include light-theme("background");
+
+  padding: 14px 8px;
+
+  &__menubutton {
+    position: fixed;
+    bottom: 4%;
+    right: 2%;
+  }
+
+  &__logo {
+    margin-top: 36px;
+    padding: 0 36px;
+  }
+
+  &__menu {
+    margin-top: 36px;
+    font-size: 1.15rem;
+  }
+
+  &__switcher {
+    margin-top: 36px;
+  }
+
+  :global(.p-sidebar-content) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    margin: auto 4px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,45 @@
+"use client";
+
+import { useAppContext } from "@/context";
+import { useSession } from "@/hooks";
+import { Spinner, ShapesBackground, PageContent } from "@/components";
+import { SignInForm } from "@/libs";
+import { WENT_WRONG_ERROR } from "@/constants";
+import { withPrivateRoute } from "@/hoc";
+import styles from "./page.module.scss";
+
+function SignInPage() {
+  const { theme, showToast } = useAppContext();
+  const {
+    currentUser,
+    sigIn,
+    isSessionLoading,
+    isSessionError,
+    isSignInLoading,
+  } = useSession(() => showToast("error", WENT_WRONG_ERROR));
+
+  let content;
+  if (isSessionLoading || (!currentUser && !isSessionError)) {
+    content = <Spinner isPage />;
+  } else {
+    content = (
+      <>
+        <ShapesBackground />
+        <SignInForm
+          theme={theme}
+          onSubmit={sigIn}
+          isLoading={isSignInLoading}
+          className={styles.page__form}
+        />
+      </>
+    );
+  }
+
+  return (
+    <main data-theme={theme} className={styles.page}>
+      <PageContent>{content}</PageContent>
+    </main>
+  );
+}
+
+export default withPrivateRoute(SignInPage, "onlyLoggedOut");

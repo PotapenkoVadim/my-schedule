@@ -1,0 +1,28 @@
+.dialog {
+  min-width: 410px;
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+}
+
+@media (width <= 420px) {
+  .dialog {
+    min-width: 100%;
+    width: 100%;
+
+    &__buttons {
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    &__button {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

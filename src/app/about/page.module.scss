@@ -1,0 +1,26 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
+.page {
+  @include light-theme("background");
+  @include dark-theme("darkest-background");
+
+  min-height: 100vh;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__image,
+  &__text,
+  &__generator {
+    margin-top: 14px;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    border: 1px solid $dark-text;
+    border-radius: 4px;
+  }
+}
