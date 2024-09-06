@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { getSessionService, signInService } from "@/services";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
@@ -39,12 +39,6 @@ export const useSession = (onError?: () => void) => {
     onError,
   });
 
-  useEffect(() => {
-    if (!user) {
-      handleFetch(currentYear);
-    }
-  }, [user]);
-
   return {
     currentUser: user,
     setCurrentUser: setUser,
@@ -55,5 +49,6 @@ export const useSession = (onError?: () => void) => {
     isSessionLoading: isLoading,
     isSessionSuccess: isSuccess,
     isSignInLoading,
+    getSession: handleFetch,
   };
 };
