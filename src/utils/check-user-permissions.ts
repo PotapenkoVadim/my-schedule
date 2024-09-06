@@ -14,5 +14,5 @@ export const checkUserPermissions = (
     onlyLoggedOut: !isUser,
   };
 
-  return routerConfig[routePermission];
+  return Boolean(routerConfig[routePermission]);
 };

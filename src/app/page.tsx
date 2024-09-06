@@ -1,24 +1,33 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { APP_TITLE, APP_DESCRIPTION } from "@/constants";
+import { APP_TITLE, APP_DESCRIPTION, currentYear } from "@/constants";
 import { useAppContext } from "@/context";
 import { Button, Spinner, ShapesBackground } from "@/components";
 import { useSession } from "@/hooks";
-import { getInitialPath } from "@/utils";
+import { getInitialPath, getToken } from "@/utils";
+import { useEffect } from "react";
 import styles from "./page.module.scss";
 
 export default function Home() {
   const router = useRouter();
   const { theme } = useAppContext();
-  const { currentUser, isSessionLoading, isSessionError } = useSession();
+  const { currentUser, isSessionLoading, getSession } = useSession();
 
   const moveTo = () => {
     router.push(getInitialPath(currentUser));
   };
 
+  useEffect(() => {
+    const token = getToken();
+
+    if (!currentUser && token) {
+      getSession(currentYear);
+    }
+  }, [currentUser]);
+
   let content;
-  if (isSessionLoading || (!currentUser && !isSessionError)) {
+  if (isSessionLoading) {
     content = <Spinner />;
   } else {
     content = (
