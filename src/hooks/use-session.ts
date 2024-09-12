@@ -20,6 +20,7 @@ export const useSession = (onError?: () => void) => {
       setUser(response);
       setOrderList(response?.orders || null);
     },
+    onError: removeToken,
   });
 
   const signOut = useCallback(() => {
