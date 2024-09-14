@@ -1,25 +1,31 @@
 "use client";
 
-import Image from "next/image";
 import { useAppContext } from "@/context";
-import { UserGenerator } from "@/libs";
-import adminImage from "@/assets/images/admin.png";
-import calendarImage from "@/assets/images/calendar.png";
-import tableImage from "@/assets/images/table.png";
-import { PageContent } from "@/components";
+import { Gallery, UserGenerator } from "@/libs";
+import { PageContent, Spinner } from "@/components";
+import { ABOUT_PAGE_IMAGES, CURRENT_YEAR } from "@/constants";
+import { useSession } from "@/hooks";
+import { useEffect } from "react";
+import { getToken } from "@/utils";
 import styles from "./page.module.scss";
 
 export default function AboutPage() {
   const { theme } = useAppContext();
+  const { currentUser, isSessionLoading, getSession } = useSession();
 
-  const images = [
-    { src: calendarImage, alt: "страница календаря" },
-    { src: tableImage, alt: "страница таблицы" },
-    { src: adminImage, alt: "страница админки" },
-  ];
+  useEffect(() => {
+    const token = getToken();
 
-  return (
-    <main data-theme={theme} className={styles.page}>
+    if (!currentUser && token) {
+      getSession(CURRENT_YEAR);
+    }
+  }, [currentUser]);
+
+  let content;
+  if (isSessionLoading) {
+    content = <Spinner />;
+  } else {
+    content = (
       <PageContent>
         <h1 className={styles.page__title}>My Schedule</h1>
 
@@ -41,18 +47,14 @@ export default function AboutPage() {
         </div>
 
         <UserGenerator className={styles.page__generator} />
-        {images.map(({ src, alt }) => (
-          <Image
-            key={alt}
-            className={styles.page__image}
-            width={0}
-            height={0}
-            sizes="100vw"
-            src={src}
-            alt={alt}
-          />
-        ))}
+        <Gallery className={styles.page__gallery} images={ABOUT_PAGE_IMAGES} />
       </PageContent>
+    );
+  }
+
+  return (
+    <main data-theme={theme} className={styles.page}>
+      {content}
     </main>
   );
 }

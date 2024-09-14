@@ -1,3 +1,9 @@
+import adminImage from "@/assets/images/admin.png";
+import adminThumbnailImage from "@/assets/images/admin-thumbnail.png";
+import calendarImage from "@/assets/images/calendar.png";
+import calendarThumbnailImage from "@/assets/images/calendar-thumbnail.png";
+import tableImage from "@/assets/images/table.png";
+import tableThumbnailImage from "@/assets/images/table-thumbnail.png";
 import { DialogVariant, UserRole, UserScopes } from "./types";
 
 export const APP_TITLE = "My Schedule";
@@ -64,4 +70,22 @@ export const ADD_TEXT = "Создать";
 export const TOKEN_KEY = "auth_token";
 export const TOKEN_TTL_MS = 2592000000;
 
-export const currentYear = new Date().getFullYear();
+export const CURRENT_YEAR = new Date().getFullYear();
+
+export const ABOUT_PAGE_IMAGES = [
+  {
+    image: calendarImage,
+    thumbnail: calendarThumbnailImage,
+    alt: "страница календаря",
+  },
+  {
+    image: tableImage,
+    thumbnail: tableThumbnailImage,
+    alt: "страница таблицы",
+  },
+  {
+    image: adminImage,
+    thumbnail: adminThumbnailImage,
+    alt: "страница админки",
+  },
+];

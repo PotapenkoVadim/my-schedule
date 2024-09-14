@@ -18,6 +18,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { InputNumber } from "primereact/inputnumber";
 import { Password } from "primereact/password";
+import { Galleria } from "primereact/galleria";
+import { Image } from "primereact/image";
 
 export {
   Button,
@@ -40,6 +42,8 @@ export {
   Divider,
   InputNumber,
   Password,
+  Galleria,
+  Image,
 };
 
 export * from "./theme-switcher/theme-switcher";

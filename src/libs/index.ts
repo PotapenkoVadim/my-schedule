@@ -8,3 +8,4 @@ export * from "./order-table/order-table";
 export * from "./user-form/user-form";
 export * from "./user-modal/user-modal";
 export * from "./user-generator/user-generator";
+export * from "./gallery/gallery";
