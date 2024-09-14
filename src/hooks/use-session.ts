@@ -3,7 +3,7 @@ import { getSessionService, signInService } from "@/services";
 import { useUserStore } from "@/stores/user";
 import { useOrderStore } from "@/stores/order";
 import { setToken, removeToken } from "@/utils";
-import { currentYear } from "@/constants";
+import { CURRENT_YEAR } from "@/constants";
 import { useFetch } from "./use-fetch";
 
 export const useSession = (onError?: () => void) => {
@@ -35,7 +35,7 @@ export const useSession = (onError?: () => void) => {
       if (!response) throw new Error();
 
       setToken(response.token);
-      handleFetch(currentYear);
+      handleFetch(CURRENT_YEAR);
     },
     onError,
   });

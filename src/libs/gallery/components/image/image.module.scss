@@ -1,0 +1,11 @@
+@import "@/assets/variables";
+
+.image {
+  width: 100%;
+  height: auto;
+
+  &__thumbnail {
+    width: 120px;
+    height: 120px;
+  }
+}

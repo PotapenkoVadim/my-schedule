@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { APP_TITLE, APP_DESCRIPTION, currentYear } from "@/constants";
+import { APP_TITLE, APP_DESCRIPTION, CURRENT_YEAR } from "@/constants";
 import { useAppContext } from "@/context";
 import { Button, Spinner, ShapesBackground } from "@/components";
 import { useSession } from "@/hooks";
@@ -22,7 +22,7 @@ export default function Home() {
     const token = getToken();
 
     if (!currentUser && token) {
-      getSession(currentYear);
+      getSession(CURRENT_YEAR);
     }
   }, [currentUser]);
 

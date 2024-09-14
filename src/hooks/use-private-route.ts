@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { checkUserPermissions, getInitialPath, getToken } from "@/utils";
 import { useEffect, useReducer } from "react";
-import { currentYear } from "@/constants";
+import { CURRENT_YEAR } from "@/constants";
 import { RoutePermissions } from "@/types";
 import { useSession } from "./use-session";
 
@@ -52,7 +52,9 @@ export const usePrivateRoute = (routePermission: RoutePermissions) => {
     const token = getToken();
 
     if (!currentUser && token) {
-      getSession(currentYear).then(() => dispatch({ type: "session_fetched" }));
+      getSession(CURRENT_YEAR).then(() =>
+        dispatch({ type: "session_fetched" }),
+      );
     } else {
       dispatch({ type: "session_fetched" });
     }

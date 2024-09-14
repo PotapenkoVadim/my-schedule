@@ -1,4 +1,4 @@
-import { currentYear } from "@/constants";
+import { CURRENT_YEAR } from "@/constants";
 import { create } from "zustand";
 
 interface SelectedYearState {
@@ -7,6 +7,6 @@ interface SelectedYearState {
 }
 
 export const useSelectedYearStore = create<SelectedYearState>((set) => ({
-  selectedYear: currentYear,
+  selectedYear: CURRENT_YEAR,
   changeYear: (year: number) => set({ selectedYear: year }),
 }));
