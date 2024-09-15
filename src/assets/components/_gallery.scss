@@ -1,0 +1,9 @@
+@import "@/assets/variables";
+
+.p-galleria {
+  &[data-theme="Light"] {
+    .p-galleria-thumbnail-container {
+      background: #e2e2e2;
+    }
+  }
+}

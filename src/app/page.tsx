@@ -6,12 +6,13 @@ import { useAppContext } from "@/context";
 import { Button, Spinner, ShapesBackground } from "@/components";
 import { useSession } from "@/hooks";
 import { getInitialPath, getToken } from "@/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 
 export default function Home() {
   const router = useRouter();
   const { theme } = useAppContext();
+  const [isLoading, setIsLoading] = useState(true);
   const { currentUser, isSessionLoading, getSession } = useSession();
 
   const moveTo = () => {
@@ -20,14 +21,15 @@ export default function Home() {
 
   useEffect(() => {
     const token = getToken();
-
     if (!currentUser && token) {
       getSession(CURRENT_YEAR);
     }
+
+    setIsLoading(false);
   }, [currentUser]);
 
   let content;
-  if (isSessionLoading) {
+  if (isSessionLoading || isLoading) {
     content = <Spinner />;
   } else {
     content = (
