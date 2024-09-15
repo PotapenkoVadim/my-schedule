@@ -10,6 +10,7 @@
     position: relative;
     opacity: .5;
     filter: blur(90px);
+    transform: translate3d(0, 0, 0);
 
     &_one {
       width: 400px;
