@@ -5,16 +5,62 @@
   @include light-theme("background");
   @include dark-theme("darkest-background");
 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  position: relative;
+
+  &__content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 62px;
+    gap: 64px;
+
+    & > * {
+      flex: 1;
+      position: relative;
+    }
+  }
+
+  &__generator,
+  &__description {
+    margin-top: 32px;
+  }
+
+  &__subdescription {
+    margin-top: 14px;
+  }
 
   &__title {
     text-align: center;
   }
 
-  &__image,
-  &__text,
-  &__generator,
-  &__gallery {
-    margin-top: 14px;
+  &__wrapper {
+    box-shadow: 2px 2px 15px darkslateblue;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+}
+
+@media (width <= 1224px) {
+  .page__content {
+    flex-direction: column;
+    padding: 32px;
+    gap: 32px;
+  }
+
+  .page__wrapper {
+    margin-top: 0;
+  }
+}
+
+@media (width <= 420px) {
+  .page__content {
+    padding: 36px 14px;
+    gap: 14px;
   }
 }
