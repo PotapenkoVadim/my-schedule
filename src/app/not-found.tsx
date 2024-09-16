@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { ShapesBackground, Button, Spinner } from "@/components";
 import { useAppContext } from "@/context";
 import { CURRENT_YEAR, PATHS } from "@/constants";
-import { useSession } from "@/hooks";
+import { useListenSystemTray, useSession } from "@/hooks";
 import { getToken } from "@/utils";
 import { useEffect } from "react";
 import styles from "./page.module.scss";
 
 export default function NotFound() {
   const router = useRouter();
-  const { theme } = useAppContext();
+  const { theme, switchTheme } = useAppContext();
   const { currentUser, isSessionLoading, getSession } = useSession();
 
   useEffect(() => {
@@ -23,6 +23,8 @@ export default function NotFound() {
   }, [currentUser]);
 
   const moveToHove = () => router.push(PATHS.home);
+
+  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading) {

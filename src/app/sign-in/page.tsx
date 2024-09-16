@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppContext } from "@/context";
-import { useSession } from "@/hooks";
+import { useListenSystemTray, useSession } from "@/hooks";
 import { Spinner, ShapesBackground, PageContent } from "@/components";
 import { SignInForm } from "@/libs";
 import { WENT_WRONG_ERROR } from "@/constants";
@@ -11,10 +11,12 @@ import styles from "./page.module.scss";
 
 function SignInPage() {
   const token = getToken();
-  const { theme, showToast } = useAppContext();
+  const { theme, showToast, switchTheme } = useAppContext();
   const { sigIn, isSessionLoading, isSignInLoading } = useSession(() =>
     showToast("error", WENT_WRONG_ERROR),
   );
+
+  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || token) {

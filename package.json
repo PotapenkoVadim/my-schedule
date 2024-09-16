@@ -8,7 +8,10 @@
     "start": "npx serve@latest out",
     "lint": "next lint --fix",
     "lint:style": "stylelint \"**/*.{css,scss}\" --fix",
-    "tauri": "tauri",
+    "desktop:dev": "set NEXT_PUBLIC_CLIENT=desktop && yarn tauri dev",
+    "desktop:build": "set NEXT_PUBLIC_CLIENT=desktop && yarn tauri build",
+    "web:dev": "set NEXT_PUBLIC_CLIENT=web && next dev",
+    "web:build": "set NEXT_PUBLIC_CLIENT=web && next build",
     "prepare": "husky",
     "pre-commit": "yarn lint && yarn lint:style"
   },
