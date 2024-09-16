@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/context";
 import { useRouter } from "next/navigation";
-import { useSession, useUsers } from "@/hooks";
+import { useListenSystemTray, useSession, useUsers } from "@/hooks";
 import { DELETE_USER_TEXT, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import {
   Button,
@@ -21,7 +21,7 @@ import styles from "./page.module.scss";
 
 function AdminPanel() {
   const router = useRouter();
-  const { theme, showToast } = useAppContext();
+  const { theme, showToast, switchTheme } = useAppContext();
 
   const onError = () => showToast("error", WENT_WRONG_ERROR);
 
@@ -78,6 +78,8 @@ function AdminPanel() {
       getUsers();
     }
   }, [currentUser]);
+
+  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || (!currentUser && !isSessionError)) {

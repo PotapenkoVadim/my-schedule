@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { APP_TITLE, APP_DESCRIPTION, CURRENT_YEAR } from "@/constants";
 import { useAppContext } from "@/context";
 import { Button, Spinner, ShapesBackground } from "@/components";
-import { useSession } from "@/hooks";
+import { useListenSystemTray, useSession } from "@/hooks";
 import { getInitialPath, getToken } from "@/utils";
 import { useEffect, useState } from "react";
 import styles from "./page.module.scss";
 
 export default function Home() {
   const router = useRouter();
-  const { theme } = useAppContext();
+  const { theme, switchTheme } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser, isSessionLoading, getSession } = useSession();
 
@@ -27,6 +27,8 @@ export default function Home() {
 
     setIsLoading(false);
   }, [currentUser]);
+
+  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || isLoading) {

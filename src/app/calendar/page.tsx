@@ -4,7 +4,12 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import omit from "lodash/omit";
 import { useRouter } from "next/navigation";
-import { useOrderMenuCtx, useOrder, useSession } from "@/hooks";
+import {
+  useOrderMenuCtx,
+  useOrder,
+  useSession,
+  useListenSystemTray,
+} from "@/hooks";
 import { ContextMenu, DialogModal, PageContent, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import {
@@ -27,7 +32,7 @@ function CalendarPage() {
   );
 
   const router = useRouter();
-  const { theme, showToast } = useAppContext();
+  const { theme, showToast, switchTheme } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
 
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
@@ -140,6 +145,8 @@ function CalendarPage() {
       changeYear(year);
     }
   };
+
+  useListenSystemTray({ onAddOrder: handleAdd, onSwitchTheme: switchTheme });
 
   const isLoadingPage =
     isSessionLoading || isGetOrdersLoading || (!currentUser && !isSessionError);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
-import { useOrder, useSession } from "@/hooks";
+import { useListenSystemTray, useOrder, useSession } from "@/hooks";
 import { PageContent, Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType, OrderStatus } from "@/types";
@@ -17,7 +17,7 @@ function OrderTablePage() {
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
 
-  const { theme, showToast } = useAppContext();
+  const { theme, showToast, switchTheme } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
 
   const [selectedYear, changeYear] = useSelectedYearStore(
@@ -51,6 +51,8 @@ function OrderTablePage() {
 
     addOrder(order);
   };
+
+  useListenSystemTray({ onAddOrder: openModal, onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || (!currentUser && !isSessionError)) {
