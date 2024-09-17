@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { WebviewWindow } from "@tauri-apps/api/window";
+import { useListenThemeTray } from "./use-listen-theme-tray";
+import { useListenOrderTray } from "./use-listen-order-tray";
 
 export const useListenSystemTray = ({
   onSwitchTheme,
@@ -23,32 +25,6 @@ export const useListenSystemTray = ({
     }
   }, []);
 
-  useEffect(() => {
-    if (appWindow && onAddOrder) {
-      let unlistenOrderTray: () => void;
-      const listenOrderTray = async () => {
-        unlistenOrderTray = await appWindow.listen("new_order", onAddOrder);
-      };
-
-      listenOrderTray();
-
-      return () => unlistenOrderTray?.();
-    }
-  }, [appWindow, onAddOrder]);
-
-  useEffect(() => {
-    if (appWindow && onSwitchTheme) {
-      let unlistenThemeTray: () => void;
-      const listenThemeTray = async () => {
-        unlistenThemeTray = await appWindow.listen(
-          "switch_theme",
-          onSwitchTheme,
-        );
-      };
-
-      listenThemeTray();
-
-      return () => unlistenThemeTray?.();
-    }
-  }, [appWindow, onSwitchTheme]);
+  useListenOrderTray(appWindow, onAddOrder);
+  useListenThemeTray(appWindow, onSwitchTheme);
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShapesBackground, Spinner } from "@/components";
+import { PageContent, ShapesBackground, Spinner } from "@/components";
 import { ABOUT_PAGE_IMAGES, APP_TITLE, CURRENT_YEAR } from "@/constants";
 import { useAppContext } from "@/context";
 import { useListenSystemTray, useSession } from "@/hooks";
@@ -73,7 +73,7 @@ export default function AboutPage() {
 
   return (
     <main data-theme={theme} className={styles.page}>
-      {content}
+      <PageContent>{content}</PageContent>
     </main>
   );
 }
