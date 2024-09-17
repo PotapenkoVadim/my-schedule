@@ -12,6 +12,9 @@ export const enum UserScopes {
   allowCommon,
 }
 
-export type UserFormType = Pick<UserEntity, "role" | "username"> & {
+export type UserFormType = Pick<
+  UserEntity,
+  "role" | "username" | "telegram"
+> & {
   password: string;
 };
