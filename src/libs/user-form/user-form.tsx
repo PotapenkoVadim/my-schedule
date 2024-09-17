@@ -56,6 +56,13 @@ export function UserForm({
         error={errors.role?.message}
       />
 
+      <FormInput
+        label="Telegram username"
+        name="telegram"
+        control={control}
+        error={errors.telegram?.message}
+      />
+
       <Button loading={isLoading} className={styles.form__button}>
         Сохранить
       </Button>

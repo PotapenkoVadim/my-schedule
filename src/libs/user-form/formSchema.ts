@@ -6,4 +6,5 @@ export const formSchema: yup.ObjectSchema<UserFormType> = yup.object().shape({
   username: yup.string().required(REQUIRED_FIELD_ERROR),
   password: yup.string().required(REQUIRED_FIELD_ERROR),
   role: yup.mixed<UserRole>().required(REQUIRED_FIELD_ERROR),
+  telegram: yup.string(),
 });

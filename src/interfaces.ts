@@ -21,6 +21,7 @@ export interface UserEntity {
   orders?: OrderListEntity;
   createdAt: string;
   updatedAt: string;
+  telegram?: string;
 }
 
 export interface OrderDetailsEntity {
