@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import classnames from "classnames";
 import { v4 as uuidv4 } from "uuid";
-import { Button, Tooltip } from "@/components";
+import { Button } from "@/components";
 import { ThemeVariant, UserScopes } from "@/types";
 import { OrderEntity, UserEntity } from "@/interfaces";
 import { hasPermission } from "@/utils";
@@ -121,6 +121,7 @@ export function Calendar({
 
                   {days.map((item) => (
                     <div
+                      data-title={getTooltipText(item)}
                       onContextMenu={(e) => handleContextMenu(e, item)}
                       data-pr-disabled={isDisabledDay(item)}
                       onClick={() => handleDayClick(item)}
@@ -138,8 +139,6 @@ export function Calendar({
                             item?.toDateString() === currentDate,
                         },
                       ])}
-                      data-pr-tooltip={getTooltipText(item)}
-                      data-pr-position="top"
                     >
                       {item?.getDate()}
                     </div>
@@ -150,8 +149,6 @@ export function Calendar({
           </div>
         ))}
       </div>
-
-      <Tooltip hideDelay={250} target={`.${styles.calendar__day}`} />
     </div>
   );
 }
