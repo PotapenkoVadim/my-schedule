@@ -7,8 +7,9 @@ import { useSelectedYearStore } from "@/stores";
 import { useListenSystemTray, useOrder, useSession } from "@/hooks";
 import { PageContent, Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
-import { OrderFormType, OrderStatus } from "@/types";
+import { OrderFormType } from "@/types";
 import { withPrivateRoute } from "@/hoc";
+import { constructOrder } from "@/utils";
 import styles from "./page.module.scss";
 
 function OrderTablePage() {
@@ -43,13 +44,7 @@ function OrderTablePage() {
   };
 
   const onSubmitOrderForm = (data: OrderFormType) => {
-    const order = {
-      ...data,
-      status: OrderStatus.InProgress,
-      currentYear: selectedYear,
-    };
-
-    addOrder(order);
+    addOrder(constructOrder(data, selectedYear));
   };
 
   useListenSystemTray({ onAddOrder: openModal, onSwitchTheme: switchTheme });

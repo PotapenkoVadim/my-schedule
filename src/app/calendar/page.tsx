@@ -13,6 +13,7 @@ import {
 import { ContextMenu, DialogModal, PageContent, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
 import {
+  constructOrder,
   getContextMenuItems,
   handleDoneStatus,
   handleReadyStatus,
@@ -107,11 +108,7 @@ function CalendarPage() {
   };
 
   const onSubmitOrderForm = (data: OrderFormType) => {
-    const order = {
-      ...data,
-      status: OrderStatus.InProgress,
-      currentYear: selectedYear,
-    };
+    const order = constructOrder(data, selectedYear);
 
     if (ctxOrder) {
       editOrder(ctxOrder.id, { ...order, status: ctxOrder.status });
