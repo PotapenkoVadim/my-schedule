@@ -13,3 +13,37 @@
     background-color: map-get($light-theme, $background) !important;
   }
 }
+
+@mixin tooltip() {
+  & {
+    position: relative;
+    
+    &[data-title]:hover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 4px;
+      width: 0; 
+      height: 0; 
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid $dark-text;
+      z-index: 999;
+    }
+  
+    &[data-title]:hover::before {
+      content: attr(data-title);
+      position: absolute;
+      top: -75%;
+      left: 0;
+      padding: 6px 14px;
+      border-radius: 4px;
+      border: none;
+      background-color: $dark-text;
+      color: $light;
+      width: max-content;
+      z-index: 999;
+      box-shadow: 3px 3px 10px $martinique;
+    }
+  }
+}

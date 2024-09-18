@@ -42,6 +42,8 @@
   }
   
   &__day {
+    @include tooltip;
+
     width: 45px;
     height: 45px;
     display: flex;
