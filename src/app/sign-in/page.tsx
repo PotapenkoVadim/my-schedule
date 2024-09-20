@@ -25,19 +25,21 @@ function SignInPage() {
     content = (
       <>
         <ShapesBackground />
-        <SignInForm
-          theme={theme}
-          onSubmit={sigIn}
-          isLoading={isSignInLoading}
-          className={styles.page__form}
-        />
+        <PageContent>
+          <SignInForm
+            theme={theme}
+            onSubmit={sigIn}
+            isLoading={isSignInLoading}
+            className={styles.page__form}
+          />
+        </PageContent>
       </>
     );
   }
 
   return (
     <main data-theme={theme} className={styles.page}>
-      <PageContent>{content}</PageContent>
+      {content}
     </main>
   );
 }

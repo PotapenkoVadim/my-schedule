@@ -1,3 +1,6 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .toolbar {
   &__order-show {
     display: flex;
@@ -18,7 +21,7 @@
   }
 }
 
-@media (width <= 780px) {
+@include tablet-display {
   .toolbar {
     &__row {
       gap: 4px;

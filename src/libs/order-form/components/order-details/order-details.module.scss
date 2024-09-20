@@ -1,3 +1,6 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .details {
   position: relative;
   
@@ -29,7 +32,7 @@
   }
 }
 
-@media (width <= 480px) {
+@include mobile-display {
   .details {
     &__row {
       flex-direction: column;

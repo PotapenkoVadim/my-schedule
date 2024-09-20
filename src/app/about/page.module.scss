@@ -45,7 +45,7 @@
   }
 }
 
-@media (width <= 1224px) {
+@include small-desktop-display {
   .page__content {
     flex-direction: column;
     padding: 32px;
@@ -57,7 +57,7 @@
   }
 }
 
-@media (width <= 420px) {
+@include mobile-display {
   .page__content {
     padding: 36px 14px;
     gap: 14px;

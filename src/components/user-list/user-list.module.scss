@@ -1,3 +1,6 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .list {
   &__item {
     display: flex;
@@ -30,7 +33,7 @@
   }
 }
 
-@media (width <= 780px) {
+@include tablet-display {
   .list {
     &__item {
       width: 100%;
@@ -42,7 +45,7 @@
   }
 }
 
-@media (width <= 420px) {
+@include mobile-display {
   .list__buttons {
     flex-basis: 100%;
   }

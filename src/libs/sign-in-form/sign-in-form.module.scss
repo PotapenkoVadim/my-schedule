@@ -39,7 +39,7 @@
   }
 }
 
-@media (width <= 420px) {
+@include mobile-display {
   .form {
     width: 100%;
   }

@@ -1,3 +1,6 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .form {
   display: flex;
   flex-direction: column;
@@ -9,7 +12,7 @@
   }
 }
 
-@media (width <= 780px) {
+@include tablet-display {
   .form {
     width: auto;
 

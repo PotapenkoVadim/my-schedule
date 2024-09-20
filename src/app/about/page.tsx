@@ -33,47 +33,49 @@ export default function AboutPage() {
       <>
         <ShapesBackground />
 
-        <div className={styles.page__content}>
-          <div>
-            <h1 className={styles.page__title}>{APP_TITLE} App.</h1>
+        <PageContent>
+          <div className={styles.page__content}>
+            <div>
+              <h1 className={styles.page__title}>{APP_TITLE} App.</h1>
 
-            <div className={styles.page__description}>
-              Приложение предназначено для учета и визуализации заказов. Оно
-              позволяет пользователям просматривать информацию о заказах в двух
-              форматах: в виде цветовых схем на календаре и в виде таблицы.
-              Каждый заказ имеет свой цвет, который выбирает пользователь, и
-              статус, который может меняться со временем. Статус заказа
-              отображается на календаре различными способами в зависимости от
-              его текущего состояния.
+              <div className={styles.page__description}>
+                Приложение предназначено для учета и визуализации заказов. Оно
+                позволяет пользователям просматривать информацию о заказах в
+                двух форматах: в виде цветовых схем на календаре и в виде
+                таблицы. Каждый заказ имеет свой цвет, который выбирает
+                пользователь, и статус, который может меняться со временем.
+                Статус заказа отображается на календаре различными способами в
+                зависимости от его текущего состояния.
+              </div>
+
+              <div className={styles.page__subdescription}>
+                Приложение также поддерживает ролевую модель с тремя уровнями
+                доступа: администратор, пользователь и временный пользователь.
+                Администратор имеет возможность добавлять новых пользователей.
+                Пользователи и временные пользователи имеют доступ к основным
+                функциям приложения, но доступ временных пользователей к
+                приложению ограничен сутками.
+              </div>
+
+              <UserGenerator className={styles.page__generator} />
             </div>
 
-            <div className={styles.page__subdescription}>
-              Приложение также поддерживает ролевую модель с тремя уровнями
-              доступа: администратор, пользователь и временный пользователь.
-              Администратор имеет возможность добавлять новых пользователей.
-              Пользователи и временные пользователи имеют доступ к основным
-              функциям приложения, но доступ временных пользователей к
-              приложению ограничен сутками.
+            <div className={styles.page__wrapper}>
+              <Gallery
+                theme={theme}
+                className={styles.page__gallery}
+                images={ABOUT_PAGE_IMAGES}
+              />
             </div>
-
-            <UserGenerator className={styles.page__generator} />
           </div>
-
-          <div className={styles.page__wrapper}>
-            <Gallery
-              theme={theme}
-              className={styles.page__gallery}
-              images={ABOUT_PAGE_IMAGES}
-            />
-          </div>
-        </div>
+        </PageContent>
       </>
     );
   }
 
   return (
     <main data-theme={theme} className={styles.page}>
-      <PageContent>{content}</PageContent>
+      {content}
     </main>
   );
 }

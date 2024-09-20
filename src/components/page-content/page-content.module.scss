@@ -1,10 +1,13 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .content {
   max-width: 1436px;
   margin: 0 auto;
   padding: 24px;
 }
 
-@media (width <= 420px) {
+@include mobile-display {
   .content {
     padding: 8px;
   }

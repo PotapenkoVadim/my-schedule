@@ -47,3 +47,15 @@
     }
   }
 }
+
+@mixin small-desktop-display {
+  @media (width <= $small-desktop) { @content; }
+}
+
+@mixin tablet-display {
+  @media (width <= $tablet) { @content; }
+}
+
+@mixin mobile-display {
+  @media (width <= $mobile) { @content; }
+}
