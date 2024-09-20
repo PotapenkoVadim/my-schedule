@@ -1,3 +1,6 @@
+@import "@/assets/variables";
+@import "@/assets/mixins";
+
 .dialog {
   min-width: 410px;
 
@@ -9,7 +12,7 @@
   }
 }
 
-@media (width <= 420px) {
+@include mobile-display {
   .dialog {
     min-width: 100%;
     width: 100%;
