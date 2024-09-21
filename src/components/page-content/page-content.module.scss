@@ -1,5 +1,4 @@
-@import "@/assets/variables";
-@import "@/assets/mixins";
+@use "@/assets/mixins" as *;
 
 .content {
   max-width: 1436px;
