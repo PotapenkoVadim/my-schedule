@@ -1,5 +1,4 @@
-@import "@/assets/variables";
-@import "@/assets/mixins";
+@use "@/assets/mixins" as *;
 
 .details {
   position: relative;

@@ -1,4 +1,4 @@
-@import "@/assets/variables";
+@use "@/assets/variables" as *;
 
 .checkbox {
   display: flex;

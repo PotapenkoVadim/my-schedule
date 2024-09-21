@@ -1,5 +1,4 @@
-@import "@/assets/variables";
-@import "@/assets/mixins";
+@use "@/assets/mixins" as *;
 
 .sidebar {
   @include dark-theme("background");

@@ -1,9 +1,8 @@
+@use './variables';
+@use './components/index';
+
 @import "primeicons/primeicons.css";
 @import "primereact/resources/themes/lara-light-cyan/theme.css";
-
-@import './variables';
-@import './mixins';
-@import './components/index';
 
 * {
   box-sizing: border-box;
@@ -11,7 +10,7 @@
 }
 
 :root {
-  font-size: $fonts;
+  font-size: variables.$fonts;
   line-height: 24px;
   font-weight: 400;
   font-synthesis: none;

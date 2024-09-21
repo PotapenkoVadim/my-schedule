@@ -1,9 +1,9 @@
-@import "../variables";
-@import "../mixins";
+@use "../variables" as *;
+@use "../mixins";
 
 .p-datatable {
-  @include dark-theme("background");
-  @include light-theme("background");
+  @include mixins.dark-theme("background");
+  @include mixins.light-theme("background");
 
   .p-datatable-tbody > tr > td {
     border: none;

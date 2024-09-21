@@ -1,5 +1,5 @@
-@import "@/assets/variables";
-@import "@/assets/mixins";
+@use "@/assets/variables" as *;
+@use "@/assets/mixins" as *;
 
 .form {
   @include dark-theme("background");
