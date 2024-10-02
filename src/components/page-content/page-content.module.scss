@@ -1,8 +1,9 @@
 @use "@/assets/mixins" as *;
+@use "@/assets/variables" as *;
 
 .content {
   width: 100%;
-  max-width: 1436px;
+  max-width: $max-width;
   margin: 0 auto;
   padding: 16px;
 }

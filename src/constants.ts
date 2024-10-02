@@ -89,3 +89,18 @@ export const ABOUT_PAGE_IMAGES = [
     alt: "страница админки",
   },
 ];
+
+export const GITHUB_LINK = "https://github.com/PotapenkoVadim";
+export const TELEGRAM_LINK = "https://t.me/vadpotapenko";
+export const FOOTER_LINKS = [
+  {
+    id: "github",
+    href: GITHUB_LINK,
+    icon: "pi pi-github",
+  },
+  {
+    id: "telegram",
+    href: TELEGRAM_LINK,
+    icon: "pi pi-telegram",
+  },
+];

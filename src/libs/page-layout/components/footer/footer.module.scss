@@ -1,6 +1,36 @@
 @use "@/assets/mixins" as *;
+@use "@/assets/variables" as *;
 
 .footer {
   @include layout-light-theme;
   @include layout-dark-theme;
+
+  &__content {
+    max-width: $max-width;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    margin: 0 auto;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    & > * {
+      color: $button;
+    }
+  }
+  
+  &__link {
+    font-size: 1.6rem;
+  }
+}
+
+@include mobile-display {
+  .footer__content {
+    padding: 8px;
+  }
 }
