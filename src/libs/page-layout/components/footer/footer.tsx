@@ -7,7 +7,7 @@ export function Footer({ theme }: { theme: ThemeVariant }) {
   const footerText = `${APP_TITLE}. Copyright © ${CURRENT_YEAR}`;
 
   return (
-    <div data-theme={theme} className={styles.footer}>
+    <footer data-theme={theme} className={styles.footer}>
       <div className={styles.footer__content}>
         <div className={styles.footer__links}>
           {FOOTER_LINKS.map(({ href, icon, id }) => (
@@ -22,6 +22,6 @@ export function Footer({ theme }: { theme: ThemeVariant }) {
 
         <div>{footerText}</div>
       </div>
-    </div>
+    </footer>
   );
 }
