@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppContext } from "@/context";
-import { useListenSystemTray, useSession } from "@/hooks";
+import { useSession } from "@/hooks";
 import { Spinner, ShapesBackground, PageContent } from "@/components";
 import { SignInForm } from "@/libs";
 import { WENT_WRONG_ERROR } from "@/constants";
@@ -11,19 +11,17 @@ import styles from "./page.module.scss";
 
 function SignInPage() {
   const token = getToken();
-  const { theme, showToast, switchTheme } = useAppContext();
+  const { theme, showToast } = useAppContext();
   const { sigIn, isSessionLoading, isSignInLoading } = useSession(() =>
     showToast("error", WENT_WRONG_ERROR),
   );
-
-  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || token) {
     content = <Spinner isPage />;
   } else {
     content = (
-      <>
+      <div className={styles.page__content}>
         <ShapesBackground />
         <PageContent>
           <SignInForm
@@ -33,15 +31,11 @@ function SignInPage() {
             className={styles.page__form}
           />
         </PageContent>
-      </>
+      </div>
     );
   }
 
-  return (
-    <main data-theme={theme} className={styles.page}>
-      {content}
-    </main>
-  );
+  return <div className={styles.page}>{content}</div>;
 }
 
 export default withPrivateRoute(SignInPage, "onlyLoggedOut");

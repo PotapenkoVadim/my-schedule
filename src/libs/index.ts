@@ -9,3 +9,4 @@ export * from "./user-form/user-form";
 export * from "./user-modal/user-modal";
 export * from "./user-generator/user-generator";
 export * from "./gallery/gallery";
+export * from "./page-layout/page-layout";

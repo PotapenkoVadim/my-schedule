@@ -1,13 +1,14 @@
 @use "@/assets/mixins" as *;
 
 .content {
+  width: 100%;
   max-width: 1436px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
 }
 
 @include mobile-display {
   .content {
-    padding: 8px;
+    padding: 16px 8px;
   }
 }

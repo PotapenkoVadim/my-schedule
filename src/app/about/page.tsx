@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { PageContent, ShapesBackground, Spinner } from "@/components";
 import { ABOUT_PAGE_IMAGES, APP_TITLE, CURRENT_YEAR } from "@/constants";
 import { useAppContext } from "@/context";
-import { useListenSystemTray, useSession } from "@/hooks";
+import { useSession } from "@/hooks";
 import { getToken } from "@/utils";
 import { Gallery, UserGenerator } from "@/libs";
 import styles from "./page.module.scss";
 
 export default function AboutPage() {
-  const { theme, switchTheme } = useAppContext();
+  const { theme } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser, isSessionLoading, getSession } = useSession();
 
@@ -22,8 +22,6 @@ export default function AboutPage() {
 
     setIsLoading(false);
   }, [currentUser]);
-
-  useListenSystemTray({ onSwitchTheme: switchTheme });
 
   let content;
   if (isSessionLoading || isLoading) {
@@ -73,9 +71,5 @@ export default function AboutPage() {
     );
   }
 
-  return (
-    <main data-theme={theme} className={styles.page}>
-      {content}
-    </main>
-  );
+  return <div className={styles.page}>{content}</div>;
 }

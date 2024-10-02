@@ -4,13 +4,12 @@ import { useState } from "react";
 import { useAppContext } from "@/context";
 import { OrderModal, OrderTable } from "@/libs";
 import { useSelectedYearStore } from "@/stores";
-import { useListenSystemTray, useOrder, useSession } from "@/hooks";
+import { useListenOrderTray, useOrder, useSession } from "@/hooks";
 import { PageContent, Spinner } from "@/components";
 import { WENT_WRONG_ERROR } from "@/constants";
 import { OrderFormType } from "@/types";
 import { withPrivateRoute } from "@/hoc";
 import { constructOrder } from "@/utils";
-import styles from "./page.module.scss";
 
 function OrderTablePage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -18,7 +17,7 @@ function OrderTablePage() {
   const openModal = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
 
-  const { theme, showToast, switchTheme } = useAppContext();
+  const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
 
   const [selectedYear, changeYear] = useSelectedYearStore(
@@ -47,7 +46,7 @@ function OrderTablePage() {
     addOrder(constructOrder(data, selectedYear));
   };
 
-  useListenSystemTray({ onAddOrder: openModal, onSwitchTheme: switchTheme });
+  useListenOrderTray(openModal);
 
   let content;
   if (isSessionLoading || (!currentUser && !isSessionError)) {
@@ -75,11 +74,7 @@ function OrderTablePage() {
     );
   }
 
-  return (
-    <main data-theme={theme} className={styles.page}>
-      <PageContent>{content}</PageContent>
-    </main>
-  );
+  return <PageContent>{content}</PageContent>;
 }
 
 export default withPrivateRoute(OrderTablePage, "onlyUser");

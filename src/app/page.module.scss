@@ -1,16 +1,7 @@
-@use "@/assets/mixins" as *;
-
-.page {
-  @include light-theme("background");
-  @include dark-theme("darkest-background");
-  
-  position: relative;
+.page {  
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  min-width: 100vw;
-  overflow: hidden;
 
   &__content {
     display: flex;

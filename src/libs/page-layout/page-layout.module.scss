@@ -3,6 +3,10 @@
 .page {
   @include light-theme("background");
   @include dark-theme("darkest-background");
-
+  
+  position: relative;
   min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 40px auto 40px;
 }
