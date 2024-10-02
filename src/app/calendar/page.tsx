@@ -8,7 +8,7 @@ import {
   useOrderMenuCtx,
   useOrder,
   useSession,
-  useListenSystemTray,
+  useListenOrderTray,
 } from "@/hooks";
 import { ContextMenu, DialogModal, PageContent, Spinner } from "@/components";
 import { Calendar, OrderModal } from "@/libs";
@@ -22,7 +22,6 @@ import { DIALOG_ACTION_TITLES, PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { DialogVariant, OrderFormType, OrderStatus } from "@/types";
 import { useSelectedYearStore } from "@/stores";
 import { withPrivateRoute } from "@/hoc";
-import styles from "./page.module.scss";
 
 function CalendarPage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -33,7 +32,7 @@ function CalendarPage() {
   );
 
   const router = useRouter();
-  const { theme, showToast, switchTheme } = useAppContext();
+  const { theme, showToast } = useAppContext();
   const { currentUser, isSessionLoading, isSessionError } = useSession();
 
   const { ctxDate, ctxRef, ctxOrder, handleContextMenu, resetContextState } =
@@ -143,7 +142,7 @@ function CalendarPage() {
     }
   };
 
-  useListenSystemTray({ onAddOrder: handleAdd, onSwitchTheme: switchTheme });
+  useListenOrderTray(handleAdd);
 
   const isLoadingPage =
     isSessionLoading || isGetOrdersLoading || (!currentUser && !isSessionError);
@@ -205,11 +204,7 @@ function CalendarPage() {
     );
   }
 
-  return (
-    <main data-theme={theme} className={styles.page}>
-      <PageContent>{content}</PageContent>
-    </main>
-  );
+  return <PageContent>{content}</PageContent>;
 }
 
 export default withPrivateRoute(CalendarPage, "onlyUser");

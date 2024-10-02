@@ -1,12 +1,11 @@
-import type { WebviewWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
+import { useAppWindow } from "./use-app-window";
 
-export const useListenOrderTray = (
-  appWindow?: WebviewWindow,
-  onAddOrder?: () => void,
-) => {
+export const useListenOrderTray = (onAddOrder: () => void) => {
+  const appWindow = useAppWindow();
+
   useEffect(() => {
-    if (appWindow && onAddOrder) {
+    if (appWindow) {
       let unlistenOrderTray: () => void;
       const listenOrderTray = async () => {
         unlistenOrderTray = await appWindow.listen("new_order", onAddOrder);

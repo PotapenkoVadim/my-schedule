@@ -14,6 +14,20 @@
   }
 }
 
+@mixin layout-light-theme() {
+  &[data-theme="Light"] {
+    box-shadow: 2px 2px 14px $dark-text;
+    background-color: #e2e2e2;
+  }
+}
+
+@mixin layout-dark-theme() {
+  &[data-theme="Dark"] {
+    box-shadow: 2px 2px 14px $secondary-dark;
+    background-color: $dark;
+  }
+}
+
 @mixin tooltip() {
   & {
     position: relative;

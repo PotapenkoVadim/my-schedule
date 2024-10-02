@@ -1,7 +1,7 @@
 import { APP_DESCRIPTION, APP_TITLE } from "@/constants";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import { Sidebar } from "@/libs";
+import { PageLayout } from "@/libs";
 import { AppProvider } from "@/context";
 import "@/assets/global.scss";
 
@@ -24,8 +24,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={inter.className}>
         <AppProvider>
-          {children}
-          <Sidebar />
+          <PageLayout>{children}</PageLayout>
         </AppProvider>
       </body>
     </html>

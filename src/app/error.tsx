@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppContext } from "@/context";
 import { ShapesBackground, Button, Spinner } from "@/components";
 import { useSession } from "@/hooks";
 import { getToken } from "@/utils";
@@ -9,7 +8,6 @@ import { CURRENT_YEAR } from "@/constants";
 import styles from "./page.module.scss";
 
 export default function Error({ reset }: { reset: () => void }) {
-  const { theme } = useAppContext();
   const { currentUser, isSessionLoading, getSession } = useSession();
 
   useEffect(() => {
@@ -38,9 +36,5 @@ export default function Error({ reset }: { reset: () => void }) {
     );
   }
 
-  return (
-    <main data-theme={theme} className={styles.page}>
-      {content}
-    </main>
-  );
+  return <div className={styles.page}>{content}</div>;
 }

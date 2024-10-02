@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import type { WebviewWindow } from "@tauri-apps/api/window";
-import { useListenThemeTray } from "./use-listen-theme-tray";
-import { useListenOrderTray } from "./use-listen-order-tray";
 
-export const useListenSystemTray = ({
-  onSwitchTheme,
-  onAddOrder,
-}: {
-  onSwitchTheme?: () => void;
-  onAddOrder?: () => void;
-}) => {
+export const useAppWindow = () => {
   const [appWindow, setAppWindow] = useState<WebviewWindow>();
 
   async function setupAppWindow() {
@@ -20,11 +12,10 @@ export const useListenSystemTray = ({
   useEffect(() => {
     const client = process.env.NEXT_PUBLIC_CLIENT?.trim();
 
-    if (client === "desktop") {
+    if (client === "desktop" && !appWindow) {
       setupAppWindow();
     }
   }, []);
 
-  useListenOrderTray(appWindow, onAddOrder);
-  useListenThemeTray(appWindow, onSwitchTheme);
+  return appWindow;
 };

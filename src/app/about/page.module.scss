@@ -1,16 +1,9 @@
 @use "@/assets/mixins" as *;
 
 .page {
-  @include light-theme("background");
-  @include dark-theme("darkest-background");
-
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  min-width: 100vw;
-  overflow: hidden;
-  position: relative;
 
   &__content {
     display: flex;
@@ -47,7 +40,6 @@
 @include small-desktop-display {
   .page__content {
     flex-direction: column;
-    padding: 32px;
     gap: 32px;
   }
 
@@ -58,7 +50,6 @@
 
 @include mobile-display {
   .page__content {
-    padding: 36px 14px;
     gap: 14px;
   }
 }

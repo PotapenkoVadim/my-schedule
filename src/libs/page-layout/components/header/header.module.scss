@@ -1,0 +1,6 @@
+@use "@/assets/mixins" as *;
+
+.header {
+  @include layout-light-theme;
+  @include layout-dark-theme;
+}
