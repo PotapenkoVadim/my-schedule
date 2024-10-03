@@ -5,5 +5,5 @@ The application also supports a role model with three levels of access: administ
 ![calendar](https://github.com/PotapenkoVadim/my-schedule/blob/dev-3.0/src/assets/images/calendar.png?raw=true)
 
 ### Scripts
-- `yarn build` - build a web client
-- `yarn tauri build` - build a desktop client
+- `yarn web:build` - build a web client
+- `yarn desktop:build` - build a desktop client

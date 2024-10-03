@@ -11,4 +11,8 @@
     background-color: inherit;
     color: inherit;
   }
+
+  &:global(.p-button:focus) {
+    box-shadow: none;
+  }
 }

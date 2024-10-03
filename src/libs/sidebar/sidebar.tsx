@@ -6,14 +6,13 @@ import {
   BaseSidebar,
   Button,
   Logo,
-  Menu,
   SignOutButton,
   ThemeSwitcher,
 } from "@/components";
-import { getNavigateLinks } from "@/utils";
 import { useAppContext } from "@/context";
 import { PATHS, WENT_WRONG_ERROR } from "@/constants";
 import { useSession } from "@/hooks";
+import { NavigationLinks } from "../navigation-links/navigation-links";
 import styles from "./sidebar.module.scss";
 
 export function Sidebar() {
@@ -32,12 +31,6 @@ export function Sidebar() {
     router.push(PATHS.home);
   };
 
-  const navigateLinks = getNavigateLinks(
-    router.push,
-    toggleSidebar,
-    currentUser,
-  );
-
   return (
     <>
       <BaseSidebar
@@ -47,11 +40,11 @@ export function Sidebar() {
         className={styles.sidebar}
       >
         <Logo onClick={moveToHome} className={styles.sidebar__logo} />
-
-        <Menu
-          data-theme={theme}
-          model={navigateLinks}
-          className={styles.sidebar__menu}
+        <NavigationLinks
+          currentUser={currentUser}
+          theme={theme}
+          classNames={styles.sidebar__menu}
+          onBeforeNavigate={toggleSidebar}
         />
 
         {Boolean(currentUser) && (
