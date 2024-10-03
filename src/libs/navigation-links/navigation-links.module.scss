@@ -1,0 +1,12 @@
+.navigation {
+  &_row {
+    & :global(.p-menu-list) {
+      display: flex !important;
+      gap: 8px;
+    }
+
+    & :global(.p-menuitem-link) {
+      padding: 4px;
+    }
+  }
+}

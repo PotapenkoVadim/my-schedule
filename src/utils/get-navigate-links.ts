@@ -4,8 +4,8 @@ import { isAdmin } from "./is-admin";
 
 export const getNavigateLinks = (
   navigateTo: (href: string) => void,
-  onBeforeNavigate: () => void,
   user: UserEntity | null,
+  onBeforeNavigate?: () => void,
 ) => {
   const isUserAdmin = isAdmin(user);
   const routes = [];
@@ -16,7 +16,7 @@ export const getNavigateLinks = (
       icon: "pi pi-sign-in",
       label: PATH_TITLES.signIn,
       command: () => {
-        onBeforeNavigate();
+        if (onBeforeNavigate) onBeforeNavigate();
         navigateTo(PATHS.signIn);
       },
     });
@@ -29,7 +29,7 @@ export const getNavigateLinks = (
         icon: "pi pi-calendar",
         label: PATH_TITLES.calendar,
         command: () => {
-          onBeforeNavigate();
+          if (onBeforeNavigate) onBeforeNavigate();
           navigateTo(PATHS.calendar);
         },
       },
@@ -38,7 +38,7 @@ export const getNavigateLinks = (
         icon: "pi pi-table",
         label: PATH_TITLES.table,
         command: () => {
-          onBeforeNavigate();
+          if (onBeforeNavigate) onBeforeNavigate();
           navigateTo(PATHS.table);
         },
       },
@@ -51,7 +51,7 @@ export const getNavigateLinks = (
       icon: "pi pi-cog",
       label: PATH_TITLES.adminPanel,
       command: () => {
-        onBeforeNavigate();
+        if (onBeforeNavigate) onBeforeNavigate();
         navigateTo(PATHS.adminPanel);
       },
     });
@@ -62,7 +62,7 @@ export const getNavigateLinks = (
     icon: "pi pi-info-circle",
     label: PATH_TITLES.about,
     command: () => {
-      onBeforeNavigate();
+      if (onBeforeNavigate) onBeforeNavigate();
       navigateTo(PATHS.about);
     },
   });

@@ -19,6 +19,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Password } from "primereact/password";
 import { Galleria } from "primereact/galleria";
 import { Image } from "primereact/image";
+import { Avatar } from "primereact/avatar";
 
 export {
   Button,
@@ -42,6 +43,7 @@ export {
   Password,
   Galleria,
   Image,
+  Avatar,
 };
 
 export * from "./theme-switcher/theme-switcher";
