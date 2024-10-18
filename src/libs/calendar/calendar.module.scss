@@ -50,6 +50,7 @@
     justify-content: center;
     border-radius: 2px;
     margin: 1px 0;
+    user-select: none;
 
     &_hover {
       cursor: pointer;
