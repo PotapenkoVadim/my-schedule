@@ -1,9 +1,28 @@
 # My Schedule
-The application is designed to record and visualize orders. It allows users to view information about orders in two formats: as color schemes on the calendar and as a table. Each order has its own color, which is selected by the user, and status, which can change over time. The order status is displayed on the calendar in different ways depending on its current status.
-The application also supports a role model with three levels of access: administrator, user, and temporary user. The administrator has the ability to add new users. Users and temporary users have access to the main functions of the application, but temporary users' access to the application is limited to 24 hours.
+##### Версия: 3.1.1
+##### Платформа: Web/Desktop
+##### Технологии:
+- Frontend: NextJs, Zustand
+- Backend в репозитории [my-schedule-backend](https://github.com/PotapenkoVadim/my-schedule-backend): NestJs, PostgreSql, Prisma
+- Для компиляции бинарных приложений используется фреймворк [Tauri](https://v2.tauri.app/)
+### Описание
+Приложение предназначено для учета и визуализации заказов. Оно позволяет пользователям просматривать информацию о заказах в двух форматах: в виде цветовых схем на календаре и в виде таблицы. Каждый заказ имеет свой цвет, который выбирает пользователь, и статус, который может меняться со временем. Статус заказа отображается на календаре различными способами в зависимости от его текущего состояния.
 
-![calendar](https://github.com/PotapenkoVadim/my-schedule/blob/dev-3.0/src/assets/images/calendar.png?raw=true)
+Приложение также поддерживает ролевую модель с тремя уровнями доступа: администратор, пользователь и временный пользователь. Администратор имеет возможность добавлять новых пользователей. Пользователи и временные пользователи имеют доступ к основным функциям приложения, но доступ временных пользователей к приложению ограничен сутками.
 
-### Scripts
-- `yarn web:build` - build a web client
-- `yarn desktop:build` - build a desktop client
+> [!IMPORTANT] 
+> Приложение создано для личного использования автора, однако другие пользователи могут зарегистрироваться и протестировать его в роли временных пользователей. Учетная запись и данные временного пользователя будут удаляться в течении суток.
+### Тестирование
+Протестировать приложение можно на следующих платформах:
+
+- Web client: [My schedule app](https://my-schedule.ru/)
+### Сборка
+Для корректной сборки приложение необходимо создать `.env.[development | production]` файл в корне директории, в которой будут хранится урл сервера (`NEXT_PUBLIC_API_HOST`).
+Сборка Web-клиента:
+```sh
+yarn web:build
+```
+Сборка Desktop-клиента:
+```sh
+yarn desktop:build
+```
